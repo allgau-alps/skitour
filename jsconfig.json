@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2020",
+        "checkJs": true,
+        "allowJs": true,
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "paths": {
+            "*": [
+                "node_modules/*"
+            ]
+        }
+    },
+    "include": [
+        "tools/**/*",
+        "snow-depth/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "archive",
+        "data"
+    ]
+}

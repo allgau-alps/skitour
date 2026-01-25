@@ -1,0 +1,33 @@
+{
+  "name": "avalanche-archiver",
+  "version": "1.0.0",
+  "description": "Daily avalanche bulletin archiver",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:smoke": "node tools/test_smoke.js",
+    "build": "node tools/build.js",
+    "fetch:daily": "node tools/fetch_daily.js",
+    "fetch:weather": "node tools/fetch_weather.js",
+    "fetch:report": "node tools/fetch_weather_report.js",
+    "fetch:incidents": "node tools/fetch_lawis_incidents.js",
+    "fetch:profiles": "node tools/process_profiles.js",
+    "fetch:geosphere": "node tools/fetch_geosphere.js",
+    "enrich:profiles": "node tools/enrich_profiles.js",
+    "fetch:uploads": "node tools/fetch_uploads.js",
+    "fetch:chain:profiles": "npm run fetch:incidents && npm run fetch:profiles && npm run enrich:profiles",
+    "fetch:all": "npm-run-all -p fetch:daily fetch:weather fetch:report fetch:geosphere fetch:uploads fetch:chain:profiles",
+    "serve": "serve .",
+    "lint": "eslint tools snow-depth",
+    "lint:fix": "eslint tools snow-depth --fix"
+  },
+  "dependencies": {
+    "@xmldom/xmldom": "^0.8.11",
+    "dotenv": "^17.2.3",
+    "maplibre-gl": "^5.16.0",
+    "puppeteer": "^24.35.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.2",
+    "npm-run-all": "^4.1.5"
+  }
+}

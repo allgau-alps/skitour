@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snow Profile Creator</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+    <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <a href="../index.html" class="logo">Avalanche Archive</a>
+                <div class="date-nav"><span>Profile Creator</span></div>
+            </div>
+        </header>
+
+        <div style="margin-bottom: 2rem;">
+            <h1>Create Snow Profile</h1>
+        </div>
+
+        <div class="creator-container">
+            <!-- Sidebar Controls -->
+            <div class="controls-panel">
+                <div class="panel-section">
+                    <h3>Metadata</h3>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="meta-observer" placeholder="e.g. Harry Black">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="meta-location" placeholder="e.g. Fellhorn">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Coordinates</label>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-bottom:0.5rem;">
+                            <input type="number" id="meta-lat" placeholder="Lat" step="0.00001">
+                            <input type="number" id="meta-lon" placeholder="Lon" step="0.00001">
+                        </div>
+                        <button id="open-map-btn"
+                            style="width:100%; margin-bottom:0.5rem; padding:0.5rem; background:#f1f5f9; border:1px solid #cbd5e1; cursor:pointer;">Select
+                            on Map</button>
+                        <button id="use-loc-btn"
+                            style="width:100%; padding:0.5rem; background:#f1f5f9; border:1px solid #cbd5e1; cursor:pointer;">Use
+                            Current Location</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="meta-date">
+                    </div>
+                    <div class="form-group row">
+                        <div>
+                            <label>Elevation (m)</label>
+                            <input type="number" id="meta-elevation" placeholder="1600">
+                        </div>
+                        <div>
+                            <label>Aspect</label>
+                            <select id="meta-aspect">
+                                <option value="">-</option>
+                                <option value="N">N</option>
+                                <option value="NE">NE</option>
+                                <option value="E">E</option>
+                                <option value="SE">SE</option>
+                                <option value="S">S</option>
+                                <option value="SW">SW</option>
+                                <option value="W">W</option>
+                                <option value="NW">NW</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Air Temp (°C)</label>
+                        <input type="number" id="meta-air-temp" placeholder="-5.0" step="0.1">
+                    </div>
+                </div>
+
+
+
+                <div class="panel-section">
+                    <h3>Layers <button id="add-layer-btn" class="btn-sm">+ Add Layer</button></h3>
+                    <div id="layers-list" class="layers-list">
+                        <!-- Dynamic Layers will go here -->
+                    </div>
+                    <button id="add-layer-btn-bottom" class="btn-sm"
+                        style="width:100%; margin-top:0.5rem; text-align:center;">+ Add Layer</button>
+                    <div class="helper-text">Top layers first (Depth 0 = Surface)</div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>Stability Tests <button id="add-test-btn" class="btn-orange">+ Add Test</button></h3>
+                    <div id="tests-list" class="tests-list">
+                        <!-- Dynamic Tests -->
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <button id="download-btn" class="btn-primary" style="margin-bottom:0.5rem;">Download Image</button>
+                    <button id="upload-site-btn" class="btn-primary" style="background-color: #059669;">Upload to
+                        Site</button>
+                    <div id="upload-status" style="margin-top:0.5rem; font-size:0.9rem;"></div>
+                </div>
+            </div>
+
+            <!-- Preview Area -->
+            <div class="preview-panel">
+                <div class="canvas-wrapper">
+                    <canvas id="profile-canvas" width="800" height="600"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+            <p style="text-align: center; color: var(--text-secondary); font-size: 0.875rem;">
+                <a href="../archive/profiles/index.html">&larr; Back to Profiles</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Map Modal -->
+    <div id="map-modal"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+        <div
+            style="background:white; padding:1rem; border-radius:8px; width:90%; max-width:600px; height:80vh; display:flex; flex-direction:column;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+                <h3>Select Location</h3>
+                <button id="close-map-btn"
+                    style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </div>
+            <div id="picker-map" style="flex:1; border-radius:4px; border:1px solid #ccc;"></div>
+            <p style="font-size:0.8rem; color:#666; margin-top:0.5rem;">Click to set location. Drag marker to refine.
+            </p>
+            <button id="confirm-loc-btn" class="btn-primary" style="margin-top:0.5rem;">Confirm Location</button>
+        </div>
+    </div>
+
+    <!-- MapLibre loaded in head -->
+    <script src="js/renderer.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

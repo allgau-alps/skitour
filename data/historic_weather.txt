@@ -1,0 +1,77 @@
+1) 2026‑01‑11 — Ifen‑Kellerloch
+On 10 January 2026, the day before the incident, the historic forecast for the Riezlern/Oberstdorf region showed cold and stable temperatures, averaging around –3.2 °C through the day. Snowfall was continuous, with a total of approximately 10.2 mm water equivalent. Snow depth increased steadily from 0.30 m to 0.44 m, indicating ongoing accumulation and light to moderate loading of the snowpack. Winds were moderate to strong, averaging 10.2 km/h, with peak periods above 15 km/h from the west‑southwest (≈250°). Wind speeds weakened late in the day. Total precipitation reached around 10.6 mm, confirming a moist, storm‑influenced 24‑hour period leading into the incident day.
+Source: Open‑Meteo Historical Forecast API.
+
+2) 2024‑12‑15 — Ifenmulde / Hirschegg
+On 14 December 2024, temperatures showed a rising trend, averaging around 0.5 °C after a cold start near –4 °C. Snowfall was intermittent, totaling about 3.4 mm water equivalent, mainly in the afternoon and evening. Snow depth remained nearly unchanged, fluctuating only slightly around 0.40–0.43 m, indicating minimal accumulation. Winds were light to moderate, averaging 4.8 km/h, shifting from southerly to westerly directions. Total precipitation reached around 3.8 mm, consistent with light convective snow showers.
+Source: Open‑Meteo Historical Forecast API.
+
+3) 2024‑03‑17 — Steinmandl / Schwarzwassertal
+On 16 March 2024, temperatures were mild for the season, averaging 4.6 °C with a stable trend. Snowfall was light and scattered, totaling around 3.1 mm water equivalent. Snow depth decreased slightly from 1.08 m to 1.05 m, reflecting melt and settlement under warm daytime temperatures. Winds were moderate, averaging 6.3 km/h, with a westerly to southwesterly flow. Precipitation totaled around 11.0 mm, mostly as mixed rain‑snow during warmer hours.
+Source: Open‑Meteo Historical Forecast API.
+
+4) 2024‑03‑07 — Güntlespitze
+On 6 March 2024, temperatures hovered near freezing, averaging 0.4 °C with a slight cooling trend. Snowfall was persistent and moderate, totaling approximately 11.0 mm water equivalent. Snow depth increased from 1.05 m to 1.18 m, indicating steady accumulation. Winds were light to moderate, averaging 3.7 km/h, with variable directions shifting between northwest and west. Total precipitation reached around 13.0 mm, consistent with a moist frontal passage.
+Source: Open‑Meteo Historical Forecast API.
+
+5) 2024‑01‑16 — Gaichtspitze
+On 15 January 2024, temperatures were cold and stable, averaging –3.4 °C. Snowfall was light but continuous, totaling around 4.0 mm water equivalent. Snow depth increased slightly from 1.10 m to 1.15 m, indicating modest accumulation. Winds were moderate to strong, averaging 9.0 km/h, with gusty periods and a predominantly westerly flow. Total precipitation reached around 6.0 mm, consistent with light convective snow showers.
+Source: Open‑Meteo Historical Forecast API.
+
+6–8) 2024‑01‑14 — Nesselwängler Scharte / Stuiben Sennalpe / Brentenjoch
+(All share the same day‑before weather)
+
+On 13 January 2024, temperatures were extremely cold, averaging –9.0 °C, with a stable trend and no warming through the day. No snowfall was forecast, and snow depth remained constant at 1.11 m, indicating a dry, cold high‑pressure regime. Winds were moderate, averaging 7.4 km/h, with a consistent southerly to southeasterly direction. No measurable precipitation occurred.
+Source: Open‑Meteo Historical Forecast API.
+
+9) 2024‑01‑09 — Hirschegg
+On 8 January 2024, temperatures were cold and stable, averaging –6.4 °C. Snowfall was minimal, totaling around 0.6 mm water equivalent. Snow depth remained steady at 1.16 m, showing no meaningful accumulation. Winds were light to moderate, averaging 3.7 km/h, with a northeasterly to easterly flow. Precipitation remained very low at around 0.6 mm.
+Source: Open‑Meteo Historical Forecast API.
+
+10) 2023‑02‑05 — Höferspitze / Mittelberg
+On 4 February 2023, temperatures hovered near freezing, averaging 0.2 °C with a slight cooling trend. Snowfall was moderate to heavy at times, totaling around 12.0 mm water equivalent. Snow depth increased from 0.70 m to 0.76 m, indicating steady accumulation. Winds were moderate, averaging 5.3 km/h, with a westerly to northwesterly flow. Total precipitation reached around 14.0 mm, consistent with a moist frontal system.
+Source: Open‑Meteo Historical Forecast API.
+
+11) 2023‑02‑04 — Hählekopf / Egg
+On 3 February 2023, temperatures were near freezing, averaging 0.4 °C. Snowfall was intermittent but included a strong evening pulse, totaling around 6.0 mm water equivalent. Snow depth increased slightly from 0.67 m to 0.68 m. Winds were moderate to strong, averaging 8.0 km/h, with a westerly flow. Total precipitation reached around 7.0 mm.
+Source: Open‑Meteo Historical Forecast API.
+
+12) 2023‑02‑03 — Walmendingerhorn
+On 2 February 2023, temperatures remained cold, averaging –1.2 °C. Snowfall was steady, totaling around 12.0 mm water equivalent. Snow depth increased from 0.57 m to 0.67 m, indicating significant accumulation. Winds were strong, averaging 10.0 km/h, with a westerly to southwesterly flow. Precipitation totaled around 15.0 mm, consistent with a winter storm cycle.
+Source: Open‑Meteo Historical Forecast API.
+
+13) 2021‑12‑29 — Haldenwangerkopf / Warth
+On 28 December 2021, temperatures averaged 2.3 °C, showing a warming trend. Snowfall was minimal, totaling around 1.7 mm water equivalent. Snow depth remained constant at 0.62 m. Winds were moderate to strong, averaging 8.5 km/h, with a southerly to westerly flow. Total precipitation reached around 4.0 mm, mostly as mixed rain‑snow.
+Source: Open‑Meteo Historical Forecast API.
+
+14) 2020‑12‑10 — Ifenmulde / Hirschegg
+On 9 December 2020, temperatures were cold and stable, averaging –1.7 °C. Snowfall was light to moderate, totaling around 4.0 mm water equivalent. Snow depth increased from 0.33 m to 0.38 m, indicating steady accumulation. Winds were light to moderate, averaging 3.7 km/h, with a westerly flow. Total precipitation reached around 5.0 mm.
+Source: Open‑Meteo Historical Forecast API.
+
+15) 2019‑12‑15 — Hoher Ifen
+On 14 December 2019, temperatures averaged 1.1 °C, with a warming trend through the day. Snowfall was light, totaling around 2.0 mm water equivalent. Snow depth remained nearly unchanged at 0.63–0.64 m. Winds were moderate to strong, averaging 10.5 km/h, with a westerly flow. Total precipitation reached around 3.0 mm.
+Source: Open‑Meteo Historical Forecast API.
+
+16) 2019‑05‑17 — Großer Widderstein / Karlstor
+On 16 May 2019, temperatures were mild, averaging 4.0 °C. No snowfall occurred, and snow depth remained steady at 0.70 m. Winds were moderate, averaging 5.4 km/h, with variable directions shifting from southerly to northerly. No measurable precipitation was forecast.
+Source: Open‑Meteo Historical Forecast API.
+
+17) 2019‑03‑21 — Krinnenspitze
+On 20 March 2019, temperatures were cold, averaging –1.5 °C, with a cooling trend. No snowfall occurred, and snow depth remained constant at 1.51–1.50 m. Winds were moderate, averaging 4.7 km/h, with a southerly flow. No measurable precipitation was forecast.
+Source: Open‑Meteo Historical Forecast API.
+
+18) 2019‑02‑16 — Schoppernau / Neuhornbach
+On 15 February 2019, temperatures averaged 2.0 °C, showing a warming trend. No snowfall occurred, and snow depth remained steady at 1.44 m. Winds were moderate, averaging 6.0 km/h, with a southerly flow. No measurable precipitation was forecast.
+Source: Open‑Meteo Historical Forecast API.
+
+19) 2019‑01‑31 — Krinnenspitze
+On 30 January 2019, temperatures were cold, averaging –4.3 °C, with a cooling trend. Snowfall was minimal, totaling around 0.3 mm water equivalent. Snow depth remained steady at 1.36 m. Winds were moderate to strong, averaging 7.5 km/h, with a southerly flow. Total precipitation remained very low.
+Source: Open‑Meteo Historical Forecast API.
+
+20) 2019‑01‑06 — Diedamskopf
+On 5 January 2019, temperatures averaged –3.1 °C, with a stable trend. Snowfall was moderate to heavy at times, totaling around 12.0 mm water equivalent. Snow depth increased from 0.72 m to 0.90 m, indicating significant accumulation. Winds were moderate to strong, averaging 7.3 km/h, with a westerly flow. Total precipitation reached around 14.0 mm.
+Source: Open‑Meteo Historical Forecast API.
+
+21) 2018‑12‑09 — Kemptner Scharte
+On 8 December 2018, temperatures averaged 1.3 °C, with a warming trend. Snowfall was moderate, totaling around 6.0 mm water equivalent. Snow depth increased slightly from 0.06 m to 0.10 m. Winds were strong, averaging 11.5 km/h, with a westerly flow. Total precipitation reached around 8.0 mm, consistent with a moist early‑winter storm.
+Source: Open‑Meteo Historical Forecast API.

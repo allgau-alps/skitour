@@ -1,0 +1,49 @@
+name: Daily Avalanche Fetch
+
+on:
+  schedule:
+    # Run 3 times daily (times in UTC, assuming CET = UTC+1):
+    # 06:00 CET = 05:00 UTC (Morning update)
+    - cron: "0 5 * * *"
+    # 14:00 CET = 13:00 UTC (Early afternoon)
+    - cron: "0 13 * * *"
+    # 18:00 CET = 17:00 UTC (Evening update)
+    - cron: "0 17 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Fetch all data
+        env:
+          GCP_TRANSLATE_KEY: ${{ secrets.GCP_TRANSLATE_KEY }}
+        run: npm run fetch:all
+
+      - name: Build site
+        run: npm run build
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Routine data update"
+          branch: main
+          file_pattern: "data/* archive/* index.html gpx/routes-metadata.json"
+          pull_before_push: true

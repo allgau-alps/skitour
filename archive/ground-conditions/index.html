@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ground Conditions</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛷️</text></svg>">
+    <link rel="stylesheet" href="../../styles.css">
+    <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+    <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+    <style>
+        /* Updated Tagline Style: White background, standard font, no border */
+        .tagline-container {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 1rem;
+            background: white;
+        }
+
+        .tagline-main {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 1.75rem;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .tagline-sub {
+            font-size: 1rem;
+            color: #64748b;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .action-card {
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .action-card:hover {
+            transform: translateY(-4px);
+            border-color: #0284c7;
+        }
+
+        .action-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .action-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            display: block;
+        }
+
+        .map-container {
+            height: 400px;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal h3 {
+            margin-top: 0;
+            color: #ef4444;
+        }
+
+        .modal-actions {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .btn-cancel {
+            background: #f1f5f9;
+            color: #64748b;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-confirm {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .maplibregl-marker,
+        .maplibregl-marker svg {
+            cursor: pointer !important;
+        }
+
+        /* Global Popup Link Styles */
+        .maplibregl-popup-content a {
+            color: #0284c7 !important;
+            text-decoration: none;
+            font-weight: bold;
+            outline: none;
+            border: none;
+            box-shadow: none;
+        }
+
+        .maplibregl-popup-content a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <a href="../../index.html" class="logo">Skitour Allgäu</a>
+                <div class="date-nav"><span>Ground Conditions</span></div>
+            </div>
+        </header>
+
+        <div class="tagline-container">
+            <h1>Ground Conditions</h1>
+            <h2 class="tagline-main">If you find good snow let your fellow skiers know! ❄️</h2>
+            <div class="tagline-sub">...and if it's not good, definitely share it so we can mark and avoid! 🏔️</div>
+        </div>
+
+        <div class="action-grid">
+            <a href="../webcams/index.html" class="action-card">
+                <span class="action-icon">📹</span>
+                <span class="action-title">Allgäu Webcams</span>
+                <span style="display:block; margin-top:0.5rem; color:#64748b;">17 Live Views & Cams</span>
+            </a>
+            <a href="upload.html" class="action-card" style="background:#fefce8; border-color:#fef08a;">
+                <span class="action-icon">⛷️</span>
+                <span class="action-title">Skier Upload</span>
+                <span style="display:block; margin-top:0.5rem; color:#854d0e;">Submit Report</span>
+            </a>
+        </div>
+
+        <h2>Report Map</h2>
+        <div id="map" class="map-container"></div>
+
+        <h2>Recent Reports</h2>
+        <div class="archive-list">
+            <div class="archive-item"
+                style="display:flex; flex-direction:column; justify-content:space-between; text-align:left; align-items:stretch; cursor:default;">
+                <a href="uploads/1768914614379.html"
+                    style="text-decoration:none; color:inherit; display:flex; flex-direction:column; gap:0.25rem; flex-grow: 1;">
+
+                    <span style="font-size:1.1rem; color:#0f172a; font-weight:700;">Grosser Daumen descent.</span>
+                    <span style="font-size:0.85rem; color:#64748b; font-style:italic;">Uploaded by Lance Solf</span>
+                    <span style="font-size:0.85rem; color:#64748b; font-weight:500;">20/01/2026</span>
+                    <span style="font-size:0.9rem; color:#334155; margin-top:0.5rem; line-height:1.5;">"Ramp on skiers
+                        left slightly better"</span>
+                </a>
+                <div
+                    style="margin-top:1rem; text-align:right; border-top:1px solid #f1f5f9; padding-top:0.5rem; display:flex; justify-content:flex-end; gap:1rem;">
+                    <a href="upload.html?edit=1768914614379"
+                        style="color:#0284c7; font-size:0.8rem; text-decoration:none; font-weight:600;">Edit Report</a>
+                    <button onclick="openDeleteModal('1768914614379', this)"
+                        style="color:#ef4444; background:none; border:none; padding:0; font-size:0.8rem; cursor:pointer; text-decoration:none;">Remove
+                        Report</button>
+                </div>
+            </div>
+            <div class="archive-item"
+                style="display:flex; flex-direction:column; justify-content:space-between; text-align:left; align-items:stretch; cursor:default;">
+                <a href="uploads/1768751582715.html"
+                    style="text-decoration:none; color:inherit; display:flex; flex-direction:column; gap:0.25rem; flex-grow: 1;">
+
+                    <span style="font-size:1.1rem; color:#0f172a; font-weight:700;">Ifen S.</span>
+                    <span style="font-size:0.85rem; color:#64748b; font-style:italic;">Uploaded by Lance Solf </span>
+                    <span style="font-size:0.85rem; color:#64748b; font-weight:500;">18/01/2026</span>
+                    <span style="font-size:0.9rem; color:#334155; margin-top:0.5rem; line-height:1.5;">"Ifen Southern
+                        Slopes - stripped"</span>
+                </a>
+                <div
+                    style="margin-top:1rem; text-align:right; border-top:1px solid #f1f5f9; padding-top:0.5rem; display:flex; justify-content:flex-end; gap:1rem;">
+                    <a href="upload.html?edit=1768751582715"
+                        style="color:#0284c7; font-size:0.8rem; text-decoration:none; font-weight:600;">Edit Report</a>
+                    <button onclick="openDeleteModal('1768751582715', this)"
+                        style="color:#ef4444; background:none; border:none; padding:0; font-size:0.8rem; cursor:pointer; text-decoration:none;">Remove
+                        Report</button>
+                </div>
+            </div>
+            <div class="archive-item"
+                style="display:flex; flex-direction:column; justify-content:space-between; text-align:left; align-items:stretch; cursor:default;">
+                <a href="uploads/1768751699019.html"
+                    style="text-decoration:none; color:inherit; display:flex; flex-direction:column; gap:0.25rem; flex-grow: 1;">
+
+                    <span style="font-size:1.1rem; color:#0f172a; font-weight:700;">Berlingerskopfle</span>
+                    <span style="font-size:0.85rem; color:#64748b; font-style:italic;">Uploaded by Lance Solf </span>
+                    <span style="font-size:0.85rem; color:#64748b; font-weight:500;">18/01/2026</span>
+                    <span style="font-size:0.9rem; color:#334155; margin-top:0.5rem; line-height:1.5;">"Patchy snow
+                        cover and already stripped through the..."</span>
+                </a>
+                <div
+                    style="margin-top:1rem; text-align:right; border-top:1px solid #f1f5f9; padding-top:0.5rem; display:flex; justify-content:flex-end; gap:1rem;">
+                    <a href="upload.html?edit=1768751699019"
+                        style="color:#0284c7; font-size:0.8rem; text-decoration:none; font-weight:600;">Edit Report</a>
+                    <button onclick="openDeleteModal('1768751699019', this)"
+                        style="color:#ef4444; background:none; border:none; padding:0; font-size:0.8rem; cursor:pointer; text-decoration:none;">Remove
+                        Report</button>
+                </div>
+            </div>
+            <div class="archive-item"
+                style="display:flex; flex-direction:column; justify-content:space-between; text-align:left; align-items:stretch; cursor:default;">
+                <a href="uploads/1768751773816.html"
+                    style="text-decoration:none; color:inherit; display:flex; flex-direction:column; gap:0.25rem; flex-grow: 1;">
+
+                    <span style="font-size:1.1rem; color:#0f172a; font-weight:700;">Litzescharte from
+                        berlingerskopfle</span>
+                    <span style="font-size:0.85rem; color:#64748b; font-style:italic;">Uploaded by Lance Solf</span>
+                    <span style="font-size:0.85rem; color:#64748b; font-weight:500;">18/01/2026</span>
+                    <span style="font-size:0.9rem; color:#334155; margin-top:0.5rem; line-height:1.5;">"Looking across
+                        at litzescharte from berlingerskopf..."</span>
+                </a>
+                <div
+                    style="margin-top:1rem; text-align:right; border-top:1px solid #f1f5f9; padding-top:0.5rem; display:flex; justify-content:flex-end; gap:1rem;">
+                    <a href="upload.html?edit=1768751773816"
+                        style="color:#0284c7; font-size:0.8rem; text-decoration:none; font-weight:600;">Edit Report</a>
+                    <button onclick="openDeleteModal('1768751773816', this)"
+                        style="color:#ef4444; background:none; border:none; padding:0; font-size:0.8rem; cursor:pointer; text-decoration:none;">Remove
+                        Report</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Modal -->
+        <div id="deleteModal" class="modal-overlay">
+            <div class="modal">
+                <h3>Remove Report?</h3>
+                <p>Are you sure you want to remove this report?</p>
+                <div style="margin: 1rem 0;">
+                    <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                        <input type="checkbox" id="confirmAuth">
+                        <span style="font-size:0.9rem;">I confirm I am the author of this report or have authority to
+                            remove it.</span>
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button id="btnDelete" class="btn-confirm" onclick="confirmDelete()">Remove</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generic Message Modal -->
+        <div id="messageModal" class="modal-overlay">
+            <div class="modal">
+                <h3 id="msgTitle">Title</h3>
+                <p id="msgText">Text</p>
+                <div class="modal-actions">
+                    <button class="btn-cancel" style="background:var(--primary-blue); color:white;"
+                        onclick="closeMessageModal()">OK</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const uploads = [{ "id": "1768914614379", "date": "2026-01-20T17:18:50.665Z", "user": "Lance Solf", "location": "Grosser Daumen descent.", "comment": "Ramp on skiers left slightly better", "lat": "47.4255947", "lon": "10.4076408", "elevation": null, "aspect": null, "type": "generic", "images": ["../images/1768914614379_0.jpeg"], "approved": true }, { "id": "1768751582715", "date": "2026-01-18T17:21:51.538Z", "user": "Lance Solf ", "location": "Ifen S.", "comment": "Ifen Southern Slopes - stripped", "lat": "47.34362366606856", "lon": "10.095862842601758", "elevation": null, "aspect": null, "type": "generic", "images": ["../images/1768751582715_0.jpeg", "../images/1768751582715_1.jpeg"], "layers": [], "tests": [], "approved": true }, { "id": "1768751699019", "date": "2026-01-18T17:21:14.609Z", "user": "Lance Solf ", "location": "Berlingerskopfle", "comment": "Patchy snow cover and already stripped through the trees / on the debris slope before the track", "lat": "47.35320046180101", "lon": "10.0760893474033", "elevation": null, "aspect": null, "type": "generic", "images": ["../images/1768751699019_0.jpeg", "../images/1768751699019_1.jpeg", "../images/1768751699019_2.jpeg"], "layers": [], "tests": [], "approved": true }, { "id": "1768751773816", "date": "2026-01-18T17:20:41.112Z", "user": "Lance Solf", "location": "Litzescharte from berlingerskopfle", "comment": "Looking across at litzescharte from berlingerskopfle", "lat": "47.32546696293839", "lon": "10.102069719459521", "elevation": null, "aspect": null, "type": "generic", "images": ["../images/1768751773816_0.jpeg"], "layers": [], "tests": [], "approved": true }];
+
+            function formatMapDate(isoStr) {
+                const date = new Date(isoStr);
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const yesterday = new Date(today);
+                yesterday.setDate(yesterday.getDate() - 1);
+
+                const inputDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+                const hours = date.getHours().toString().padStart(2, '0');
+                const minutes = date.getMinutes().toString().padStart(2, '0');
+                const timeStr = hours + ':' + minutes;
+
+                if (inputDate.getTime() === today.getTime()) {
+                    return 'Today @' + timeStr;
+                } else if (inputDate.getTime() === yesterday.getTime()) {
+                    return 'Yesterday @' + timeStr;
+                } else {
+                    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                    return days[date.getDay()] + ' ' + date.getDate() + ' @' + timeStr;
+                }
+            }
+
+            const map = new maplibregl.Map({
+                container: 'map',
+                style: {
+                    version: 8,
+                    sources: {
+                        'osm': { type: 'raster', tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'], tileSize: 256, attribution: '&copy; OpenStreetMap Contributors' },
+                        'topo': { type: 'raster', tiles: ['https://a.tile.opentopomap.org/{z}/{x}/{y}.png'], tileSize: 256, attribution: 'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap (CC-BY-SA)' }
+                    },
+                    layers: [
+                        { id: 'osm-layer', type: 'raster', source: 'osm', minzoom: 0, maxzoom: 19 },
+                        { id: 'topo-layer', type: 'raster', source: 'topo', minzoom: 0, maxzoom: 17, layout: { visibility: 'none' } }
+                    ]
+                },
+                center: [10.3, 47.45], // Lon, Lat
+                zoom: 9
+            });
+            map.addControl(new maplibregl.NavigationControl());
+
+            function updateLayers() {
+                const zoom = map.getZoom();
+                if (zoom < 13) {
+                    if (map.getLayer('topo-layer')) map.setLayoutProperty('topo-layer', 'visibility', 'none');
+                    if (map.getLayer('osm-layer')) map.setLayoutProperty('osm-layer', 'visibility', 'visible');
+                } else {
+                    if (map.getLayer('osm-layer')) map.setLayoutProperty('osm-layer', 'visibility', 'none');
+                    if (map.getLayer('topo-layer')) map.setLayoutProperty('topo-layer', 'visibility', 'visible');
+                }
+            }
+            map.on('zoom', updateLayers);
+
+            uploads.forEach(u => {
+                if (u.lat && u.lon) {
+                    const link = 'uploads/' + (u.id || new Date(u.date).getTime()) + '.html';
+                    const popuphtml = `<b>${u.user}</b><br>${formatMapDate(u.date)}<br><a href="${link}">View Report</a>`;
+
+                    new maplibregl.Marker()
+                        .setLngLat([u.lon, u.lat])
+                        .setPopup(new maplibregl.Popup({ offset: 25 }).setHTML(popuphtml))
+                        .addTo(map);
+                }
+            });
+
+            // DELETE LOGIC
+            let deleteTargetId = null;
+            let deleteTargetBtn = null;
+            const modal = document.getElementById('deleteModal');
+            const check = document.getElementById('confirmAuth');
+            const btnDelete = document.getElementById('btnDelete');
+
+            function openDeleteModal(id, btnElement) {
+                deleteTargetId = id;
+                deleteTargetBtn = btnElement;
+                modal.style.display = 'flex';
+                check.checked = false;
+                btnDelete.style.opacity = '0.5';
+                btnDelete.style.pointerEvents = 'none';
+            }
+
+            function closeModal() {
+                modal.style.display = 'none';
+                deleteTargetId = null;
+            }
+
+            check.addEventListener('change', function () {
+                if (this.checked) {
+                    btnDelete.style.opacity = '1';
+                    btnDelete.style.pointerEvents = 'auto';
+                } else {
+                    btnDelete.style.opacity = '0.5';
+                    btnDelete.style.pointerEvents = 'none';
+                }
+            });
+
+            // Message Modal Logic
+            const msgModal = document.getElementById('messageModal');
+            const msgTitle = document.getElementById('msgTitle');
+            const msgText = document.getElementById('msgText');
+
+            function showMessage(title, text, isError = false) {
+                msgTitle.innerText = title;
+                msgTitle.style.color = isError ? '#ef4444' : '#0f172a';
+                msgText.innerText = text;
+                msgModal.style.display = 'flex';
+            }
+
+            function closeMessageModal() {
+                msgModal.style.display = 'none';
+            }
+
+            async function confirmDelete() {
+                if (!deleteTargetId) return;
+
+                btnDelete.innerText = 'Removing...';
+                try {
+                    const WORKER_URL = 'https://avalanche-archiver-uploads.bigdoggybollock.workers.dev/delete';
+                    const res = await fetch(WORKER_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: deleteTargetId })
+                    });
+
+                    if (res.ok) {
+                        closeModal(); // Close delete confirmation first
+                        showMessage('Report Removed', 'It will disappear permanently on the next site update. (Updates daily @06:00, 14:00 & 18:00 CET)');
+                        // Visually remove
+                        const card = deleteTargetBtn.closest('.archive-item');
+                        if (card) {
+                            card.style.opacity = '0.5';
+                            card.style.pointerEvents = 'none';
+                            card.innerHTML += '<div style="color:red; font-weight:bold; text-align:center;">REMOVED</div>';
+                        }
+                    } else {
+                        closeModal();
+                        showMessage('Error', 'Error removing report.', true);
+                    }
+                } catch (e) {
+                    closeModal();
+                    showMessage('Error', 'Error: ' + e.message, true);
+                } finally {
+                    btnDelete.innerText = 'Remove';
+                    // closeModal is handled in if/else blocks to allow smooth transition to message modal
+                }
+            }
+        </script>
+
+        <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+            <p style="text-align: center; color: var(--text-secondary); font-size: 0.875rem;">
+                <a href="../../index.html">&larr; Back to Home</a>
+            </p>
+        </footer>
+    </div>
+</body>
+
+</html>

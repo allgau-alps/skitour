@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planning Tool - Skitour Allgau</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛷️</text></svg>">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="planning.css">
+    <!-- MapLibre GL JS -->
+    <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+    <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+    <!-- ToGeoJSON for GPX parsing -->
+    <script src="https://unpkg.com/@tmcw/togeojson@5.8.1/dist/togeojson.umd.js"></script>
+    <script src="https://unpkg.com/suncalc@1.9.0/suncalc.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="map-header">
+        <a href="../index.html" class="back-button">
+            ← Back to Archive
+        </a>
+    </div>
+
+    <!-- Map Container -->
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+
+    <!-- Custom Unified Controls -->
+    <div class="custom-map-controls">
+        <div class="control-group">
+            <button class="map-btn" id="btn-zoom-in" title="Zoom In">＋</button>
+            <button class="map-btn" id="btn-zoom-out" title="Zoom Out">－</button>
+            <!-- 3D Extension (Hidden by default) -->
+            <div class="controls-3d-group" id="controls-3d-group">
+                <button class="map-btn" id="btn-reset-north" title="Reset North/Pitch">
+                    <div class="compass-wrapper" id="compass-icon">N</div>
+                </button>
+                <button class="map-btn" id="ctrl-tilt-up" title="Tilt Up">▲</button>
+                <button class="map-btn" id="ctrl-tilt-down" title="Tilt Down">▼</button>
+                <button class="map-btn" id="ctrl-rotate-left" title="Rotate Left">↺</button>
+                <button class="map-btn" id="ctrl-rotate-right" title="Rotate Right">↻</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Control Panel (Right Drawer) -->
+    <div class="control-panel" id="control-panel">
+        <div class="sidebar-handle" id="sidebar-handle">
+            <div class="sidebar-handle-bar"></div>
+        </div>
+
+        <div class="panel-scroll-container">
+            <div class="panel-header">
+                <h2>&#x1F6E0; Planning Tool</h2>
+            </div>
+
+            <!-- Overlay Layers -->
+            <div class="control-section">
+                <h3>Overlay Layers</h3>
+
+                <!-- Satellite -->
+                <div class="layer-control">
+                    <label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="satellite-toggle">
+                            <span class="slider"></span>
+                        </div>
+                        Satellite Imagery
+                    </label>
+                </div>
+                <div class="opacity-control" id="satellite-opacity-container" style="display: none;">
+                    <input type="range" id="satellite-opacity" min="0" max="100" value="100">
+                    <div class="opacity-label">Opacity: <span id="satellite-opacity-value">100</span>%</div>
+                </div>
+                <!-- External Link for EOS LandViewer -->
+                <div id="satellite-link-container"
+                    style="display: none; padding-left: 0.5rem; margin-top: 0.25rem; margin-bottom: 0.75rem;">
+                    <a id="satellite-link" href="#" target="_blank"
+                        style="font-size: 0.8rem; color: #0284c7; text-decoration: none;">
+                        Check Recent Snow (EOS) <span style="font-size: 0.7em;">↗</span>
+                    </a>
+                </div>
+
+                <!-- Slope-Aspect -->
+                <div class="layer-control">
+                    <label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="slope-aspect-toggle">
+                            <span class="slider"></span>
+                        </div>
+                        Slope-Aspect
+                    </label>
+                </div>
+                <div class="opacity-control" id="slope-aspect-opacity-container" style="display: none;">
+                    <input type="range" id="slope-aspect-opacity" min="0" max="100" value="70">
+                    <div class="opacity-label">Opacity: <span id="slope-aspect-opacity-value">70</span>%</div>
+                </div>
+
+                <!-- Slope -->
+                <div class="layer-control">
+                    <label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="slope-toggle">
+                            <span class="slider"></span>
+                        </div>
+                        Slope Angle
+                    </label>
+                </div>
+                <div class="opacity-control" id="slope-opacity-container" style="display: none;">
+                    <input type="range" id="slope-opacity" min="0" max="100" value="50">
+                    <div class="opacity-label">Opacity: <span id="slope-opacity-value">50</span>%</div>
+                </div>
+
+                <!-- Simple Shade Map -->
+                <div class="layer-control">
+                    <label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="shademap-toggle">
+                            <span class="slider"></span>
+                        </div>
+                        Simple Shade Map
+                    </label>
+                </div>
+                <!-- External Link for ShadeMap, hidden by default -->
+                <div id="shademap-link-container" style="display: none; padding-left: 0.5rem; margin-top: 0.25rem;">
+                    <a id="shademap-link" href="#" target="_blank"
+                        style="font-size: 0.8rem; color: #0284c7; text-decoration: none;">
+                        More accurate (external link) <span style="font-size: 0.7em;">↗</span>
+                    </a>
+                </div>
+
+                <div class="control-section">
+                    <h3>3D Terrain</h3>
+                    <div class="layer-control">
+                        <label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="terrain-toggle">
+                                <span class="slider"></span>
+                            </div>
+                            Enable 3D
+                        </label>
+                    </div>
+                    <!-- External Link for RealityMaps -->
+                    <div id="realitymaps-link-container"
+                        style="display: none; padding-left: 0.5rem; margin-top: 0.25rem; margin-bottom: 0.75rem;">
+                        <a href="https://www.realitymaps.app/" target="_blank"
+                            style="font-size: 0.8rem; color: #0284c7; text-decoration: none;">
+                            Highest quality 3d Maps <span style="font-size: 0.7em;">↗</span>
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- GPX Routes -->
+            <div class="control-section">
+                <h3>GPX Routes</h3>
+                <div class="gpx-upload-container">
+                    <input type="file" id="gpx-file-input" accept=".gpx" class="hidden-input">
+                    <label for="gpx-file-input" class="upload-btn">
+                        📂 Upload GPX
+                    </label>
+                    <div id="gpx-status" class="gpx-status" style="display: none;">
+                        <span id="gpx-filename">filename.gpx</span>
+                        <button id="btn-clear-gpx" class="clear-btn" title="Remove GPX">✕</button>
+                    </div>
+                    <a href="../gpx-library/index.html" class="upload-btn"
+                        style="margin-top: 0.5rem; text-decoration: none;">
+                        📂 Load from Library
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Time Slider -->
+    <div class="bottom-slider-container" id="bottom-slider-container">
+        <button class="drawer-handle" id="bottom-drawer-toggle" aria-label="Toggle Time Slider">
+            <div class="handle-bar"></div>
+        </button>
+        <div class="slider-content">
+            <div class="bottom-slider-header">
+                <span class="bottom-slider-title">Sun Position Time</span>
+                <span class="bottom-slider-time" id="shademap-time-value">12:00</span>
+            </div>
+            <input type="range" class="bottom-time-input" id="shademap-time" min="0" max="1439" value="720" step="1">
+            <div style="display:flex; justify-content:space-between; color:#64748b; font-size:0.75rem; margin-top:4px;">
+                <span>00:00</span>
+                <span>06:00</span>
+                <span>12:00</span>
+                <span>18:00</span>
+                <span>23:59</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Indicator -->
+    <div id="shademap-status" class="shademap-status">Calculating...</div>
+
+    <!-- Slope Legend -->
+    <div id="slope-legend" class="legend" style="display: none;">
+        <h4>Slope Angle</h4>
+        <div class="legend-item"><span style="background: #ffff00cc;"></span> 27-29°</div>
+        <div class="legend-item"><span style="background: #ff8000cc;"></span> 30-34°</div>
+        <div class="legend-item"><span style="background: #ff0000cc;"></span> 35-39°</div>
+        <div class="legend-item"><span style="background: #990000cc;"></span> 40-44°</div>
+        <div class="legend-item"><span style="background: #1a0033cc;"></span> ≥45°</div>
+    </div>
+
+    <!-- Slope-Aspect Legend -->
+    <div id="slope-aspect-legend" class="legend" style="display: none;">
+        <h4>Aspect (≥20°)</h4>
+        <div class="legend-item"><span style="background: #3b82f6cc;"></span> N</div>
+        <div class="legend-item"><span style="background: #22d3eecc;"></span> NE</div>
+        <div class="legend-item"><span style="background: #22c55ecc;"></span> E</div>
+        <div class="legend-item"><span style="background: #a3e635cc;"></span> SE</div>
+        <div class="legend-item"><span style="background: #ef4444cc;"></span> S</div>
+        <div class="legend-item"><span style="background: #fb923ccc;"></span> SW</div>
+        <div class="legend-item"><span style="background: #facc15cc;"></span> W</div>
+        <div class="legend-item"><span style="background: #a855f7cc;"></span> NW</div>
+    </div>
+
+    <!-- Upload Choice Modal -->
+    <div id="uploadChoiceModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>GPX Upload</h3>
+            <p>What would you like to do with this route?</p>
+            <div class="modal-actions">
+                <button id="btn-choice-view" class="btn-secondary">Just View</button>
+                <button id="btn-choice-save" class="btn-primary">Upload & Save to Online Library</button>
+            </div>
+            <div style="margin-top: 1rem;">
+                <button onclick="closeUploadModal()" class="btn-secondary"
+                    style="background:none; border:none; color:#64748b; font-weight:normal; text-decoration:underline; min-width:auto;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Route Modal -->
+    <div id="saveRouteModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Save to Library</h3>
+            <p>Enter a name for this route:</p>
+            <input type="text" id="save-route-name" class="modal-input" placeholder="Route Name">
+            <div class="modal-actions">
+                <button onclick="closeSaveModal()" class="btn-secondary">Cancel</button>
+                <button id="btn-confirm-save" class="btn-primary">Save & View</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../shared/js/SlopeUtils.js"></script>
+    <script src="../shared/js/SlopeLayer.js"></script>
+    <script src="js/overlays/SlopeAspectLayer.js"></script>
+    <script src="js/overlays/ShadeMap.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>

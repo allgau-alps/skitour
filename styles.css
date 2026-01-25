@@ -1,0 +1,296 @@
+:root {
+  --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Brand Colors */
+  --primary-blue: #0f172a;
+  /* Slate 900 - Modern Dark */
+  --accent-red: #dc2626;
+  /* Red 600 */
+  --accent-red-hover: #b91c1c;
+
+  /* UI Colors */
+  --bg-color: #f8fafc;
+  /* Slate 50 */
+  --card-bg: #ffffff;
+  --text-primary: #1e293b;
+  /* Slate 800 */
+  --text-secondary: #64748b;
+  /* Slate 500 */
+  --border-color: #e2e8f0;
+  /* Slate 200 */
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1000px;
+  /* Tighter container for readability */
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Header */
+header {
+  background: var(--card-bg);
+  /* White header */
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 3rem;
+  /* Sticky header? Maybe not for simple archive. */
+}
+
+.header-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.date-nav {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-align: right;
+  line-height: 1.3;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--primary-blue);
+  text-decoration: none;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+}
+
+/* Typography */
+h1 {
+  font-weight: 800;
+  color: var(--primary-blue);
+  font-size: 2.25rem;
+  margin-bottom: 2rem;
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--primary-blue);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+/* Archive List Grid */
+.archive-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.archive-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text-primary);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.archive-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-blue);
+  color: var(--primary-blue);
+}
+
+/* Special Items (Landing Page) styles removed to match standard style */
+
+/* Incident Cards (List) */
+.incident-card {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 4px solid var(--accent-red);
+  align-items: flex-start;
+  /* Align text left */
+}
+
+.inc-loc {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.inc-date {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+/* Incident Details Page */
+.incident-detail-container {
+  background: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+}
+
+/* Meta Grid */
+.incident-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  background: var(--bg-color);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2.5rem;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta-item strong {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.incident-description {
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  margin-bottom: 3rem;
+}
+
+/* Gallery - Dynamic Masonry */
+.gallery-grid {
+  column-count: 2;
+  /* 2 columns on mobile */
+  column-gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .gallery-grid {
+    column-count: 3;
+    /* 3 columns on larger screens */
+  }
+}
+
+.gallery-item {
+  break-inside: avoid;
+  /* Prevent splitting across columns */
+  margin-bottom: 1rem;
+  /* Vertical spacing */
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  background: var(--bg-color);
+}
+
+.gallery-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Maintain original aspect ratio */
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+}
+
+/* Hover effect only on non-touch devices */
+@media (hover: hover) {
+  .gallery-item img:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.img-caption {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+  padding: 0 0.5rem 0.5rem;
+}
+
+/* Footer Link */
+/* Footer Link - Use lawis-link class instead */
+
+/* Back Link */
+.back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header-content {
+    padding: 0 1rem;
+  }
+
+
+  .incident-detail-container {
+    padding: 1.5rem;
+  }
+}
+
+/* Generic Lawis Link */
+.lawis-link {
+  margin-top: 1rem;
+  display: inline-block;
+  color: #666;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.lawis-link:hover {
+  color: var(--primary-blue);
+  text-decoration: none;
+}
+
+/* Incident Item Hover (Red Theme) */
+.archive-item.incident-item:hover {
+  border-color: var(--accent-red) !important;
+  color: var(--accent-red) !important;
+}

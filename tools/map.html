@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+    <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #main_map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Custom Marker Styles */
+        .marker-pin {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .profile-pin {
+            background: #0284c7;
+        }
+
+        .incident-pin {
+            background: #ef4444;
+        }
+
+        .recent-pin {
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+        }
+
+        /* Global Popup Link Styles */
+        .maplibregl-popup-content a {
+            color: #0284c7 !important;
+            text-decoration: none;
+            font-weight: bold;
+            outline: none;
+            border: none;
+            box-shadow: none;
+        }
+
+        .maplibregl-popup-content a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main_map"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 1. Parse URL Parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const lat = parseFloat(urlParams.get('lat'));
+            const lon = parseFloat(urlParams.get('lon'));
+            const profileId = urlParams.get('profileId');
+            const incLat = parseFloat(urlParams.get('incLat'));
+            const incLon = parseFloat(urlParams.get('incLon'));
+            const incId = urlParams.get('incId');
+            const incFilename = urlParams.get('incFilename');
+            const context = urlParams.get('context');
+            const locationName = urlParams.get('location');
+            const customTitle = urlParams.get('title');
+            const linkUrl = urlParams.get('linkUrl');
+            const linkText = urlParams.get('linkText') || 'View Details';
+
+            // 2. Determine Initial View (Note: MapLibre uses [Lon, Lat])
+            let startCenter = [10.2797, 47.4099]; // Default Allgäu
+            let startZoom = 10;
+
+            if (!isNaN(lat) && !isNaN(lon)) {
+                startCenter = [lon, lat];
+                startZoom = 14;
+            } else if (!isNaN(incLat) && !isNaN(incLon)) {
+                startCenter = [incLon, incLat];
+                startZoom = 14; // Slightly zoomed out to see context
+            }
+
+            // 3. Initialize Map
+            window.map = new maplibregl.Map({
+                container: 'main_map',
+                style: {
+                    version: 8,
+                    sources: {
+                        'osm': {
+                            type: 'raster',
+                            tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+                            tileSize: 256,
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        },
+                        'topo': {
+                            type: 'raster',
+                            tiles: ['https://a.tile.opentopomap.org/{z}/{x}/{y}.png'],
+                            tileSize: 256,
+                            attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+                        }
+                    },
+                    layers: [
+                        { id: 'osm-layer', type: 'raster', source: 'osm', minzoom: 0, maxzoom: 19 },
+                        { id: 'topo-layer', type: 'raster', source: 'topo', minzoom: 0, maxzoom: 17, layout: { visibility: 'none' } }
+                    ]
+                },
+                center: startCenter,
+                zoom: startZoom
+            });
+            window.map.addControl(new maplibregl.NavigationControl());
+
+            // 4. Dynamic Layer Switching
+            function updateLayers() {
+                const zoom = window.map.getZoom();
+                if (zoom < 13) {
+                    if (window.map.getLayer('topo-layer')) window.map.setLayoutProperty('topo-layer', 'visibility', 'none');
+                    if (window.map.getLayer('osm-layer')) window.map.setLayoutProperty('osm-layer', 'visibility', 'visible');
+                } else {
+                    if (window.map.getLayer('osm-layer')) window.map.setLayoutProperty('osm-layer', 'visibility', 'none');
+                    if (window.map.getLayer('topo-layer')) window.map.setLayoutProperty('topo-layer', 'visibility', 'visible');
+                }
+            }
+            window.map.on('zoom', updateLayers);
+            window.map.on('load', updateLayers);
+
+            // 5. Add Markers
+
+            // Title Logic
+            let profileTitle = customTitle;
+            if (!profileTitle) {
+                if (context === 'coords') {
+                    profileTitle = 'Relevant Profile';
+                } else if (incId) {
+                    profileTitle = 'Selected Profile';
+                } else {
+                    profileTitle = locationName || 'Selected Profile';
+                }
+            }
+            const incidentTitle = (context === 'coords') ? 'Selected Incident' : 'Avalanche Incident';
+
+            // Profile Marker
+            let profileMarker;
+            if (!isNaN(lat) && !isNaN(lon)) {
+                const mapBackUrl = 'map.html' + window.location.search;
+                const backParam = `?back=${encodeURIComponent(mapBackUrl)}`;
+
+                let popupHTML = `<b>${profileTitle}</b>`;
+                if (profileId) {
+                    popupHTML += `<br><a href="${profileId}.html${backParam}" target="_parent" style="color:#0284c7; font-weight:bold;">View Profile →</a>`;
+                } else if (linkUrl) {
+                    popupHTML += `<br><a href="${linkUrl}" target="_parent" style="color:#0284c7; font-weight:bold;">${linkText} →</a>`;
+                }
+
+                const el = document.createElement('div');
+                el.className = 'marker-pin profile-pin';
+
+                profileMarker = new maplibregl.Marker({ element: el })
+                    .setLngLat([lon, lat])
+                    .setPopup(new maplibregl.Popup({ offset: 15 }).setHTML(popupHTML))
+                    .addTo(window.map);
+            }
+
+            // Incident Marker
+            let incidentMarker;
+            if (!isNaN(incLat) && !isNaN(incLon)) {
+                const href = incFilename
+                    ? `../incidents/${incFilename}`
+                    : incId ? `../incidents/index.html` : '';
+
+                const popupHTML = href
+                    ? `<b>${incidentTitle}</b><br><a href="${href}" style="color:#0284c7; font-weight:bold;">View Incident →</a>`
+                    : `<b>${incidentTitle}</b>`;
+
+                const el = document.createElement('div');
+                el.className = 'marker-pin incident-pin';
+
+                incidentMarker = new maplibregl.Marker({ element: el })
+                    .setLngLat([incLon, incLat])
+                    .setPopup(new maplibregl.Popup({ offset: 15 }).setHTML(popupHTML))
+                    .addTo(window.map);
+            }
+
+            // Open appropriate popup
+            if (context === 'coords' && incidentMarker) {
+                incidentMarker.togglePopup();
+            } else if (profileMarker) {
+                profileMarker.togglePopup();
+            } else if (incidentMarker) {
+                incidentMarker.togglePopup();
+            }
+        });
+    </script>
+</body>
+
+</html>

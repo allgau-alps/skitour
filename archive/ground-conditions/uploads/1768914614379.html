@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+                        <html lang="en">
+                            <head>
+                                <meta charset="UTF-8">
+                                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                        <title>Report by Lance Solf</title>
+                                        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛷️</text></svg>">
+                                        <link rel="stylesheet" href="../../../styles.css">
+                                            <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+                                            <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+                                        </head>
+                                        <body>
+                                            <div class="container">
+                                                <header>
+                                                    <div class="header-content">
+                                                        <a href="../../../index.html" class="logo">Skitour Allgäu</a>
+                                                        <div class="date-nav"><span>Report Detail</span></div>
+                                                    </div>
+                                                </header>
+                                                <div style="margin-bottom:1rem;"><a href="../index.html">&larr; Back to Ground Conditions</a></div>
+
+                                                <h1>Skier Report</h1>
+                                                <div style="background:white; padding:2rem; border-radius:12px; box-shadow:0 2px 4px rgba(0,0,0,0.1); border:1px solid #e2e8f0;">
+                                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; border-bottom:1px solid #eee; padding-bottom:1rem;">
+                                                        <div>
+                                                            <h2 style="margin:0; color:#0f172a;">Grosser Daumen descent.</h2>
+                                                            <div style="font-size:0.95rem; font-style:italic; color:#475569; margin-top:0.25rem;">Uploaded by Lance Solf</div>
+                                                            <div style="color:#64748b; margin-top:0.25rem;">20/01/2026 18:18:50</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div style="margin-bottom:2rem;">
+                                                        <img src="../images/1768914614379_0.jpeg" style="max-width:100%; border-radius:8px; display:block; margin:0 auto 1rem auto;">
+                                                    </div>
+
+                                                    <p style="font-size:1.1rem; line-height:1.7; color:#334155;">Ramp on skiers left slightly better</p>
+
+                                                    
+            <div style="margin-top:2rem;">
+                <h3>Location</h3>
+                <div id="map" style="height:200px; width:100%; max-width:400px; border-radius:8px; border:1px solid #cbd5e1;"></div>
+                <script>
+                    const map = new maplibregl.Map({
+                        container: 'map',
+                        style: {
+                            version: 8,
+                            sources: {
+                                'osm': { type: 'raster', tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'], tileSize: 256, attribution: '&copy; OpenStreetMap Contributors' },
+                                'topo': { type: 'raster', tiles: ['https://a.tile.opentopomap.org/{z}/{x}/{y}.png'], tileSize: 256, attribution: 'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap (CC-BY-SA)' }
+                            },
+                            layers: [
+                                { id: 'osm-layer', type: 'raster', source: 'osm', minzoom: 0, maxzoom: 19 },
+                                { id: 'topo-layer', type: 'raster', source: 'topo', minzoom: 0, maxzoom: 17, layout: { visibility: 'none' } }
+                            ]
+                        },
+                        center: [10.4076408, 47.4255947],
+                        zoom: 13
+                    });
+                    map.addControl(new maplibregl.NavigationControl());
+
+                    function updateLayers() {
+                        const zoom = map.getZoom();
+                        if (zoom < 13) {
+                            if (map.getLayer('topo-layer')) map.setLayoutProperty('topo-layer', 'visibility', 'none');
+                            if (map.getLayer('osm-layer')) map.setLayoutProperty('osm-layer', 'visibility', 'visible');
+                        } else {
+                            if (map.getLayer('osm-layer')) map.setLayoutProperty('osm-layer', 'visibility', 'none');
+                            if (map.getLayer('topo-layer')) map.setLayoutProperty('topo-layer', 'visibility', 'visible');
+                        }
+                    }
+                    map.on('zoom', updateLayers);
+
+                    new maplibregl.Marker()
+                        .setLngLat([10.4076408, 47.4255947])
+                        .addTo(map);
+                </script>
+            </div>
+                                                </div>
+                                            </div>
+                                        </body>
+                                    </html>

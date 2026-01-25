@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPX Route Library - Skitour Allgau</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛷️</text></svg>">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="library.css">
+</head>
+
+<body>
+    <div class="library-container" style="padding-top:0;">
+        <header style="background:white; border-bottom:1px solid #e2e8f0; margin-bottom:2rem; padding:1.5rem 0;">
+            <div class="header-content">
+                <a href="../index.html" class="logo">Skitour Allgäu</a>
+                <div class="date-nav"><span>GPX Route Library</span></div>
+            </div>
+        </header>
+
+        <header class="library-header" style="border:none; padding-top:0;">
+            <h1>📂 GPX Route Library</h1>
+            <p>Browse and analyse ski touring routes in the Allgäu Alps</p>
+        </header>
+
+        <!-- Filters -->
+        <div class="filter-panel">
+            <!-- Search Filter (Full Width) -->
+            <div class="filter-group search-filter-group">
+                <label for="search-input">Search</label>
+                <input type="text" id="search-input" placeholder="Search routes...">
+            </div>
+
+            <!-- Toggle Grid -->
+            <div class="filter-toggles-grid">
+
+                <!-- Distance Filter -->
+                <div class="filter-group">
+                    <div class="filter-header-toggle">
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="toggle-distance">
+                            <span class="slider"></span>
+                        </div>
+                        <label for="toggle-distance">Distance</label>
+                    </div>
+                    <div class="filter-inputs-container collapsed" id="container-distance">
+                        <div class="range-container">
+                            <div class="dual-range-labels">
+                                <span>Min</span>
+                                <span>Max</span>
+                            </div>
+                            <input type="range" id="distance-filter-min" min="0" max="40" value="0" step="0.5">
+                            <input type="range" id="distance-filter-max" min="0" max="40" value="40" step="0.5">
+                            <span id="distance-value">0 - 40+ km</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ascent Filter -->
+                <div class="filter-group">
+                    <div class="filter-header-toggle">
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="toggle-ascent">
+                            <span class="slider"></span>
+                        </div>
+                        <label for="toggle-ascent">Ascent</label>
+                    </div>
+                    <div class="filter-inputs-container collapsed" id="container-ascent">
+                        <div class="range-container">
+                            <div class="dual-range-labels">
+                                <span>Min</span>
+                                <span>Max</span>
+                            </div>
+                            <input type="range" id="ascent-filter-min" min="0" max="2000" value="0" step="50">
+                            <input type="range" id="ascent-filter-max" min="0" max="2000" value="2000" step="50">
+                            <span id="ascent-value">0 - 2000+ m</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Descent Filter -->
+                <div class="filter-group">
+                    <div class="filter-header-toggle">
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="toggle-descent">
+                            <span class="slider"></span>
+                        </div>
+                        <label for="toggle-descent">Descent</label>
+                    </div>
+                    <div class="filter-inputs-container collapsed" id="container-descent">
+                        <div class="range-container">
+                            <div class="dual-range-labels">
+                                <span>Min</span>
+                                <span>Max</span>
+                            </div>
+                            <input type="range" id="descent-filter-min" min="0" max="2000" value="0" step="50">
+                            <input type="range" id="descent-filter-max" min="0" max="2000" value="2000" step="50">
+                            <span id="descent-value">0 - 2000+ m</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Max Slope Filter -->
+                <div class="filter-group">
+                    <div class="filter-header-toggle">
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="toggle-slope">
+                            <span class="slider"></span>
+                        </div>
+                        <label for="toggle-slope">Max Slope</label>
+                    </div>
+                    <div class="filter-inputs-container collapsed" id="container-slope">
+                        <div class="range-container">
+                            <div class="dual-range-labels">
+                                <span>Min</span>
+                                <span>Max</span>
+                            </div>
+                            <input type="range" id="slope-filter-min" min="0" max="45" value="0" step="1">
+                            <input type="range" id="slope-filter-max" min="0" max="45" value="45" step="1">
+                            <span id="slope-value">0° - 45°+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aspect Breakdown Filter (Visual Only) -->
+                <div class="filter-group breakdown-filter">
+                    <div class="filter-header-toggle">
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="toggle-breakdown">
+                            <span class="slider"></span>
+                        </div>
+                        <label for="toggle-breakdown">Aspect Breakdown</label>
+                    </div>
+                    <div class="filter-inputs-container collapsed" id="container-breakdown">
+                        <!-- Legend moved to Table Header -->
+                    </div>
+                </div>
+
+                <!-- Aspect Filter (Full Width) -->
+                <div class="filter-group aspect-filter">
+                    <div class="filter-header-toggle">
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="toggle-aspect">
+                            <span class="slider"></span>
+                        </div>
+                        <label for="toggle-aspect">Primary Aspect</label>
+                    </div>
+                    <div class="filter-inputs-container collapsed" id="container-aspect">
+                        <div class="aspect-checkboxes">
+                            <label><input type="checkbox" value="N" checked> <span
+                                    class="aspect-badge N">N</span></label>
+                            <label><input type="checkbox" value="NE" checked> <span
+                                    class="aspect-badge NE">NE</span></label>
+                            <label><input type="checkbox" value="E" checked> <span
+                                    class="aspect-badge E">E</span></label>
+                            <label><input type="checkbox" value="SE" checked> <span
+                                    class="aspect-badge SE">SE</span></label>
+                            <label><input type="checkbox" value="S" checked> <span
+                                    class="aspect-badge S">S</span></label>
+                            <label><input type="checkbox" value="SW" checked> <span
+                                    class="aspect-badge SW">SW</span></label>
+                            <label><input type="checkbox" value="W" checked> <span
+                                    class="aspect-badge W">W</span></label>
+                            <label><input type="checkbox" value="NW" checked> <span
+                                    class="aspect-badge NW">NW</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add New Route -->
+                <div class="filter-group add-route-filter">
+                    <label>Add New Route</label>
+                    <div class="upload-container-compact">
+                        <input type="file" id="gpx-upload-input" accept=".gpx" class="hidden-input">
+                        <label for="gpx-upload-input" class="upload-btn-compact">
+                            📂 Choose GPX File
+                        </label>
+                        <div id="upload-status" class="upload-status-compact" style="display: none;">
+                            <input type="text" id="upload-name-input" placeholder="Route Name"
+                                style="width:100%; padding:0.4rem; border:1px solid #cbd5e1; border-radius:4px; margin-bottom:0.25rem;">
+                            <button id="btn-process" class="process-btn-compact">Add to Library</button>
+                            <button id="btn-cancel-upload" class="cancel-upload-btn-compact">✕</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Routes Table -->
+        <div class="table-container">
+            <table class="routes-table">
+                <thead>
+                    <tr>
+                        <th data-sort="name">Route Name <span class="sort-icon">↕</span></th>
+                        <th data-sort="region">Region <span class="sort-icon">↕</span></th>
+                        <th data-sort="distance">Distance <span class="sort-icon">↕</span></th>
+                        <th data-sort="ascent">Ascent <span class="sort-icon">↕</span></th>
+                        <th data-sort="primaryAspect">Primary Aspect <span class="sort-icon">↕</span></th>
+                        <th>Aspect Breakdown</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="routes-tbody">
+                    <!-- Routes will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="no-results" class="no-results" style="display: none;">
+            No routes match your filters. Try adjusting your criteria.
+        </div>
+
+        <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+            <p style="text-align: center; color: var(--text-secondary); font-size: 0.875rem;">
+                <a href="../index.html">&larr; Back to Home</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3 style="margin-top:0; color:#ef4444;">⚠️ Remove GPX Route?</h3>
+            <p>Are you sure you want to remove this route from the library?</p>
+            <div style="margin: 1rem 0; text-align:left;">
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                    <input type="checkbox" id="confirmAuth" onchange="toggleDeleteBtn()">
+                    <span style="font-size:0.9rem;">I confirm I have authority to remove this route.</span>
+                </label>
+            </div>
+            <div class="modal-actions" style="display:flex; gap:1rem; justify-content:center; margin-top:1.5rem;">
+                <button onclick="closeModal()" class="btn-cancel">Cancel</button>
+                <button id="btnDelete" onclick="showFinalWarning()" class="btn-delete" disabled>Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final Warning Modal -->
+    <div id="finalWarningModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3 style="margin-top:0; color:#dc2626;">🚨 Final Warning</h3>
+            <p style="font-weight: 600; color: #991b1b;">This action cannot be undone!</p>
+            <p>Removing this route will:</p>
+            <ul style="text-align: left; color: #4b5563; margin: 1rem 0;">
+                <li>Permanently delete the GPX file from the server</li>
+                <li>Remove all route metadata and analysis data</li>
+                <li>Make the route unavailable in the planning tool</li>
+            </ul>
+            <p style="font-weight: 600;">Are you absolutely sure?</p>
+            <div class="modal-actions" style="display:flex; gap:1rem; justify-content:center; margin-top:1.5rem;">
+                <button onclick="closeFinalWarning()" class="btn-cancel">Cancel</button>
+                <button onclick="confirmDelete()" class="btn-delete-final">Yes, Delete Permanently</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="library.js"></script>
+</body>
+
+</html>

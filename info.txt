@@ -1,0 +1,43 @@
+
+ ⛅️ wrangler 4.59.1
+───────────────────
+Getting User settings...
+👋 You are logged in with an OAuth Token, associated with the email bigdoggybollock@gmail.com.
+┌─────────────────────────────────────┬──────────────────────────────────┐
+│ Account Name                        │ Account ID                       │
+├─────────────────────────────────────┼──────────────────────────────────┤
+│ Bigdoggybollock@gmail.com's Account │ b4dcf8adb960f4fa9c6b0ef2d0b6aa37 │
+└─────────────────────────────────────┴──────────────────────────────────┘
+🔓 Token Permissions:
+Scope (Access)
+- account (read)
+- user (read)
+- workers (write)
+- workers_kv (write)
+- workers_routes (write)
+- workers_scripts (write)
+- workers_tail (read)
+- d1 (write)
+- pages (write)
+- zone (read)
+- ssl_certs (write)
+- ai (write)
+- queues (write)
+- pipelines (write)
+- secrets_store (write)
+- containers (write)
+- cloudchamber (write)
+- connectivity (admin)
+- offline_access 
+
+ ⛅️ wrangler 4.59.1
+───────────────────
+Total Upload: 2.27 KiB / gzip: 0.81 KiB
+Your Worker has access to the following bindings:
+Binding                                             Resource          
+env.UPLOADS (8ca71cb3a5f846939c753b995aba9245)      KV Namespace      
+
+Uploaded avalanche-archiver-uploads (7.38 sec)
+Deployed avalanche-archiver-uploads triggers (4.31 sec)
+  https://avalanche-archiver-uploads.bigdoggybollock.workers.dev
+Current Version ID: b1adb098-43bf-4e16-b43e-531cd975d45c

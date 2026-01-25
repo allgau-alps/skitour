@@ -1,0 +1,7 @@
+name = "avalanche-archiver-uploads"
+main = "workers/upload-worker.js"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "UPLOADS"
+id = "8ca71cb3a5f846939c753b995aba9245"

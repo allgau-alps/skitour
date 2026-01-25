@@ -1,0 +1,75 @@
+[
+  {
+    "id": "1768914614379",
+    "date": "2026-01-20T17:18:50.665Z",
+    "user": "Lance Solf",
+    "location": "Grosser Daumen descent.",
+    "comment": "Ramp on skiers left slightly better",
+    "lat": "47.4255947",
+    "lon": "10.4076408",
+    "elevation": null,
+    "aspect": null,
+    "type": "generic",
+    "images": [
+      "../data/upload_images/1768914614379_0.jpeg"
+    ],
+    "approved": true
+  },
+  {
+    "id": "1768751582715",
+    "date": "2026-01-18T17:21:51.538Z",
+    "user": "Lance Solf ",
+    "location": "Ifen S.",
+    "comment": "Ifen Southern Slopes - stripped",
+    "lat": "47.34362366606856",
+    "lon": "10.095862842601758",
+    "elevation": null,
+    "aspect": null,
+    "type": "generic",
+    "images": [
+      "../data/upload_images/1768751582715_0.jpeg",
+      "../data/upload_images/1768751582715_1.jpeg"
+    ],
+    "layers": [],
+    "tests": [],
+    "approved": true
+  },
+  {
+    "id": "1768751699019",
+    "date": "2026-01-18T17:21:14.609Z",
+    "user": "Lance Solf ",
+    "location": "Berlingerskopfle",
+    "comment": "Patchy snow cover and already stripped through the trees / on the debris slope before the track",
+    "lat": "47.35320046180101",
+    "lon": "10.0760893474033",
+    "elevation": null,
+    "aspect": null,
+    "type": "generic",
+    "images": [
+      "../data/upload_images/1768751699019_0.jpeg",
+      "../data/upload_images/1768751699019_1.jpeg",
+      "../data/upload_images/1768751699019_2.jpeg"
+    ],
+    "layers": [],
+    "tests": [],
+    "approved": true
+  },
+  {
+    "id": "1768751773816",
+    "date": "2026-01-18T17:20:41.112Z",
+    "user": "Lance Solf",
+    "location": "Litzescharte from berlingerskopfle",
+    "comment": "Looking across at litzescharte from berlingerskopfle",
+    "lat": "47.32546696293839",
+    "lon": "10.102069719459521",
+    "elevation": null,
+    "aspect": null,
+    "type": "generic",
+    "images": [
+      "../data/upload_images/1768751773816_0.jpeg"
+    ],
+    "layers": [],
+    "tests": [],
+    "approved": true
+  }
+]

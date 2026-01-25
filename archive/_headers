@@ -1,0 +1,50 @@
+/*
+  Cloudflare Pages Headers
+  https://developers.cloudflare.com/pages/configuration/headers/
+*/
+
+/*
+  Default: Cache everything for 1 hour (fallback)
+  Browser cache: 1 hour
+  CDN cache: 1 hour
+*/
+/*
+  Cache-Control: public, max-age=3600
+*/
+
+/* 
+  Static Assets (CSS, JS, Images) - Immutable
+  These files are usually versioned or can be cached for a long time.
+  Cache for 1 year.
+*/
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.pdf
+  Cache-Control: public, max-age=31536000, immutable
+
+/* 
+  HTML Files - Short Cache
+  These are the entry points and change frequently (daily updates).
+  Cache for 10 minutes to allow quick updates.
+*/
+/*.html
+  Cache-Control: public, max-age=600, must-revalidate
+
+/* 
+  Data files
+*/
+/*.json
+  Cache-Control: public, max-age=600, must-revalidate

@@ -1,0 +1,150 @@
+[
+    {
+        "title": "Balderschwang Gelbhansekopf",
+        "location": "Allgäu",
+        "type": "live",
+        "linkUrl": "https://balderschwang.roundshot.com/gelbhansekopf/#/",
+        "lat": 47.450878,
+        "lon": 10.104517,
+        "provider": "Roundshot"
+    },
+    {
+        "title": "Grasgehren - Bolgengrat",
+        "location": "Allgäu",
+        "type": "live",
+        "linkUrl": "https://grasgehren.roundshot.com/bolgengrat/#/",
+        "lat": 47.445346,
+        "lon": 10.183202,
+        "provider": "Roundshot"
+    },
+    {
+        "title": "Balderschwang",
+        "location": "Allgäu",
+        "type": "live",
+        "linkUrl": "https://balderschwang.roundshot.com/#/",
+        "lat": 47.465106,
+        "lon": 10.105126,
+        "provider": "Roundshot"
+    },
+    {
+        "title": "Ofterschwang Bergbahnen",
+        "location": "Allgäu",
+        "type": "live",
+        "linkUrl": "https://bog.roundshot.com/#/",
+        "lat": 47.498619,
+        "lon": 10.213637,
+        "provider": "Roundshot"
+    },
+    {
+        "title": "Oberstdorf - Nebelhorn (Bergstation)",
+        "location": "Allgäu",
+        "type": "live",
+        "linkUrl": "https://ok-bergbahnen.panomax.com/nebelhorn?t=2026-01-16+20-00-00&r=15&z=100&tl=0",
+        "lat": 47.419481,
+        "lon": 10.346831,
+        "provider": "Panomax"
+    },
+    {
+        "title": "Bad Hindelang/Oberjoch",
+        "location": "Allgäu",
+        "type": "live",
+        "linkUrl": "https://www.feratel.com/en/webcams/germany/bavaria/bad-hindelang-oberjoch",
+        "lat": 47.517702,
+        "lon": 10.394094,
+        "provider": "Feratel"
+    },
+    {
+        "title": "Weiherkopf Bolsterlang",
+        "location": "Allgäu",
+        "type": "live",
+        "linkUrl": "https://www.feratel.com/en/webcams/germany/bavaria/bolsterlang-i-weiherkopf-bergstation",
+        "lat": 47.465261,
+        "lon": 10.201382,
+        "provider": "Feratel"
+    },
+    {
+        "title": "Grünten",
+        "location": "Rettenberg",
+        "type": "live",
+        "linkUrl": "https://www.feratel.com/webcams/deutschland/bayern/burgberg-im-allgaeu-gruenten-gipfel",
+        "lat": 47.553388,
+        "lon": 10.317145
+    },
+    {
+        "title": "Hochgrat",
+        "location": "Oberstaufen",
+        "type": "live",
+        "linkUrl": "https://www.feratel.com/webcams/deutschland/bayern/oberstaufen-hochgratbahn-bergstation",
+        "lat": 47.492402,
+        "lon": 10.072574
+    },
+    {
+        "title": "Kleinwalsertal - Kanzelwand",
+        "location": "Allgäu",
+        "type": "live",
+        "linkUrl": "https://www.feratel.com/en/webcams/austria/vorarlberg/riezlern-kleinwalsertal-kanzelwand-fellhorn",
+        "lat": 47.335709,
+        "lon": 10.206049,
+        "provider": "Feratel"
+    },
+    {
+        "title": "Ifen (Bergstation)",
+        "location": "Kleinwalsertal",
+        "type": "live",
+        "linkUrl": "https://www.feratel.com/webcams/oesterreich/vorarlberg/hirschegg-ifenbahn-bergstation",
+        "lat": 47.356397,
+        "lon": 10.105857
+    },
+    {
+        "title": "Walmendingerhorn",
+        "location": "Allgäu",
+        "type": "live",
+        "linkUrl": "https://www.feratel.com/webcams/oesterreich/vorarlberg/mittelberg-walmendingerhorn",
+        "lat": 47.325423,
+        "lon": 10.117945,
+        "provider": "Feratel"
+    },
+    {
+        "title": "Zöblen - Obere Halde",
+        "location": "Allgäu",
+        "type": "live",
+        "linkUrl": "https://www.feratel.com/en/webcams/austria/tyrol/zoeblen-obere-halde",
+        "lat": 47.513952,
+        "lon": 10.475822,
+        "provider": "Feratel"
+    },
+    {
+        "title": "Oberstdorf Fellhorn",
+        "location": "Allgäu",
+        "type": "live",
+        "linkUrl": "https://www.feratel.com/en/webcams/germany/bavaria/oberstdorf-fellhorn-oberstdorf-kleinwalsertal",
+        "lat": 47.348098,
+        "lon": 10.216258,
+        "provider": "Feratel"
+    },
+    {
+        "title": "Neunerköpfle",
+        "location": "Tannheimer Tal",
+        "type": "live",
+        "linkUrl": "https://www.feratel.com/en/webcams/austria/tyrol/tannheim-neunerkoepfle-mittelstation",
+        "lat": 47.491838,
+        "lon": 10.536338
+    },
+    {
+        "title": "Oberstdorf - Möserbahn Berg",
+        "location": "Allgäu",
+        "type": "live",
+        "linkUrl": "https://www.feratel.com/en/webcams/germany/bavaria/oberstdorf-moeserbahn-berg",
+        "lat": 47.34502,
+        "lon": 10.213019,
+        "provider": "Feratel"
+    },
+    {
+        "title": "Nebelhorn Gipfel",
+        "location": "Oberstdorf",
+        "type": "live",
+        "linkUrl": "https://www.feratel.com/en/webcams/germany/bavaria/oberstdorf-nebelhorn",
+        "lat": 47.421897,
+        "lon": 10.34267
+    }
+]
