@@ -305,10 +305,10 @@
                 // map.html resides in tools/ or archive/profiles/
                 // From map.html (in profiles/), back to snow depth: ../snow-depth/index.html
                 // User wants to remove 'archive/' prefix, so we go up two levels from archive/profiles/ to root
-                const linkUrl = `../../snow-depth/index.html`;
+                const linkUrl = `../snow-depth/index.html`;
 
                 // Construct Map Link with Params
-                const mapLinkBase = '../archive/profiles/map.html';
+                const mapLinkBase = '../profiles/map.html';
                 const mapLink = `${mapLinkBase}?lat=${station.lat}&lon=${station.lon}&title=${encodeURIComponent('Selected Station')}&linkUrl=${encodeURIComponent(linkUrl)}&linkText=${encodeURIComponent('View Station Data')}`;
 
 
@@ -442,19 +442,42 @@
                 .filter(d => new Date(d.TS).getTime() > cutoff)
                 .filter((_, i) => i % step === 0);
 
-            let lastDate = null;
+            // Generate centered date labels
+            const dateIndices = {};
+            let maxPointsPerDay = 0;
 
-            const labels = data.map(d => {
+            data.forEach((d, i) => {
                 const date = new Date(d.TS);
                 const dateStr = date.toLocaleDateString('en-GB', {
                     weekday: 'short', day: 'numeric'
                 });
+                if (!dateIndices[dateStr]) dateIndices[dateStr] = [];
+                dateIndices[dateStr].push(i);
+            });
 
-                if (lastDate !== dateStr) {
-                    lastDate = dateStr;
-                    return dateStr;
-                }
-                return '';
+            // Find max points to identify full days
+            Object.values(dateIndices).forEach(indices => {
+                if (indices.length > maxPointsPerDay) maxPointsPerDay = indices.length;
+            });
+
+            const labels = new Array(data.length).fill('');
+            const dates = Object.keys(dateIndices);
+
+            dates.forEach((dateStr, index) => {
+                const indices = dateIndices[dateStr];
+
+                // Logic to hide labels for "stub" days that cause overcrowding
+                // 1. If it's the very first day (leftmost) and has < 50% of data, skip it. 
+                //    This fixes the "left two days being very close" issue.
+                if (index === 0 && indices.length < maxPointsPerDay * 0.5) return;
+
+                // 2. If it's the very last day (today) and it just started (e.g. < 10% data), 
+                //    maybe skip to avoid it bunching with yesterday? 
+                //    Actually, users usually want to know which one is "Today", so let's keep it unless it's extremely tiny.
+                //    (User specifically complained about the LEFT side, so we focus there).
+
+                const mid = indices[Math.floor(indices.length / 2)];
+                labels[mid] = dateStr;
             });
 
             // Timestamps for tooltips

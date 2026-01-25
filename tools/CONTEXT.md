@@ -20,7 +20,7 @@ This directory is the **Engine Room** of the project. It contains all the script
 ### Static Site Generator
 - **`build.js`**: The main build orchestration script (`npm run build`).
     - It calls specific builders located in `lib/builders/`.
-    - Generates the entire `archive/` directory structure.
+    - Generates the root-level directories (`incidents/`, `profiles/`, `weather/`, etc.) and the `archive/` region indices.
 
 ## Libraries (`tools/lib/`)
 - **`config.js`**: Central configuration for regions, IDs, URLs, and file paths.

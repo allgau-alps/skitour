@@ -203,7 +203,7 @@ function generateWeatherPage(w, content) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mountain Weather - ${w.date}</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛷️</text></svg>">
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <style>
         .weather-content { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .original-text { margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1rem; color: #555; }
@@ -212,7 +212,7 @@ function generateWeatherPage(w, content) {
 </head>
 <body>
     <div class="container">
-        <header><div class="header-content"><a href="../../index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Mountain Weather</span></div></div></header>
+        <header><div class="header-content"><a href="../index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Mountain Weather</span></div></div></header>
         <div style="margin-bottom:1rem;"><a href="#" onclick="history.back(); return false;">&larr; Back</a></div>
         <h1>Mountain Weather Report</h1>
         <h2 style="color: #666; font-weight: 400;">${w.date} (Issued: ${w.issued})</h2>
@@ -235,7 +235,7 @@ function generateIncidentWeatherPage(inc, weatherHtml, historicText, dailyWeathe
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Context: ${inc.location}</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛷️</text></svg>">
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .chart-container { position: relative; height: 400px; width: 100%; margin-bottom: 2rem; }
@@ -248,7 +248,7 @@ function generateIncidentWeatherPage(inc, weatherHtml, historicText, dailyWeathe
 </head>
 <body>
     <div class="container">
-        <header><div class="header-content"><a href="../../index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Weather Context</span></div></div></header>
+        <header><div class="header-content"><a href="../index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Weather Context</span></div></div></header>
         <div style="margin-bottom:1rem;"><a href="index.html">&larr; Back to Incidents</a></div>
         
         <h1>Weather Context</h1>
@@ -360,13 +360,13 @@ function generateIncidentPage(inc, imagesHtml, weatherLink, profilesHtml, relati
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Incident: ${location}</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛷️</text></svg>">
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
     <div class="container">
         <header>
              <div class="header-content">
-                <a href="../../index.html" class="logo">Skitour Allgäu</a>
+                <a href="../index.html" class="logo">Skitour Allgäu</a>
                 <div class="date-nav"><span>Avalanche Incidents</span></div>
              </div>
         </header>
@@ -461,7 +461,7 @@ function generateGroundConditionsPage(data) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ground Conditions</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛷️</text></svg>">
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
     <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
     <style>
@@ -504,7 +504,7 @@ function generateGroundConditionsPage(data) {
     <div class="container">
         <header>
              <div class="header-content">
-                <a href="../../index.html" class="logo">Skitour Allgäu</a>
+                <a href="../index.html" class="logo">Skitour Allgäu</a>
                 <div class="date-nav"><span>Ground Conditions</span></div>
              </div>
         </header>
@@ -716,7 +716,7 @@ function generateGroundConditionsPage(data) {
 
         <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
             <p style="text-align: center; color: var(--text-secondary); font-size: 0.875rem;">
-                <a href="../../index.html">&larr; Back to Home</a>
+                <a href="../index.html">&larr; Back to Home</a>
             </p>
         </footer>
     </div>
@@ -735,7 +735,7 @@ function generateUploadPage() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skier Upload</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛷️</text></svg>">
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
     <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
     <style> 

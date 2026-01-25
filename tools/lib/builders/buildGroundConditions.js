@@ -7,8 +7,8 @@ const { generateGroundConditionsPage, generateUploadPage, generateWebcamPage, ge
 function buildGroundConditions() {
     log.info('Building Ground Conditions...');
 
-    const groundDir = path.join(PATHS.archive, 'ground-conditions');
-    const webcamDir = path.join(PATHS.archive, 'webcams');
+    const groundDir = PATHS.groundDir;
+    const webcamDir = PATHS.webcamsDir;
 
     fs.mkdirSync(groundDir, { recursive: true });
     fs.mkdirSync(webcamDir, { recursive: true });

@@ -57,4 +57,4 @@ The **Profile Creator** is an interactive tool for creating and submitting custo
 ## Integration Points
 - **Worker API**: `/upload` endpoint in `workers/upload-worker.js`
 - **Data Sync**: `tools/fetch_uploads.js` retrieves submissions
-- **Display**: `archive/ground-conditions/` pages show uploaded profiles
+- **Display**: `ground-conditions/` pages show uploaded profiles

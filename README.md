@@ -38,20 +38,20 @@ An interactive dashboard visualization of raw station data:
 *   **Interactive Map**: Markers for all tracking stations. Clicking a marker shows a "Pin" with the station name and a link to its data.
 *   **Data Cards**: Detailed 48-hour charts for Snow Height (HS), Air Temp from stations like *Warth*, *Fellhorn*, *Nebelhorn*, and *Ifen*.
 
-### 3. **Snow Profiles (`/archive/profiles/index.html`)**
+### 3. **Snow Profiles (`/profiles/index.html`)**
 A dedicated feed of recent snow pits from Lawis.at:
 *   **Smart Parsing**: Automatically extracts Snow Height (HS) even if not explicitly labeled.
 *   **Stability Tests**: Visualizes ECT/CT results with colour-coded tags (Green for "No Fracture", Red for "Propagation").
 *   **Translation**: Automatically translates observer comments into English.
 *   **Map Integration**: View profile locations on an interactive relief map.
 
-### 4. **Incidents (`/archive/incidents/`)**
+### 4. **Incidents (`/incidents/`)**
 A permanent record of avalanche accidents:
 *   **Context**: Each report includes relevant weather history (charts) and nearby snow profiles from the time of the incident.
 *   **PDF Archive**: Links to the official avalanche bulletin from that specific day.
 *   **Translation**: Description text is translated to English.
 
-### 5. **Weather Archive (`/archive/weather/`)**
+### 5. **Weather Archive (`/weather/`)**
 A chronological text archive of daily mountain weather reports.
 
 ---

@@ -62,7 +62,7 @@ All endpoints support CORS with:
 - **GPX Files**: Permanent storage (no TTL) - user's personal route library
 
 ## Integration Points
-- **Frontend**: `profile-creator/`, `gpx-library/`, `archive/ground-conditions/`
+- **Frontend**: `profile-creator/`, `gpx-library/`, `ground-conditions/`
 - **Data Sync**: `tools/fetch_uploads.js` syncs uploads to `data/uploads.json`
 - **Build**: `tools/lib/builders/buildGroundConditions.js` generates HTML from synced data
 

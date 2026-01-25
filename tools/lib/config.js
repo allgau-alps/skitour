@@ -129,7 +129,18 @@ const PATHS = {
     pdfs: path.join(DATA_DIR, 'pdfs'),
     incidentBulletins: path.join(DATA_DIR, 'incident_bulletins'),
     incidentImages: path.join(DATA_DIR, 'incident_images'),
-    profileImages: path.join(DATA_DIR, 'profile_images')
+    profileImages: path.join(DATA_DIR, 'profile_images'),
+
+    // Output Directories (New Structure)
+    incidentsDir: path.join(ROOT_DIR, 'incidents'),
+    profilesDir: path.join(ROOT_DIR, 'profiles'),
+    weatherDir: path.join(ROOT_DIR, 'weather'),
+    groundDir: path.join(ROOT_DIR, 'ground-conditions'),
+    webcamsDir: path.join(ROOT_DIR, 'webcams'),
+    snowDepthDir: path.join(ROOT_DIR, 'snow-depth'),
+
+    // Source Directories
+    snowDepthSource: path.join(TOOLS_DIR, 'src', 'snow-depth')
 };
 
 module.exports = {

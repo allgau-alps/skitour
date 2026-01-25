@@ -161,7 +161,7 @@ function buildProfilePages() {
 
     // -------------------------------------------
 
-    const profilesDir = path.join(PATHS.archive, 'profiles');
+    const profilesDir = PATHS.profilesDir;
     if (!fs.existsSync(profilesDir)) fs.mkdirSync(profilesDir, { recursive: true });
 
     // --- CLEANUP: Remove stale profile pages ---
@@ -192,6 +192,7 @@ function buildProfilePages() {
     const mapSrc = path.join(PATHS.profiles || path.join(PATHS.root, 'tools'), 'map.html');
     if (fs.existsSync(mapSrc)) {
         let mapContent = fs.readFileSync(mapSrc, 'utf8');
+        // Update map back link
         mapContent = mapContent.replace('javascript:history.back()', 'index.html');
         fs.writeFileSync(path.join(profilesDir, 'map.html'), mapContent);
     }
@@ -218,7 +219,7 @@ function buildProfilePages() {
                 fs.copyFileSync(imgPath, path.join(destImgDir, imgName));
             }
 
-            const html = generateProfileDetailPage(p, `images/${imgName}`, '../../', 'index.html');
+            const html = generateProfileDetailPage(p, `images/${imgName}`, '../', 'index.html');
             try {
                 fs.writeFileSync(path.join(profilesDir, `${pId}.html`), html);
             } catch (err) {
@@ -287,7 +288,7 @@ function buildProfilePages() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Latest Snow Profiles</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛷️</text></svg>">
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <style>
         .profile-list { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top:2rem; }
         .station-card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; }
@@ -306,7 +307,7 @@ function buildProfilePages() {
 </head>
 <body>
     <div class="container">
-        <header><div class="header-content"><a href="../../index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Snow Profiles</span></div></div></header>
+        <header><div class="header-content"><a href="../index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Snow Profiles</span></div></div></header>
         
         <h1>Latest Snow Profiles (Last 21 Days)</h1>
 
@@ -350,7 +351,7 @@ function buildProfilePages() {
                 
                 ${p.isUserUpload ? `
                 <div style="margin-top:0.5rem; display:flex; gap:0.5rem; border-top:1px solid #f3f4f6; padding-top:0.5rem;">
-                    <a href="../../profile-creator/index.html?edit=${p.original_id || p.profil_id}" class="action-btn" style="text-decoration:none; color:#0284c7; font-size:0.85rem; font-weight:600;">Edit</a>
+                    <a href="../profile-creator/index.html?edit=${p.original_id || p.profil_id}" class="action-btn" style="text-decoration:none; color:#0284c7; font-size:0.85rem; font-weight:600;">Edit</a>
                     <button onclick="requestDelete('${p.original_id || p.profil_id}')" class="action-btn" style="background:none; border:none; color:#ef4444; font-size:0.85rem; font-weight:600; cursor:pointer; margin-left:auto;">Remove</button>
                 </div>
                 ` : ''}
@@ -364,7 +365,7 @@ function buildProfilePages() {
         })()}
             
             <div class="station-card" style="border: 2px dashed #bae6fd; background: #f0f9ff; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
-                 <a href="../../profile-creator/index.html" class="source-link" style="color:#1e40af; font-size:1.1rem; margin-bottom:1rem;">Upload your own profile &rarr;</a>
+                 <a href="../profile-creator/index.html" class="source-link" style="color:#1e40af; font-size:1.1rem; margin-bottom:1rem;">Upload your own profile &rarr;</a>
                  <div style="height: 1px; width: 100%; background: #e5e7eb; margin-bottom: 1rem;"></div>
                  <p style="color:#666; margin-bottom:1rem;">View full database on Lawis.at</p>
                  <a href="https://lawis.at/profile/" target="_blank" class="source-link" style="font-size:1.1rem;">Go to Lawis &rarr;</a>
@@ -373,7 +374,7 @@ function buildProfilePages() {
 
         <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
             <p style="text-align: center; color: var(--text-secondary); font-size: 0.875rem;">
-                <a href="../../index.html">&larr; Back to Home</a>
+                <a href="../index.html">&larr; Back to Home</a>
             </p>
         </footer>
     </div>

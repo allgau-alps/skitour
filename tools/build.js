@@ -100,15 +100,15 @@ async function main() {
         logger.error('Error in buildProfilePages:', e);
     }
 
-    // Phase 4: Generate root index
+    // Phase 4: Generate Archive Root Index (Now just for Regions)
     try {
-        logger.info('Generating Root Index...');
+        logger.info('Generating Archive Root Index...');
         const indexHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avalanche Archive Root</title>
+    <title>Forecast Archive</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛷️</text></svg>">
     <link rel="stylesheet" href="../styles.css">
 </head>
@@ -119,11 +119,11 @@ async function main() {
             Updates daily @ 06:00, 14:00 & 18:00 CET.<br>
             Changes may take a few hours to appear.
         </div></div></header>
-        <h1>Archive Root</h1>
+        <h1>Forecast Archive</h1>
         <div class="grid">
-            <a href="incidents/index.html" class="card"><h2>Incidents</h2></a>
-            <a href="profiles/index.html" class="card"><h2>Snow Profiles</h2></a>
-            <a href="snow-depth/index.html" class="card"><h2>Snow Depth</h2></a>
+            <a href="../incidents/index.html" class="card"><h2>Incidents</h2></a>
+            <a href="../profiles/index.html" class="card"><h2>Snow Profiles</h2></a>
+            <a href="../snow-depth/index.html" class="card"><h2>Snow Depth</h2></a>
              <a href="../index.html" class="card" style="background:#eee;"><h2>&larr; Main Site</h2></a>
         </div>
         
@@ -138,7 +138,7 @@ async function main() {
 
         const indexDest = path.join(PATHS.archive, 'index.html');
         fs.writeFileSync(indexDest, indexHtml);
-        logger.info('Root index generated.');
+        logger.info('Archive index generated.');
 
         // Generate Health Check File
         try {

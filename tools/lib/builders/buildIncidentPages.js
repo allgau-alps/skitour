@@ -114,8 +114,7 @@ function buildIncidentPages() {
     });
 
     // Ensure output dirs
-    // Ensure output dirs (Clean first to ensure robust removal)
-    const incidentsDir = path.join(PATHS.archive, 'incidents');
+    const incidentsDir = PATHS.incidentsDir;
     if (fs.existsSync(incidentsDir)) {
         fs.rmSync(incidentsDir, { recursive: true, force: true });
     }
@@ -136,15 +135,7 @@ function buildIncidentPages() {
         let minDist = Infinity;
 
         // Parse incident coords (approximate from map link or specific fields if available)
-        // The original script didn't have coords for incidents, it used the region center or similar?
-        // Wait, the original build.js used `inc.lat` and `inc.lon`? 
-        // Let's check the schema. The user didn't show the schema, but I recall from `build.js` that it calculates distance.
-        // Actually, looking at `build.js` diff:
-        // `const incLat = 47.4; // Default if missing` ... wait, `build.js` logic was:
-        // `if (inc.lat && inc.lon)` ...
-
-        // I need to be careful here. Use generic fallback if missing.
-        const incLat = inc.lat || 47.5; // Dummy fallback center of bavarian alps
+        const incLat = inc.lat || 47.5;
         const incLon = inc.lon || 11.0;
 
         // Find closest station
@@ -186,33 +177,26 @@ function buildIncidentPages() {
             let historicText = historicWeatherMap.get(`${dateKey}|${inc.location}`);
 
             if (!historicText) {
-                // Try partial matching matches
-                // normalize incident location: remove " - freier Schiraum" logic or similar
-                // "Ifen-Kellerloch" - freier Schiraum -> Ifen-Kellerloch
                 let normLoc = inc.location.split('" - ')[0].replace(/"/g, '').trim();
-                // Also standard normalization
                 normLoc = normLoc.replace(/\u2011/g, '-').replace(/\s*\(.*?\)/g, '').trim();
-
                 historicText = historicWeatherMap.get(`${dateKey}|${normLoc}`);
             }
             if (!historicText) {
-                // Try key with simple splitting by spaces or check start
-                // The file has "Ifen-Kellerloch", inc has "Ifen-Kellerloch" - freier Schiraum
-                // Try matching just the first part if it contains hyphens
                 const parts = inc.location.split(' ');
                 if (parts.length > 0) {
                     historicText = historicWeatherMap.get(`${dateKey}|${parts[0]}`);
                 }
             }
             if (!historicText) {
-                // Try date only
                 historicText = historicWeatherMap.get(dateKey);
             }
 
-            // Check for Daily Weather Report file
+            // Check for Daily Weather Report file in MAIN ARCHIVE
             let dailyWeatherLink = null;
             if (dateKey) {
-                const dailyWeatherFile = path.join(PATHS.archive, 'weather', `${dateKey}.html`);
+                // Weather archive is also moving to root/weather?
+                // Yes, logic: PATHS.weatherDir
+                const dailyWeatherFile = path.join(PATHS.weatherDir, `${dateKey}.html`);
                 if (fs.existsSync(dailyWeatherFile)) {
                     dailyWeatherLink = `../weather/${dateKey}.html`;
                 }
@@ -230,19 +214,17 @@ function buildIncidentPages() {
             weatherLink = `<a href="${weatherFileName}" style="color:#0284c7; text-decoration:none;">Weather Context</a>`;
         }
 
-        // Calculate filename early for map linking
+        // Calculate filename early
         const dateStr = inc.date ? inc.date.split(' ')[0] : inc.date;
         const filename = `${dateStr}_${inc.id}.html`;
 
-        // Find closest profile for Coordinates Link (to show "Relevant Profile")
+        // Find closest profile
         if (inc.linked_profiles && inc.linked_profiles.length > 0) {
-            // Sort by distance
             const closest = [...inc.linked_profiles].sort((a, b) => parseFloat(a.dist_km) - parseFloat(b.dist_km))[0];
             inc.closestProfile = closest;
         }
 
-        // 3. Profiles Link Logic - Use linked_profiles from incident data
-        // Generate styled profile cards like the original format
+        // 3. Profiles Link Logic
         let profilesHtml = '';
         if (inc.linked_profiles && inc.linked_profiles.length > 0) {
             const incLat = inc.lat || inc.details?.location?.latitude;
@@ -251,7 +233,6 @@ function buildIncidentPages() {
             profilesHtml = inc.linked_profiles.map(p => {
                 const profileDate = p.date ? p.date.split(' ')[0] : 'Unknown';
                 const profileAspect = p.aspect || '-';
-                // Map link shows both profile and incident location
                 const locationParam = p.location ? `&location=${encodeURIComponent(p.location)}` : '';
                 const mapLink = `../profiles/map.html?lat=${p.latitude}&lon=${p.longitude}&profileId=${p.id}${locationParam}${incLat && incLon ? `&incLat=${incLat}&incLon=${incLon}&incId=${inc.id}&incFilename=${filename}` : ''}`;
                 return `
@@ -269,20 +250,15 @@ function buildIncidentPages() {
         }
 
         // 4. Generate Main Incident Page
-        // Scan filesystem for incident images AND copy them
-        const sourceImagesDir = path.join(PATHS.incidentImages, String(inc.id)); // data/incident_images/ID
-        const archiveImagesDir = path.join(incidentsDir, 'images', String(inc.id)); // archive/incidents/images/ID
+        const sourceImagesDir = path.join(PATHS.incidentImages, String(inc.id));
+        const archiveImagesDir = path.join(incidentsDir, 'images', String(inc.id));
 
-        // Ensure destination
         if (fs.existsSync(sourceImagesDir)) {
             if (!fs.existsSync(archiveImagesDir)) fs.mkdirSync(archiveImagesDir, { recursive: true });
-
-            // Copy files
             const files = fs.readdirSync(sourceImagesDir);
             files.forEach(f => {
                 const srcFile = path.join(sourceImagesDir, f);
                 const destFile = path.join(archiveImagesDir, f);
-                // Copy if changed or missing? Simple copyFileSync is fine for small count
                 if (fs.statSync(srcFile).isFile()) {
                     fs.copyFileSync(srcFile, destFile);
                 }
@@ -310,14 +286,12 @@ function buildIncidentPages() {
             inc.pdf_path = bulletinPath;
         }
 
-        inc.filename = filename; // Pass filename to template
-
-        // Metadata for index filtering
+        inc.filename = filename;
         inc.hasImages = (imagesHtml.length > 0);
         inc.hasDescription = !!(inc.comments_en || inc.details?.comments_en || inc.comments || inc.details?.comments);
         inc.hasProfiles = (inc.linked_profiles && inc.linked_profiles.length > 0);
 
-        const html = generateIncidentPage(inc, imagesHtml, weatherLink, profilesHtml, '../../');
+        const html = generateIncidentPage(inc, imagesHtml, weatherLink, profilesHtml, '../');
 
         // Filename already calculated above
         try {
@@ -343,7 +317,7 @@ function buildIncidentPages() {
         };
     });
 
-    const indexHtml = generateIndexPage('Avalanche Incidents', '../../', links, true, '../../index.html');
+    const indexHtml = generateIndexPage('Avalanche Incidents', '../', links, true, '../index.html');
     fs.writeFileSync(path.join(incidentsDir, 'index.html'), indexHtml);
 
     log.info(`Generated ${count} incident pages.`);

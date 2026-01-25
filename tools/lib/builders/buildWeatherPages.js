@@ -12,7 +12,7 @@ function buildWeatherPages() {
     let count = 0;
     if (fs.existsSync(PATHS.weatherArchive)) {
         const weatherData = JSON.parse(fs.readFileSync(PATHS.weatherArchive, 'utf8'));
-        const weatherOutputDir = path.join(PATHS.archive, 'weather');
+        const weatherOutputDir = PATHS.weatherDir;
         if (!fs.existsSync(weatherOutputDir)) fs.mkdirSync(weatherOutputDir, { recursive: true });
 
         weatherData.forEach(w => {
