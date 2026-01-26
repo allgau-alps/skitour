@@ -31,7 +31,28 @@ function computeBulletinPath(inc) {
     const bulletinPath = path.join(PATHS.archive, slug, ym, `${dateStr}.pdf`);
     if (fs.existsSync(bulletinPath)) {
         // Return path relative to incidents folder (../slug/ym/date.pdf)
-        return `../${slug}/${ym}/${dateStr}.pdf`;
+        return `../archive/${slug}/${ym}/${dateStr}.pdf`;
+    }
+
+    // Fallback: Check data/incident_bulletins (Older bulletins)
+    // Try primary slug first, then others (legacy data might be misfiled)
+    const slugs = [slug, 'allgau-alps-east', 'allgau-alps-west', 'allgau-alps-central', 'allgau-prealps'];
+    // Remove duplicates
+    const uniqueSlugs = [...new Set(slugs)];
+
+    for (const checkSlug of uniqueSlugs) {
+        const fallbackSource = path.join(PATHS.incidentBulletins, checkSlug, ym, `${dateStr}.pdf`);
+        if (fs.existsSync(fallbackSource)) {
+            // Copy to specific incidents/incident_bulletins folder (using the FOUND slug to match structure)
+            // Actually, we should probably keep it consistent or use the found slug for the link
+            const targetDir = path.join(PATHS.incidentsDir, 'incident_bulletins', checkSlug, ym);
+            if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+
+            // Only copy if not exists to avoid redundant writes (though overwrite is fine)
+            fs.copyFileSync(fallbackSource, path.join(targetDir, `${dateStr}.pdf`));
+
+            return `incident_bulletins/${checkSlug}/${ym}/${dateStr}.pdf`;
+        }
     }
 
     return null;
@@ -198,7 +219,7 @@ function buildIncidentPages() {
                 // Yes, logic: PATHS.weatherDir
                 const dailyWeatherFile = path.join(PATHS.weatherDir, `${dateKey}.html`);
                 if (fs.existsSync(dailyWeatherFile)) {
-                    dailyWeatherLink = `../weather/${dateKey}.html`;
+                    dailyWeatherLink = `../archive/weather/${dateKey}.html`;
                 }
             }
 

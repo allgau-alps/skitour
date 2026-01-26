@@ -134,7 +134,7 @@ const PATHS = {
     // Output Directories (New Structure)
     incidentsDir: path.join(ROOT_DIR, 'incidents'),
     profilesDir: path.join(ROOT_DIR, 'profiles'),
-    weatherDir: path.join(ROOT_DIR, 'weather'),
+    weatherDir: path.join(ARCHIVE_DIR, 'weather'),
     groundDir: path.join(ROOT_DIR, 'ground-conditions'),
     webcamsDir: path.join(ROOT_DIR, 'webcams'),
     snowDepthDir: path.join(ROOT_DIR, 'snow-depth'),
