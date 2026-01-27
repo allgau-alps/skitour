@@ -46,4 +46,3 @@ jobs:
           commit_message: "Routine data update"
           branch: main
           file_pattern: "data/* archive/* index.html gpx/routes-metadata.json"
-          pull_before_push: true
