@@ -650,28 +650,5 @@
     "exposition": 5,
     "comments": "LO.LA Profile\n\n\nECT PP 14 @ 16 (from ground)",
     "comments_en": "LO.LA profiles\n\n\nECT PP 14 @ 16 (from ground)"
-  },
-  {
-    "profil_id": 24325,
-    "datum": "2026-01-06 13:30:00",
-    "country_id": 1,
-    "region_id": 1,
-    "subregion_id": 164,
-    "ort": "Höllkar (Grüngehrengrat)",
-    "seehoehe": 2300,
-    "latitude": 47.24082,
-    "longitude": 10.20364,
-    "hangneigung": 35,
-    "exposition_id": 3,
-    "loggedon": "2026-01-07 10:20:00",
-    "revision": 1,
-    "location": "Höllkar (Grüngehrengrat)",
-    "elevation": 2300,
-    "slope": 35,
-    "neigung": 35,
-    "aspect": 3,
-    "exposition": 3,
-    "comments": "Profilstandort kammnahe  ca. 30hm unterhalb vom Grat\nRichtung Nord selbe Krusten & drunter großflächige Becher- & Kantige Kristalle",
-    "comments_en": "Profile location near the ridge, approximately 30 meters below the crest.\nTo the north, same crusts; below them, large cup-shaped and angular crystals."
   }
 ]
