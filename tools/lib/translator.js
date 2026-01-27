@@ -41,7 +41,7 @@ function hashText(text) {
  * @param {string} [options.format='text'] - 'text' or 'html'
  * @returns {Promise<string|null>} Translated text or null
  */
-async function translateText(text, options = {}) {
+async function translateText(text, options = {}, retries = 3) {
     const format = options.format || 'text';
     const apiKey = process.env.GCP_TRANSLATE_KEY || process.env.GOOGLE_TRANSLATE_KEY;
     if (!apiKey) return null;
@@ -50,7 +50,7 @@ async function translateText(text, options = {}) {
     const key = hashText(text + '|' + format);
     if (translationCache[key]) return translationCache[key];
 
-    return new Promise((resolve) => {
+    const doRequest = () => new Promise((resolve, reject) => {
         const url = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
         const req = https.request(url, {
             method: 'POST',
@@ -62,20 +62,16 @@ async function translateText(text, options = {}) {
                 try {
                     const json = JSON.parse(data);
                     if (json.data && json.data.translations && json.data.translations.length > 0) {
-                        const translated = json.data.translations[0].translatedText;
-                        translationCache[key] = translated;
-                        saveTranslationCache();
-                        resolve(translated);
+                        resolve(json.data.translations[0].translatedText);
+                    } else if (json.error) {
+                        reject(new Error(json.error.message));
                     } else {
                         resolve(null);
                     }
-                } catch (e) { resolve(null); }
+                } catch (e) { reject(e); }
             });
         });
-        req.on('error', (e) => {
-            log.error(`Translation request failed: ${e.message}`);
-            resolve(null);
-        });
+        req.on('error', (e) => reject(e));
         req.write(JSON.stringify({
             q: text,
             source: 'de',
@@ -84,6 +80,26 @@ async function translateText(text, options = {}) {
         }));
         req.end();
     });
+
+    for (let i = 0; i < retries; i++) {
+        try {
+            const result = await doRequest();
+            if (result) {
+                translationCache[key] = result;
+                saveTranslationCache();
+                return result;
+            }
+        } catch (e) {
+            log.warn(`Translation attempt ${i + 1}/${retries} failed: ${e.message}`);
+            if (i === retries - 1) {
+                log.error(`All translation retries failed for text length ${text.length}`);
+                return null;
+            }
+            // Wait before retry (exponential backoff: 1s, 2s, 4s...)
+            await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i)));
+        }
+    }
+    return null;
 }
 
 module.exports = { translateText };
