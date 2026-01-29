@@ -627,28 +627,5 @@
         }
       }
     ]
-  },
-  {
-    "profil_id": 24356,
-    "datum": "2026-01-08 09:15:00",
-    "country_id": 1,
-    "region_id": 1,
-    "subregion_id": 158,
-    "ort": "Jöchelspitze ",
-    "seehoehe": 1697,
-    "latitude": 47.274473027547,
-    "longitude": 10.365681542627,
-    "hangneigung": 3,
-    "exposition_id": 5,
-    "loggedon": "2026-01-08 17:01:48",
-    "revision": 1,
-    "location": "Jöchelspitze ",
-    "elevation": 1697,
-    "slope": 3,
-    "neigung": 3,
-    "aspect": 5,
-    "exposition": 5,
-    "comments": "LO.LA Profile\n\n\nECT PP 14 @ 16 (from ground)",
-    "comments_en": "LO.LA profiles\n\n\nECT PP 14 @ 16 (from ground)"
   }
 ]
