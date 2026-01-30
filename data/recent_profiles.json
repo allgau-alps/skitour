@@ -1,5 +1,39 @@
 [
   {
+    "profil_id": 24789,
+    "datum": "2026-01-30 11:00:00",
+    "country_id": 1,
+    "region_id": 1,
+    "subregion_id": 165,
+    "ort": "Gümple",
+    "seehoehe": 1950,
+    "latitude": 47.26014,
+    "longitude": 10.43006,
+    "hangneigung": 36,
+    "exposition_id": 1,
+    "loggedon": "2026-01-30 16:38:30",
+    "revision": 1,
+    "location": "Gümple",
+    "elevation": 1950,
+    "slope": 36,
+    "neigung": 36,
+    "aspect": 1,
+    "exposition": 1,
+    "comments": "ECTP 14@13.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 14,
+        "height": 13,
+        "result": {
+          "text": "propagation (P)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 24684,
     "datum": "2026-01-25 10:10:00",
     "country_id": 1,
