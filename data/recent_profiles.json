@@ -1,5 +1,49 @@
 [
   {
+    "profil_id": 24808,
+    "datum": "2026-01-31 12:30:00",
+    "country_id": 1,
+    "region_id": 1,
+    "subregion_id": 164,
+    "ort": "Guflespitze",
+    "seehoehe": 2334,
+    "latitude": 47.20385,
+    "longitude": 10.33739,
+    "hangneigung": 34,
+    "exposition_id": 7,
+    "loggedon": "2026-01-31 15:30:35",
+    "revision": 1,
+    "location": "Guflespitze",
+    "elevation": 2334,
+    "slope": 34,
+    "neigung": 34,
+    "aspect": 7,
+    "exposition": 7,
+    "comments": "ECTP 4@54.0cm: plötzlicher Bruch (P) (ganzer Block)\nECTP 3@54.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 4,
+        "height": 54,
+        "result": {
+          "text": "propagation (P)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 3,
+        "height": 54,
+        "result": {
+          "text": "propagation (P)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 24804,
     "datum": "2026-01-30 13:20:00",
     "country_id": 1,
