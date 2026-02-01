@@ -1,5 +1,59 @@
 [
   {
+    "profil_id": 24830,
+    "datum": "2026-02-01 10:50:00",
+    "country_id": 1,
+    "region_id": 1,
+    "subregion_id": 164,
+    "ort": "Gaißgufel",
+    "seehoehe": 2483,
+    "latitude": 47.20505,
+    "longitude": 10.34015,
+    "hangneigung": 34,
+    "exposition_id": 7,
+    "loggedon": "2026-02-01 16:34:21",
+    "revision": 1,
+    "location": "Gaißgufel",
+    "elevation": 2483,
+    "slope": 34,
+    "neigung": 34,
+    "aspect": 7,
+    "exposition": 7,
+    "comments": "ECTP 27@41.0cm: plötzlicher Bruch (P) (ganzer Block)\nECTN 5@49.0cm: Teilbruch (N)\nECTN 7@43.0cm: Teilbruch (N)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 27,
+        "height": 41,
+        "result": {
+          "text": "propagation (P)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 5,
+        "height": 49,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 7,
+        "height": 43,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 24808,
     "datum": "2026-01-31 12:30:00",
     "country_id": 1,
@@ -531,98 +585,5 @@
     "exposition_id": 1,
     "loggedon": "2026-01-12 13:49:17",
     "revision": 2
-  },
-  {
-    "profil_id": 24406,
-    "datum": "2026-01-11 16:15:00",
-    "country_id": 1,
-    "region_id": 1,
-    "subregion_id": 158,
-    "ort": "Nesselwängle / Krinnenalm",
-    "seehoehe": 1500,
-    "latitude": 47.47931,
-    "longitude": 10.59279,
-    "hangneigung": 36,
-    "exposition_id": 3,
-    "loggedon": "2026-01-11 21:07:55",
-    "revision": 2,
-    "location": "Nesselwängle / Krinnenalm",
-    "elevation": 1500,
-    "slope": 36,
-    "neigung": 36,
-    "aspect": 3,
-    "exposition": 3,
-    "comments": "CT 13@63.0cm: plötzlicher Bruch glatt (SP)\nCT 22@38.0cm: plötzlicher Bruch mit Kollaps (SC)",
-    "comments_en": "CT 13@63.0cm: Sudden smooth fracture (SP)\nCT 22@38.0cm: Sudden fracture with collapse (SC)"
-  },
-  {
-    "profil_id": 24408,
-    "datum": "2026-01-11 16:00:00",
-    "country_id": 1,
-    "region_id": 1,
-    "subregion_id": 158,
-    "ort": "Nesslwängle-Krinnenalplift",
-    "seehoehe": 1604,
-    "latitude": 47.4798,
-    "longitude": 10.59044,
-    "hangneigung": 35,
-    "exposition_id": 8,
-    "loggedon": "2026-01-12 08:05:53",
-    "revision": 1,
-    "location": "Nesslwängle-Krinnenalplift",
-    "elevation": 1604,
-    "slope": 35,
-    "neigung": 35,
-    "aspect": 8,
-    "exposition": 8,
-    "comments": "ECTN 16@53.0cm: Teilbruch (N)",
-    "comments_en": "ECTN 16@53.0cm: Partial fraction (N)",
-    "stability_tests": [
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 16,
-        "height": 53,
-        "result": {
-          "text": "no propagation (N)"
-        }
-      }
-    ]
-  },
-  {
-    "profil_id": 24404,
-    "datum": "2026-01-11 14:50:00",
-    "country_id": 1,
-    "region_id": 1,
-    "subregion_id": 158,
-    "ort": "Jöchelspitze Standprofil",
-    "seehoehe": 1697,
-    "latitude": 47.27295,
-    "longitude": 10.36491,
-    "hangneigung": 3,
-    "exposition_id": 5,
-    "loggedon": "2026-01-11 20:20:51",
-    "revision": 1,
-    "location": "Jöchelspitze Standprofil",
-    "elevation": 1697,
-    "slope": 3,
-    "neigung": 3,
-    "aspect": 5,
-    "exposition": 5,
-    "comments": "ECTN 16@49.0cm: Teilbruch (N)",
-    "comments_en": "ECTN 16@49.0cm: Partial fraction (N)",
-    "stability_tests": [
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 16,
-        "height": 49,
-        "result": {
-          "text": "no propagation (N)"
-        }
-      }
-    ]
   }
 ]
