@@ -1,5 +1,49 @@
 [
   {
+    "profil_id": 24852,
+    "datum": "2026-02-02 13:15:00",
+    "country_id": 1,
+    "region_id": 2,
+    "subregion_id": 286,
+    "ort": "Lechtaler Alpen",
+    "seehoehe": 2200,
+    "latitude": 47.21226,
+    "longitude": 10.18415,
+    "hangneigung": 30,
+    "exposition_id": 1,
+    "loggedon": "2026-02-02 18:23:49",
+    "revision": 1,
+    "location": "Lechtaler Alpen",
+    "elevation": 2200,
+    "slope": 30,
+    "neigung": 30,
+    "aspect": 1,
+    "exposition": 1,
+    "comments": "ECTN 7@65.0cm: Teilbruch (N)\nECTP 12@65.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 7,
+        "height": 65,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 12,
+        "height": 65,
+        "result": {
+          "text": "propagation (P)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 24830,
     "datum": "2026-02-01 10:50:00",
     "country_id": 1,
@@ -570,20 +614,5 @@
         }
       }
     ]
-  },
-  {
-    "profil_id": 24410,
-    "datum": "2026-01-12 10:45:00",
-    "country_id": 1,
-    "region_id": 2,
-    "subregion_id": 82,
-    "ort": "Riezlern",
-    "seehoehe": 1800,
-    "latitude": 47.35351,
-    "longitude": 10.11609,
-    "hangneigung": 35,
-    "exposition_id": 1,
-    "loggedon": "2026-01-12 13:49:17",
-    "revision": 2
   }
 ]
