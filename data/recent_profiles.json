@@ -1,5 +1,49 @@
 [
   {
+    "profil_id": 24903,
+    "datum": "2026-02-03 16:00:00",
+    "country_id": 4,
+    "region_id": 17,
+    "subregion_id": 297,
+    "ort": "Fellhorn",
+    "seehoehe": 1720,
+    "latitude": 47.35174,
+    "longitude": 10.22504,
+    "hangneigung": 25,
+    "exposition_id": 1,
+    "loggedon": "2026-02-05 16:38:51",
+    "revision": 1,
+    "location": "Fellhorn",
+    "elevation": 1720,
+    "slope": 25,
+    "neigung": 25,
+    "aspect": 1,
+    "exposition": 1,
+    "comments": "ECTN 22@80.0cm: Teilbruch (N)\nECTP 24@80.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 22,
+        "height": 80,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 24,
+        "height": 80,
+        "result": {
+          "text": "propagation (P)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 24852,
     "datum": "2026-02-02 13:15:00",
     "country_id": 1,
@@ -510,41 +554,6 @@
         "height": 27,
         "result": {
           "text": "propagation (P)"
-        }
-      }
-    ]
-  },
-  {
-    "profil_id": 24494,
-    "datum": "2026-01-15 10:15:00",
-    "country_id": 1,
-    "region_id": 2,
-    "subregion_id": 82,
-    "ort": "Liechelkopf",
-    "seehoehe": 2065,
-    "latitude": 47.29743,
-    "longitude": 10.18351,
-    "hangneigung": 30,
-    "exposition_id": 2,
-    "loggedon": "2026-01-16 12:18:04",
-    "revision": 1,
-    "location": "Liechelkopf",
-    "elevation": 2065,
-    "slope": 30,
-    "neigung": 30,
-    "aspect": 2,
-    "exposition": 2,
-    "comments": "Nur bis 90 cm gegraben.\n\nECTN 11@173.0cm: Teilbruch (N)",
-    "comments_en": "Excavated only to a depth of 90 cm.\n\nECTN 11@173.0 cm: Partial fracture (N)",
-    "stability_tests": [
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 11,
-        "height": 173,
-        "result": {
-          "text": "no propagation (N)"
         }
       }
     ]
