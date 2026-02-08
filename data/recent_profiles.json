@@ -54,6 +54,148 @@
     ]
   },
   {
+    "profil_id": 24950,
+    "datum": "2026-02-07 11:00:00",
+    "country_id": 1,
+    "region_id": 2,
+    "subregion_id": 82,
+    "ort": "Liechelkopf",
+    "seehoehe": 1773,
+    "latitude": 47.30195,
+    "longitude": 10.19565,
+    "hangneigung": 23,
+    "exposition_id": 3,
+    "loggedon": "2026-02-07 22:29:56",
+    "revision": 1,
+    "location": "Liechelkopf",
+    "elevation": 1773,
+    "slope": 23,
+    "neigung": 23,
+    "aspect": 3,
+    "exposition": 3,
+    "comments": "Osthang ohne direkte Sonneneinstrahlung im Tagesverlauf.\n\nSchneeoberfläche: Filz, Graupel und Oberflächenreif.\n\nBergwacht Kempten Ausbildungsskitour.\n\n\n\nECTN 14@64.0cm: Teilbruch (N)\nECTN 14@64.0cm: Teilbruch (N)\nECTN 12@64.0cm: Teilbruch (N)\nECTN 29@29.0cm: Teilbruch (N)\nECT 31: kein Bruch",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 14,
+        "height": 64,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 14,
+        "height": 64,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 12,
+        "height": 64,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 29,
+        "height": 29,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 31,
+        "height": null,
+        "result": {
+          "text": ""
+        }
+      }
+    ]
+  },
+  {
+    "profil_id": 24947,
+    "datum": "2026-02-07 10:30:00",
+    "country_id": 1,
+    "region_id": 2,
+    "subregion_id": 82,
+    "ort": "Wildenalpe",
+    "seehoehe": 1770,
+    "latitude": 47.30212,
+    "longitude": 10.19586,
+    "hangneigung": 23,
+    "exposition_id": 1,
+    "loggedon": "2026-02-07 19:58:09",
+    "revision": 1,
+    "location": "Wildenalpe",
+    "elevation": 1770,
+    "slope": 23,
+    "neigung": 23,
+    "aspect": 1,
+    "exposition": 1,
+    "comments": "ECTN 14@67.0cm: Teilbruch (N)\n\nTrotz kleinräumig unterschiedlicher Expositionen reine Nordhangcharakteristik: ganztags keine Sonneneinstrahlung, ausgeprägter Kaltluftsee.",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 14,
+        "height": 67,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      }
+    ]
+  },
+  {
+    "profil_id": 24952,
+    "datum": "2026-02-05 10:30:00",
+    "country_id": 4,
+    "region_id": 17,
+    "subregion_id": 297,
+    "ort": "Nebelhorn (Koblat)",
+    "seehoehe": 2053,
+    "latitude": 47.4204,
+    "longitude": 10.35181,
+    "hangneigung": 31,
+    "exposition_id": 3,
+    "loggedon": "2026-02-07 22:55:23",
+    "revision": 1,
+    "location": "Nebelhorn (Koblat)",
+    "elevation": 2053,
+    "slope": 31,
+    "neigung": 31,
+    "aspect": 3,
+    "exposition": 3,
+    "comments": "Fortbildung \"Schneephysik\" - Lawinenwarndienst Bayern.\n\nStark eingewehter Osthang. Abfolge von Schichten mit Triebschnee und aufbauender Umwandlung.\n\nECTN 23@285.0cm: Teilbruch (N)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 23,
+        "height": 285,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 24903,
     "datum": "2026-02-03 16:00:00",
     "country_id": 4,
