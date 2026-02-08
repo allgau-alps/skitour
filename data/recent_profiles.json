@@ -1,5 +1,70 @@
 [
   {
+    "profil_id": 24967,
+    "datum": "2026-02-08 14:03:00",
+    "country_id": 1,
+    "region_id": 1,
+    "subregion_id": 158,
+    "ort": "Jöchelspitze ,Standprofil",
+    "seehoehe": 1697,
+    "latitude": 47.27383,
+    "longitude": 10.36569,
+    "hangneigung": 3,
+    "exposition_id": 5,
+    "loggedon": "2026-02-08 18:16:10",
+    "revision": 1,
+    "location": "Jöchelspitze ,Standprofil",
+    "elevation": 1697,
+    "slope": 3,
+    "neigung": 3,
+    "aspect": 5,
+    "exposition": 5,
+    "comments": "ECTN 18@24.0cm: Teilbruch (N)\nECTP 19@0.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 18,
+        "height": 24,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 19,
+        "height": 0,
+        "result": {
+          "text": "propagation (P)"
+        }
+      }
+    ]
+  },
+  {
+    "profil_id": 24965,
+    "datum": "2026-02-08 10:54:00",
+    "country_id": 1,
+    "region_id": 1,
+    "subregion_id": 158,
+    "ort": "Hinterhornbach",
+    "seehoehe": 1942,
+    "latitude": 47.35619,
+    "longitude": 10.38847,
+    "hangneigung": 33,
+    "exposition_id": 2,
+    "loggedon": "2026-02-08 18:06:31",
+    "revision": 1,
+    "location": "Hinterhornbach",
+    "elevation": 1942,
+    "slope": 33,
+    "neigung": 33,
+    "aspect": 2,
+    "exposition": 2
+  },
+  {
     "profil_id": 24942,
     "datum": "2026-02-07 14:00:00",
     "country_id": 1,
