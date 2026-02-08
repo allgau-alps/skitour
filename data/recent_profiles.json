@@ -638,40 +638,5 @@
         }
       }
     ]
-  },
-  {
-    "profil_id": 24558,
-    "datum": "2026-01-18 12:00:00",
-    "country_id": 1,
-    "region_id": 1,
-    "subregion_id": 158,
-    "ort": "Hornbachjoch",
-    "seehoehe": 1934,
-    "latitude": 47.35649,
-    "longitude": 10.3885,
-    "hangneigung": 31,
-    "exposition_id": 2,
-    "loggedon": "2026-01-18 19:52:34",
-    "revision": 1,
-    "location": "Hornbachjoch",
-    "elevation": 1934,
-    "slope": 31,
-    "neigung": 31,
-    "aspect": 2,
-    "exposition": 2,
-    "comments": "ECT 31 : kein Bruch",
-    "comments_en": "ECT 31: no fracture",
-    "stability_tests": [
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 31,
-        "height": null,
-        "result": {
-          "text": ""
-        }
-      }
-    ]
   }
 ]
