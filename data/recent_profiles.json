@@ -44,6 +44,60 @@
     ]
   },
   {
+    "profil_id": 24970,
+    "datum": "2026-02-08 12:00:00",
+    "country_id": 1,
+    "region_id": 1,
+    "subregion_id": 165,
+    "ort": "Aufstieg Gampenjoch",
+    "seehoehe": 1850,
+    "latitude": 47.26532,
+    "longitude": 10.50236,
+    "hangneigung": 31,
+    "exposition_id": 2,
+    "loggedon": "2026-02-08 19:41:49",
+    "revision": 1,
+    "location": "Aufstieg Gampenjoch",
+    "elevation": 1850,
+    "slope": 31,
+    "neigung": 31,
+    "aspect": 2,
+    "exposition": 2,
+    "comments": "ECTP 26@40.0cm: plötzlicher Bruch (P) (ganzer Block)\nECT 31: kein Bruch\nECT 31: kein Bruch\n\nSchneeprofil zu Schulungszwecken\n0-5cm Schmelzkruste vermutlich noch vom Schneefall Ende November/ Anfang Dezember\n5-50cm markante grieselige Schwachschicht mit teilweise beginnenden deutlich zu erkennenden Becherkristallen\n50-80cm überraschend homogene Schicht vom Schneefall der ersten und zweiten Januarwoche\n80-100cm Schneefall Ende Januar\n100-105 leichter Schneefall am 06. Februar",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 26,
+        "height": 40,
+        "result": {
+          "text": "propagation (P)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 31,
+        "height": null,
+        "result": {
+          "text": ""
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 31,
+        "height": null,
+        "result": {
+          "text": ""
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 24965,
     "datum": "2026-02-08 10:54:00",
     "country_id": 1,
@@ -63,6 +117,60 @@
     "neigung": 33,
     "aspect": 2,
     "exposition": 2
+  },
+  {
+    "profil_id": 24969,
+    "datum": "2026-02-07 14:30:00",
+    "country_id": 1,
+    "region_id": 2,
+    "subregion_id": 82,
+    "ort": "Liechelkopf",
+    "seehoehe": 1900,
+    "latitude": 47.29821,
+    "longitude": 10.19276,
+    "hangneigung": 32,
+    "exposition_id": 1,
+    "loggedon": "2026-02-08 19:39:24",
+    "revision": 1,
+    "location": "Liechelkopf",
+    "elevation": 1900,
+    "slope": 32,
+    "neigung": 32,
+    "aspect": 1,
+    "exposition": 1,
+    "comments": "ECTP 26@48.0cm: plötzlicher Bruch (P) (ganzer Block)\nECTN 20@90.0cm: Teilbruch (N)\nECTP 26@49.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 26,
+        "height": 48,
+        "result": {
+          "text": "propagation (P)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 20,
+        "height": 90,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 26,
+        "height": 49,
+        "result": {
+          "text": "propagation (P)"
+        }
+      }
+    ]
   },
   {
     "profil_id": 24942,
