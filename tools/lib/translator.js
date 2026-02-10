@@ -44,7 +44,10 @@ function hashText(text) {
 async function translateText(text, options = {}, retries = 3) {
     const format = options.format || 'text';
     const apiKey = process.env.GCP_TRANSLATE_KEY || process.env.GOOGLE_TRANSLATE_KEY;
-    if (!apiKey) return null;
+    if (!apiKey) {
+        log.warn('Translation skipped: GCP_TRANSLATE_KEY/GOOGLE_TRANSLATE_KEY not found in environment variables.');
+        return null;
+    }
     if (!text || text.length < 2) return null;
 
     const key = hashText(text + '|' + format);
