@@ -11,142 +11,183 @@ const OUTPUT_FILE = path.join(__dirname, '../data/weather_archive.json');
 // --- Fetching Logic ---
 
 const main = async () => {
-    log.info('Fetching LWD Bayern Weather Report via Puppeteer...');
+    const maxRetries = 3;
 
-    // Launch Puppeteer (headless)
-    const browser = await puppeteer.launch({
-        headless: "new",
-        args: ['--no-sandbox', '--disable-setuid-sandbox'] // Required for some CI environments
-    });
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        let browser = null;
 
-    try {
-        const page = await browser.newPage();
-        // Go directly to the iframe source for cleaner DOM, or the main page?
-        // Main page might be heavier. Let's try iframe source which we found earlier.
-        // Url: https://lawinenwarndienst.bayern.de/webclient/weather-report
-        await page.goto('https://lawinenwarndienst.bayern.de/webclient/weather-report', {
-            waitUntil: 'networkidle0',
-            timeout: 60000
-        });
-
-        // Wait for the content to appear
-        const selector = '.panel-body.weather-report.lwdb-p';
         try {
-            await page.waitForSelector(selector, { timeout: 10000 });
+            log.info(`Fetching LWD Bayern Weather Report via Puppeteer (attempt ${attempt}/${maxRetries})...`);
+
+            // Launch Puppeteer with improved CI stability settings
+            browser = await puppeteer.launch({
+                headless: true,
+                args: [
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',  // Prevents shared memory issues in containers
+                    '--disable-gpu',
+                    '--disable-software-rasterizer',
+                    '--single-process'  // Better for CI environments
+                ]
+            });
+
+            const page = await browser.newPage();
+
+            // Set a reasonable viewport
+            await page.setViewport({ width: 1280, height: 720 });
+
+            // Navigate with increased timeout and retry on detachment
+            const url = 'https://lawinenwarndienst.bayern.de/webclient/weather-report';
+            let navigationSuccess = false;
+
+            for (let navAttempt = 1; navAttempt <= 2; navAttempt++) {
+                try {
+                    await page.goto(url, {
+                        waitUntil: 'networkidle0',
+                        timeout: 90000  // Increased from 60s to 90s
+                    });
+                    navigationSuccess = true;
+                    break;
+                } catch (navError) {
+                    if (navError.message.includes('detached') && navAttempt === 1) {
+                        log.warn('Frame detached during navigation, retrying in 5s...');
+                        await new Promise(r => setTimeout(r, 5000));
+                    } else {
+                        throw navError;
+                    }
+                }
+            }
+
+            if (!navigationSuccess) {
+                throw new Error('Failed to navigate after frame detachment retry');
+            }
+
+            // Wait for the content to appear
+            const selector = '.panel-body.weather-report.lwdb-p';
+            try {
+                await page.waitForSelector(selector, { timeout: 10000 });
+            } catch (e) {
+                log.info('Specific selector not found, trying general weather-report class...');
+                // Fallback
+            }
+
+            // Extract HTML content
+            const content = await page.evaluate(() => {
+                const el = document.querySelector('.panel-body.weather-report.lwdb-p') || document.querySelector('.weather-report');
+                return el ? el.outerHTML : null;
+            });
+
+            if (!content) {
+                log.info('No weather report content found.');
+                await browser.close();
+                return;
+            }
+
+            // Extract Date for Archiving
+            let datePart, timePart;
+            const germanDateMatch = content.match(/(\d{2}\.\d{2}\.\d{4}), um (\d{2}\.\d{2}) Uhr/);
+            const englishDateMatch = content.match(/(\d{2}\.\d{2}\.\d{4}), at (\d{1,2}\.\d{2}) (a\.m\.|p\.m\.)/);
+
+            let issuedDate;
+
+            if (germanDateMatch) {
+                // 12.01.2026, 14.30
+                datePart = germanDateMatch[1];
+                timePart = germanDateMatch[2];
+                const [day, month, year] = datePart.split('.');
+                const [hour, minute] = timePart.split('.');
+                issuedDate = new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
+            } else if (englishDateMatch) {
+                datePart = englishDateMatch[1];
+                const timeRaw = englishDateMatch[2];
+                const ampm = englishDateMatch[3];
+                const [day, month, year] = datePart.split('.');
+                let [hour, minute] = timeRaw.split('.').map(Number);
+                if (ampm === 'p.m.' && hour !== 12) hour += 12;
+                if (ampm === 'a.m.' && hour === 12) hour = 0;
+                issuedDate = new Date(`${year}-${month}-${day}T${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:00`);
+            } else {
+                log.info('Could not parse date from content.');
+                log.info(content.substring(0, 300));
+                await browser.close();
+                return;
+            }
+
+            log.info(`Report Issued: ${issuedDate.toLocaleString()}`);
+
+            const hour = issuedDate.getHours();
+            let targetDate = new Date(issuedDate);
+            if (hour >= 14) {
+                targetDate.setDate(targetDate.getDate() + 1);
+            }
+            const targetDateStr = targetDate.toISOString().split('T')[0];
+            log.info(`Target Date for Archive: ${targetDateStr}`);
+
+            // Translate
+            log.info('Translating content...');
+            const translatedHtml = await translateText(content, { format: 'html' });
+
+            // Prepare Entry
+            let archive = [];
+            if (fs.existsSync(OUTPUT_FILE)) {
+                archive = JSON.parse(fs.readFileSync(OUTPUT_FILE, 'utf8'));
+            }
+
+            // Format Issued String
+            const dayStr = issuedDate.toLocaleDateString('en-GB', { weekday: 'long' });
+            const dateStr = issuedDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const timeStr = issuedDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }).replace(':', '.');
+            const formattedIssued = `${dayStr}, ${dateStr}, at ${timeStr}`;
+
+            const newEntry = {
+                date: targetDateStr,
+                title: `Mountain Weather Report (${targetDateStr})`,
+                issued: formattedIssued,
+                html_content: content,
+                translated_content: translatedHtml || content,
+                fetched_at: new Date().toISOString()
+            };
+
+            const existingIndex = archive.findIndex(a => a.date === targetDateStr);
+            if (existingIndex >= 0) {
+                log.info(`Updating existing entry for ${targetDateStr}`);
+                archive[existingIndex] = newEntry;
+            } else {
+                log.info(`Creating new entry for ${targetDateStr}`);
+                archive.push(newEntry);
+                archive.sort((a, b) => b.date.localeCompare(a.date));
+            }
+
+            fs.writeFileSync(OUTPUT_FILE, JSON.stringify(archive, null, 2));
+            log.info(`Weather archive updated successfully.`);
+
+            await browser.close();
+            return; // Success - exit retry loop
+
         } catch (e) {
-            log.info('Specific selector not found, trying general weather-report class...');
-            // Fallback
+            log.error(`Attempt ${attempt}/${maxRetries} failed:`, e.message);
+
+            // Ensure browser is closed on error
+            if (browser) {
+                try {
+                    await browser.close();
+                } catch (closeError) {
+                    // Ignore close errors
+                }
+            }
+
+            // If this was the last attempt, throw the error
+            if (attempt === maxRetries) {
+                log.error('All retry attempts exhausted. Weather fetch failed.');
+                throw e;
+            }
+
+            // Exponential backoff: 2s, 4s, 8s
+            const delay = Math.pow(2, attempt) * 1000;
+            log.info(`Retrying in ${delay}ms...`);
+            await new Promise(r => setTimeout(r, delay));
         }
-
-        // Extract HTML content
-        const content = await page.evaluate(() => {
-            const el = document.querySelector('.panel-body.weather-report.lwdb-p') || document.querySelector('.weather-report');
-            return el ? el.outerHTML : null;
-        });
-
-        if (!content) {
-            log.info('No weather report content found.');
-            await browser.close();
-            return;
-        }
-
-        // Extract Text for Translation (stripping extraction container tags if needed, but keeping inner structure)
-        // Actually, we want to translate the *content*. 
-        // For simplicity, let's translate the raw HTML string if Google API supports it (it does, format: 'html').
-        // This preserves <br> and formatting.
-
-        // Extract Date for Archiving
-        // We can use regex on the content string.
-        // "on Sunday, 11.01.2026, at 2.30 p.m." OR German "am Montag, den 12.01.2026, um 14.30 Uhr"
-        // The regex needs to handle German locale now since we are potentially getting German text directly?
-        // Wait, the "webclient-light" URL might serve German.
-        // Let's assume German date format based on user sample: 
-        // "am Montag, den 12.01.2026, um 14.30 Uhr"
-
-        let datePart, timePart;
-        const germanDateMatch = content.match(/(\d{2}\.\d{2}\.\d{4}), um (\d{2}\.\d{2}) Uhr/);
-        const englishDateMatch = content.match(/(\d{2}\.\d{2}\.\d{4}), at (\d{1,2}\.\d{2}) (a\.m\.|p\.m\.)/);
-
-        let issuedDate;
-
-        if (germanDateMatch) {
-            // 12.01.2026, 14.30
-            datePart = germanDateMatch[1];
-            timePart = germanDateMatch[2];
-            const [day, month, year] = datePart.split('.');
-            const [hour, minute] = timePart.split('.');
-            issuedDate = new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
-        } else if (englishDateMatch) {
-            datePart = englishDateMatch[1];
-            const timeRaw = englishDateMatch[2];
-            const ampm = englishDateMatch[3];
-            const [day, month, year] = datePart.split('.');
-            let [hour, minute] = timeRaw.split('.').map(Number);
-            if (ampm === 'p.m.' && hour !== 12) hour += 12;
-            if (ampm === 'a.m.' && hour === 12) hour = 0;
-            issuedDate = new Date(`${year}-${month}-${day}T${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:00`);
-        } else {
-            log.info('Could not parse date from content.');
-            log.info(content.substring(0, 300));
-            // Fallback to now? No, risky for archive.
-            await browser.close();
-            return;
-        }
-
-        log.info(`Report Issued: ${issuedDate.toLocaleString()}`);
-
-        const hour = issuedDate.getHours();
-        let targetDate = new Date(issuedDate);
-        if (hour >= 14) {
-            targetDate.setDate(targetDate.getDate() + 1);
-        }
-        const targetDateStr = targetDate.toISOString().split('T')[0];
-        log.info(`Target Date for Archive: ${targetDateStr}`);
-
-
-        // Translate
-        log.info('Translating content...');
-        // We translate the whole HTML block.
-        const translatedHtml = await translateText(content, { format: 'html' });
-
-        // Prepare Entry
-        let archive = [];
-        if (fs.existsSync(OUTPUT_FILE)) {
-            archive = JSON.parse(fs.readFileSync(OUTPUT_FILE, 'utf8'));
-        }
-
-        // Format Issued String (e.g. "Monday, 12.01.2026, at 14.30")
-        const dayStr = issuedDate.toLocaleDateString('en-GB', { weekday: 'long' });
-        const dateStr = issuedDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        const timeStr = issuedDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }).replace(':', '.');
-        const formattedIssued = `${dayStr}, ${dateStr}, at ${timeStr}`;
-
-        const newEntry = {
-            date: targetDateStr,
-            title: `Mountain Weather Report (${targetDateStr})`,
-            issued: formattedIssued,
-            html_content: content,
-            translated_content: translatedHtml || content, // Fallback to original
-            fetched_at: new Date().toISOString()
-        };
-
-        const existingIndex = archive.findIndex(a => a.date === targetDateStr);
-        if (existingIndex >= 0) {
-            log.info(`Updating existing entry for ${targetDateStr}`);
-            archive[existingIndex] = newEntry;
-        } else {
-            log.info(`Creating new entry for ${targetDateStr}`);
-            archive.push(newEntry);
-            archive.sort((a, b) => b.date.localeCompare(a.date));
-        }
-
-        fs.writeFileSync(OUTPUT_FILE, JSON.stringify(archive, null, 2));
-        log.info(`Weather archive updated.`);
-
-    } catch (e) {
-        log.error('Error fetching weather:', e);
-    } finally {
-        await browser.close();
     }
 };
 
