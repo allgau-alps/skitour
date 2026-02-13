@@ -68,7 +68,7 @@ function generateIndexPage(title, relativePath, links, isIncident = false, backL
     <div class="container">
         <header>
             <div class="header-content">
-                <a href="${relativePath}index.html" class="logo">Skitour Allgäu</a>
+                <a href="/skitour/index.html" class="logo">Skitour Allgäu</a>
                 <div class="date-nav"><span>${title}</span></div>
             </div>
         </header>
@@ -133,7 +133,7 @@ function generateProfileDetailPage(p, profileImageBaseName, relativePath, backLi
 </head>
 <body>
     <div class="container">
-        <header><div class="header-content"><a href="${relativePath}index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Snow Profiles</span></div></div></header>
+        <header><div class="header-content"><a href="/skitour/index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Snow Profiles</span></div></div></header>
         
         ${backLink ? `<a href="${backLink}" id="dynamic-back-link" class="back-link">&larr; Back</a>` : ''}
 
@@ -212,7 +212,7 @@ function generateWeatherPage(w, content) {
 </head>
 <body>
     <div class="container">
-        <header><div class="header-content"><a href="../index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Mountain Weather</span></div></div></header>
+        <header><div class="header-content"><a href="/skitour/index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Mountain Weather</span></div></div></header>
         <div style="margin-bottom:1rem;"><a href="#" onclick="history.back(); return false;">&larr; Back</a></div>
         <h1>Mountain Weather Report</h1>
         <h2 style="color: #666; font-weight: 400;">${w.date} (Issued: ${w.issued})</h2>
@@ -248,7 +248,7 @@ function generateIncidentWeatherPage(inc, weatherHtml, historicText, dailyWeathe
 </head>
 <body>
     <div class="container">
-        <header><div class="header-content"><a href="../index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Weather Context</span></div></div></header>
+        <header><div class="header-content"><a href="/skitour/index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Weather Context</span></div></div></header>
         <div style="margin-bottom:1rem;"><a href="index.html">&larr; Back to Incidents</a></div>
         
         <h1>Weather Context</h1>
@@ -366,7 +366,7 @@ function generateIncidentPage(inc, imagesHtml, weatherLink, profilesHtml, relati
     <div class="container">
         <header>
              <div class="header-content">
-                <a href="../index.html" class="logo">Skitour Allgäu</a>
+                <a href="/skitour/index.html" class="logo">Skitour Allgäu</a>
                 <div class="date-nav"><span>Avalanche Incidents</span></div>
              </div>
         </header>
@@ -504,7 +504,7 @@ function generateGroundConditionsPage(data) {
     <div class="container">
         <header>
              <div class="header-content">
-                <a href="../index.html" class="logo">Skitour Allgäu</a>
+                <a href="/skitour/index.html" class="logo">Skitour Allgäu</a>
                 <div class="date-nav"><span>Ground Conditions</span></div>
              </div>
         </header>
@@ -818,7 +818,7 @@ function generateUploadPage() {
     <div class="container">
         <header>
             <div class="header-content">
-                <a href="../../index.html" class="logo">Skitour Allgäu</a>
+                <a href="/skitour/index.html" class="logo">Skitour Allgäu</a>
                 <div class="date-nav"><span>Submit Report</span></div>
             </div>
         </header>
@@ -1282,7 +1282,7 @@ function generateWebcamPage(webcams) {
                         <div class="container">
                             <header>
                                 <div class="header-content">
-                                    <a href="../../index.html" class="logo">Skitour Allgäu</a>
+                                    <a href="/skitour/index.html" class="logo">Skitour Allgäu</a>
                                     <div class="date-nav"><span>Webcams</span></div>
                                 </div>
                             </header>
@@ -1425,7 +1425,7 @@ function generateUserUploadDetailPage(upload) {
                                             <div class="container">
                                                 <header>
                                                     <div class="header-content">
-                                                        <a href="../../../index.html" class="logo">Skitour Allgäu</a>
+                                                        <a href="/skitour/index.html" class="logo">Skitour Allgäu</a>
                                                         <div class="date-nav"><span>Report Detail</span></div>
                                                     </div>
                                                 </header>
