@@ -21,7 +21,16 @@ The site is updated automatically **3 times per day** (06:00, 14:00, 18:00 CET) 
 3.  **Deploy**: Commits changes to the `master` branch, triggering a GitHub Pages deployment.
 
 ### Secrets
-*   `GCP_TRANSLATE_KEY`: Required for translating avalanche problems and profile comments.
+*   `GCP_TRANSLATE_KEY`: Required for translating avalanche problems, profile comments, and weather reports (German → English).
+    *   **Note**: The secret value should contain **only the API key**, not `GCP_TRANSLATE_KEY=your_key_here`.
+    *   Example: `AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`
+
+### Weather Fetch Reliability
+The `fetch_weather_report.js` script includes robust error handling for CI environments:
+*   **Retry Logic**: 3 attempts with exponential backoff (2s, 4s, 8s delays)
+*   **Browser Stability**: Optimized Puppeteer configuration for containerized environments
+*   **Frame Detachment Recovery**: Automatic retry on navigation failures
+*   **Extended Timeout**: 90-second navigation timeout for slow connections
 
 ---
 
@@ -67,7 +76,7 @@ For detailed architectural documentation:
 1.  **Install**: `npm install`
 2.  **Configuration**: Create a `.env` file with your keys:
     ```env
-    GOOGLE_TRANSLATE_KEY=your_key_here
+    GCP_TRANSLATE_KEY=your_api_key_here
     ```
 3.  **Fetch Data**: `npm run fetch:all`
 4.  **Build**: `npm run build`

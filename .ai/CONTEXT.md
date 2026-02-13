@@ -10,6 +10,9 @@ The **Avalanche Archiver** is a Node.js-based system that:
 3.  **Builds** a static HTML website to browse this historical data.
 4.  **Visualize**: Uses **MapLibre GL JS** for all interactive maps (Planning, Incidents, Snow Depth). Leaflet is deprecated and not used.
 
+## Navigation Structure
+All pages use **absolute paths** for the header logo link (`/skitour/index.html`) to ensure consistent navigation to the site root, regardless of page depth. This works correctly on GitHub Pages (`https://allgau-alps.github.io/skitour/`).
+
 ## System Map (Mermaid)
 
 ```mermaid
