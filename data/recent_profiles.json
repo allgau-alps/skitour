@@ -20,6 +20,7 @@
     "aspect": 5,
     "exposition": 5,
     "comments": "ECTN 18@24.0cm: Teilbruch (N)\nECTP 19@0.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "comments_en": "ECTN 18@24.0cm: Partial fracture (N)\nECTP 19@0.0cm: Sudden fracture (P) (entire block)",
     "stability_tests": [
       {
         "type": {
@@ -64,6 +65,7 @@
     "aspect": 8,
     "exposition": 8,
     "comments": "ECTN 6@102.0cm: Teilbruch (N)\nECTN 15@90.0cm: Teilbruch (N)\nECTN 26@85.0cm: Teilbruch (N)\n\nUntergrund: Gras",
+    "comments_en": "ECTN 6@102.0cm: Partial fracture (N)\n\nECTN 15@90.0cm: Partial fracture (N)\n\nECTN 26@85.0cm: Partial fracture (N)\n\nSubstrate: Grass",
     "stability_tests": [
       {
         "type": {
@@ -118,6 +120,7 @@
     "aspect": 2,
     "exposition": 2,
     "comments": "ECTP 26@40.0cm: plötzlicher Bruch (P) (ganzer Block)\nECT 31: kein Bruch\nECT 31: kein Bruch\n\nSchneeprofil zu Schulungszwecken\n0-5cm Schmelzkruste vermutlich noch vom Schneefall Ende November/ Anfang Dezember\n5-50cm markante grieselige Schwachschicht mit teilweise beginnenden deutlich zu erkennenden Becherkristallen\n50-80cm überraschend homogene Schicht vom Schneefall der ersten und zweiten Januarwoche\n80-100cm Schneefall Ende Januar\n100-105 leichter Schneefall am 06. Februar",
+    "comments_en": "ECTP 26@40.0cm: Sudden fracture (P) (entire block)\n\nECT 31: No fracture\n\nECT 31: No fracture\n\nSnow profile for training purposes\n\n0-5cm Melt crust, presumably from snowfall at the end of November/beginning of December\n\n5-50cm Distinct, granular weak layer with some clearly visible cup crystals beginning to form\n\n50-80cm Surprisingly homogeneous layer from snowfall during the first and second weeks of January\n\n80-100cm Snowfall at the end of January\n\n100-105cm Light snowfall on February 6th",
     "stability_tests": [
       {
         "type": {
@@ -193,6 +196,7 @@
     "aspect": 1,
     "exposition": 1,
     "comments": "ECTP 26@48.0cm: plötzlicher Bruch (P) (ganzer Block)\nECTN 20@90.0cm: Teilbruch (N)\nECTP 26@49.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "comments_en": "ECTP 26@48.0cm: Sudden break (P) (entire block)\nECTN 20@90.0cm: Partial break (N)\nECTP 26@49.0cm: Sudden break (P) (entire block)",
     "stability_tests": [
       {
         "type": {
@@ -247,6 +251,7 @@
     "aspect": 1,
     "exposition": 1,
     "comments": "Thermometer nicht dabei - deshalb ohne Temperatur\nECTN 4@69.0cm: Teilbruch (N)\nECTN 10@69.0cm: Teilbruch (N)\nECTN 13@63.0cm: Teilbruch (N)",
+    "comments_en": "Thermometer not included - therefore no temperature given\nECTN 4@69.0cm: Partial fraction (N)\nECTN 10@69.0cm: Partial fraction (N)\nECTN 13@63.0cm: Partial fraction (N)",
     "stability_tests": [
       {
         "type": {
@@ -301,6 +306,7 @@
     "aspect": 3,
     "exposition": 3,
     "comments": "Osthang ohne direkte Sonneneinstrahlung im Tagesverlauf.\n\nSchneeoberfläche: Filz, Graupel und Oberflächenreif.\n\nBergwacht Kempten Ausbildungsskitour.\n\n\n\nECTN 14@64.0cm: Teilbruch (N)\nECTN 14@64.0cm: Teilbruch (N)\nECTN 12@64.0cm: Teilbruch (N)\nECTN 29@29.0cm: Teilbruch (N)\nECT 31: kein Bruch",
+    "comments_en": "East-facing slope with no direct sunlight throughout the day.\n\nSnow surface: mellow, graupel, and surface hoar.\n\nKempten Mountain Rescue Service training ski tour.\n\nECTN 14@64.0cm: Partial fracture (N)\n\nECTN 14@64.0cm: Partial fracture (N)\n\nECTN 12@64.0cm: Partial fracture (N)\n\nECTN 29@29.0cm: Partial fracture (N)\n\nECTN 31: No fracture",
     "stability_tests": [
       {
         "type": {
@@ -375,6 +381,7 @@
     "aspect": 1,
     "exposition": 1,
     "comments": "ECTN 14@67.0cm: Teilbruch (N)\n\nTrotz kleinräumig unterschiedlicher Expositionen reine Nordhangcharakteristik: ganztags keine Sonneneinstrahlung, ausgeprägter Kaltluftsee.",
+    "comments_en": "ECTN 14@67.0cm: Partial fracture (N)\n\nDespite small-scale variations in aspect, it exhibits pure north-facing characteristics: no solar radiation throughout the day, pronounced cold air pool.",
     "stability_tests": [
       {
         "type": {
@@ -409,6 +416,7 @@
     "aspect": 3,
     "exposition": 3,
     "comments": "Fortbildung \"Schneephysik\" - Lawinenwarndienst Bayern.\n\nStark eingewehter Osthang. Abfolge von Schichten mit Triebschnee und aufbauender Umwandlung.\n\nECTN 23@285.0cm: Teilbruch (N)",
+    "comments_en": "Advanced training course \"Snow Physics\" - Bavarian Avalanche Warning Service.\n\nHeavily wind-blown east-facing slope. Sequence of layers with wind-drifted snow and constructive metamorphism.\n\nECTN 23@285.0 cm: Partial fracture (N)",
     "stability_tests": [
       {
         "type": {
@@ -443,6 +451,7 @@
     "aspect": 1,
     "exposition": 1,
     "comments": "ECTN 22@80.0cm: Teilbruch (N)\nECTP 24@80.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "comments_en": "ECTN 22@80.0cm: Partial fracture (N)\nECTP 24@80.0cm: Sudden fracture (P) (entire block)",
     "stability_tests": [
       {
         "type": {
@@ -487,6 +496,7 @@
     "aspect": 1,
     "exposition": 1,
     "comments": "ECTN 7@65.0cm: Teilbruch (N)\nECTP 12@65.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "comments_en": "ECTN 7@65.0cm: Partial fracture (N)\nECTP 12@65.0cm: Sudden fracture (P) (entire block)",
     "stability_tests": [
       {
         "type": {
@@ -531,6 +541,7 @@
     "aspect": 7,
     "exposition": 7,
     "comments": "ECTP 27@41.0cm: plötzlicher Bruch (P) (ganzer Block)\nECTN 5@49.0cm: Teilbruch (N)\nECTN 7@43.0cm: Teilbruch (N)",
+    "comments_en": "ECTP 27@41.0cm: Sudden break (P) (entire block)\nECTN 5@49.0cm: Partial break (N)\nECTN 7@43.0cm: Partial break (N)",
     "stability_tests": [
       {
         "type": {
@@ -585,6 +596,7 @@
     "aspect": 7,
     "exposition": 7,
     "comments": "ECTP 4@54.0cm: plötzlicher Bruch (P) (ganzer Block)\nECTP 3@54.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "comments_en": "ECTP 4@54.0cm: sudden break (P) (entire block)\nECTP 3@54.0cm: sudden break (P) (entire block)",
     "stability_tests": [
       {
         "type": {
@@ -629,6 +641,7 @@
     "aspect": 5,
     "exposition": 5,
     "comments": "ECTN 9@42.0cm: Teilbruch (N)\nECTP 14@21.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "comments_en": "ECTN 9@42.0cm: Partial fracture (N)\nECTP 14@21.0cm: Sudden fracture (P) (entire block)",
     "stability_tests": [
       {
         "type": {
@@ -673,6 +686,7 @@
     "aspect": 1,
     "exposition": 1,
     "comments": "ECTP 14@13.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "comments_en": "ECTP 14@13.0cm: sudden break (P) (entire block)",
     "stability_tests": [
       {
         "type": {
