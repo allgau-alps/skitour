@@ -307,7 +307,7 @@ function buildProfilePages() {
 </head>
 <body>
     <div class="container">
-        <header><div class="header-content"><a href="../index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Snow Profiles</span></div></div></header>
+        <header><div class="header-content"><a href="/skitour/index.html" class="logo">Skitour Allgäu</a><div class="date-nav"><span>Snow Profiles</span></div></div></header>
         
         <h1>Latest Snow Profiles (Last 21 Days)</h1>
 

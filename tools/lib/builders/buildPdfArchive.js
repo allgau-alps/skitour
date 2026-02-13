@@ -264,7 +264,7 @@ function buildPdfArchive() {
     <div class="container">
         <header>
             <div class="header-content">
-                <a href="../../../index.html" class="logo">Skitour Allgäu</a>
+                <a href="/skitour/index.html" class="logo">Skitour Allgäu</a>
                 <div class="date-nav"><span>${config.label}</span></div>
             </div>
         </header>
@@ -325,7 +325,7 @@ function buildPdfArchive() {
     <div class="container">
         <header>
             <div class="header-content">
-                <a href="../index.html" class="logo">Skitour Allgäu</a>
+                <a href="/skitour/index.html" class="logo">Skitour Allgäu</a>
                 <div class="date-nav"><span>Avalanche Forecasts</span></div>
             </div>
         </header>
