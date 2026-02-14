@@ -1,5 +1,40 @@
 [
   {
+    "profil_id": 25068,
+    "datum": "2026-02-14 11:54:00",
+    "country_id": 1,
+    "region_id": 1,
+    "subregion_id": 158,
+    "ort": "Krinnenalpe",
+    "seehoehe": 1640,
+    "latitude": 47.47906,
+    "longitude": 10.58043,
+    "hangneigung": 34,
+    "exposition_id": 1,
+    "loggedon": "2026-02-14 18:20:05",
+    "revision": 1,
+    "location": "Krinnenalpe",
+    "elevation": 1640,
+    "slope": 34,
+    "neigung": 34,
+    "aspect": 1,
+    "exposition": 1,
+    "comments": "RB 5@83.0cm: Teilbruch\nECTN 22@57.0cm: Teilbruch (N)\nSchmelzkanäle zw. 60cm & 40cm\nUntergrund: Wiese",
+    "comments_en": "RB 5@83.0cm: Partial fracture\nECTN 22@57.0cm: Partial fracture (N)\nMelt channels between 60cm and 40cm\nSubsoil: Grass",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 22,
+        "height": 57,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 25061,
     "datum": "2026-02-14 11:50:00",
     "country_id": 1,
