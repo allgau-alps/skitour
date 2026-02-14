@@ -1,5 +1,60 @@
 [
   {
+    "profil_id": 25061,
+    "datum": "2026-02-14 11:50:00",
+    "country_id": 1,
+    "region_id": 1,
+    "subregion_id": 164,
+    "ort": "Kälberlahnzug",
+    "seehoehe": 2366,
+    "latitude": 47.19657,
+    "longitude": 10.35644,
+    "hangneigung": 34,
+    "exposition_id": 5,
+    "loggedon": "2026-02-14 14:40:25",
+    "revision": 1,
+    "location": "Kälberlahnzug",
+    "elevation": 2366,
+    "slope": 34,
+    "neigung": 34,
+    "aspect": 5,
+    "exposition": 5,
+    "comments": "ECTP 0@43.0cm: plötzlicher Bruch (P) (ganzer Block)\nECTP 4@43.0cm: plötzlicher Bruch (P) (ganzer Block)\nECTN 2@49.0cm: Teilbruch (N)",
+    "comments_en": "ECTP 0@43.0cm: Sudden break (P) (entire block)\nECTP 4@43.0cm: Sudden break (P) (entire block)\nECTN 2@49.0cm: Partial break (N)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 0,
+        "height": 43,
+        "result": {
+          "text": "propagation (P)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 4,
+        "height": 43,
+        "result": {
+          "text": "propagation (P)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 2,
+        "height": 49,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 24967,
     "datum": "2026-02-08 14:03:00",
     "country_id": 1,
