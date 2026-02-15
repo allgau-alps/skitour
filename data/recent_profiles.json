@@ -1,5 +1,50 @@
 [
   {
+    "profil_id": 25072,
+    "datum": "2026-02-15 13:00:00",
+    "country_id": 1,
+    "region_id": 1,
+    "subregion_id": 158,
+    "ort": "Jöchelspitze",
+    "seehoehe": 2080,
+    "latitude": 47.27938,
+    "longitude": 10.36217,
+    "hangneigung": 32,
+    "exposition_id": 2,
+    "loggedon": "2026-02-15 14:51:55",
+    "revision": 1,
+    "location": "Jöchelspitze",
+    "elevation": 2080,
+    "slope": 32,
+    "neigung": 32,
+    "aspect": 2,
+    "exposition": 2,
+    "comments": "ECTP 7@61.0cm: plötzlicher Bruch (P) (ganzer Block)\nECTP 12@20.0cm: plötzlicher Bruch (P) (ganzer Block)\nProfilstandort an Übergang in eine Mulde",
+    "comments_en": "ECTP 7@61.0cm: Sudden break (P) (entire block)\nECTP 12@20.0cm: Sudden break (P) (entire block)\nProfile location at the transition to a trough",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 7,
+        "height": 61,
+        "result": {
+          "text": "propagation (P)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 12,
+        "height": 20,
+        "result": {
+          "text": "propagation (P)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 25068,
     "datum": "2026-02-14 11:54:00",
     "country_id": 1,
@@ -784,41 +829,6 @@
         },
         "step": 14,
         "height": 13,
-        "result": {
-          "text": "propagation (P)"
-        }
-      }
-    ]
-  },
-  {
-    "profil_id": 24684,
-    "datum": "2026-01-25 10:10:00",
-    "country_id": 1,
-    "region_id": 1,
-    "subregion_id": 158,
-    "ort": "Lechleiter Alm",
-    "seehoehe": 1773,
-    "latitude": 47.27034,
-    "longitude": 10.20819,
-    "hangneigung": 30,
-    "exposition_id": 2,
-    "loggedon": "2026-01-25 18:05:48",
-    "revision": 1,
-    "location": "Lechleiter Alm",
-    "elevation": 1773,
-    "slope": 30,
-    "neigung": 30,
-    "aspect": 2,
-    "exposition": 2,
-    "comments": "ECTP 0@88.0cm: plötzlicher Bruch (P) (ganzer Block)",
-    "comments_en": "ECTP 0@88.0cm: sudden break (P) (entire block)",
-    "stability_tests": [
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 0,
-        "height": 88,
         "result": {
           "text": "propagation (P)"
         }
