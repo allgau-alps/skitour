@@ -1,5 +1,40 @@
 [
   {
+    "profil_id": 25159,
+    "datum": "2026-02-20 12:30:00",
+    "country_id": 4,
+    "region_id": 17,
+    "subregion_id": 296,
+    "ort": "Rangiswangerhorn",
+    "seehoehe": 1470,
+    "latitude": 47.479,
+    "longitude": 10.20542,
+    "hangneigung": 31,
+    "exposition_id": 3,
+    "loggedon": "2026-02-20 17:59:54",
+    "revision": 2,
+    "location": "Rangiswangerhorn",
+    "elevation": 1470,
+    "slope": 31,
+    "neigung": 31,
+    "aspect": 3,
+    "exposition": 3,
+    "comments": "ECT 31: kein Bruch",
+    "comments_en": "ECT 31: no fracture",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 31,
+        "height": null,
+        "result": {
+          "text": ""
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 25111,
     "datum": "2026-02-18 09:50:00",
     "country_id": 1,
@@ -794,86 +829,6 @@
         },
         "step": 3,
         "height": 54,
-        "result": {
-          "text": "propagation (P)"
-        }
-      }
-    ]
-  },
-  {
-    "profil_id": 24804,
-    "datum": "2026-01-30 13:20:00",
-    "country_id": 1,
-    "region_id": 1,
-    "subregion_id": 158,
-    "ort": "Jöchelspitze Standprofil",
-    "seehoehe": 1697,
-    "latitude": 47.27399,
-    "longitude": 10.36569,
-    "hangneigung": 3,
-    "exposition_id": 5,
-    "loggedon": "2026-01-30 19:33:37",
-    "revision": 2,
-    "location": "Jöchelspitze Standprofil",
-    "elevation": 1697,
-    "slope": 3,
-    "neigung": 3,
-    "aspect": 5,
-    "exposition": 5,
-    "comments": "ECTN 9@42.0cm: Teilbruch (N)\nECTP 14@21.0cm: plötzlicher Bruch (P) (ganzer Block)",
-    "comments_en": "ECTN 9@42.0cm: Partial fracture (N)\nECTP 14@21.0cm: Sudden fracture (P) (entire block)",
-    "stability_tests": [
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 9,
-        "height": 42,
-        "result": {
-          "text": "no propagation (N)"
-        }
-      },
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 14,
-        "height": 21,
-        "result": {
-          "text": "propagation (P)"
-        }
-      }
-    ]
-  },
-  {
-    "profil_id": 24789,
-    "datum": "2026-01-30 11:00:00",
-    "country_id": 1,
-    "region_id": 1,
-    "subregion_id": 165,
-    "ort": "Gümple",
-    "seehoehe": 1950,
-    "latitude": 47.26014,
-    "longitude": 10.43006,
-    "hangneigung": 36,
-    "exposition_id": 1,
-    "loggedon": "2026-01-30 16:38:30",
-    "revision": 1,
-    "location": "Gümple",
-    "elevation": 1950,
-    "slope": 36,
-    "neigung": 36,
-    "aspect": 1,
-    "exposition": 1,
-    "comments": "ECTP 14@13.0cm: plötzlicher Bruch (P) (ganzer Block)",
-    "comments_en": "ECTP 14@13.0cm: sudden break (P) (entire block)",
-    "stability_tests": [
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 14,
-        "height": 13,
         "result": {
           "text": "propagation (P)"
         }
