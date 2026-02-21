@@ -4,7 +4,7 @@ const { fetchJsonWithRetry } = require('./lib/fetcher');
 const { TAWES_STATIONS, PATHS } = require('./lib/config');
 
 const OUTPUT_FILE = PATHS.weatherStations;
-const DATASET = 'tawes-1h-station-messwerte';
+const DATASET = 'klima-v2-1h';
 
 const fetchGeosphere = async () => {
     // 1. Load Existing Data
@@ -28,20 +28,26 @@ const fetchGeosphere = async () => {
     // Fetch last 7 days to match previous logic
     const START_DATE = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000)).toISOString();
 
-    const PARAMS = 'TL,RR,HS,DD,FF,FFX';
-    // TL = Temp, RR = Rain, HS = Snow Height, DD = Wind Dir, FF = Wind Speed, FFX = Gust
-
     const urlParams = new URLSearchParams();
-    urlParams.append('subsequence_start', START_DATE);
+    urlParams.append('start', START_DATE);
+    urlParams.append('end', now.toISOString());
+    urlParams.append('output_format', 'geojson');
     // Add multiple station IDs
     TAWES_STATIONS.forEach(s => urlParams.append('station_ids', s.id));
+
+    const PARAMS = 'tl,rr,sh,dd,ff,ffx';
     PARAMS.split(',').forEach(p => urlParams.append('parameters', p));
 
     const URL = `https://dataset.api.hub.geosphere.at/v1/station/historical/${DATASET}?${urlParams.toString()}`;
     logger.info(`Fetching Austrian Weather Data from ${URL}...`);
 
     try {
-        const response = await fetchJsonWithRetry(URL, { timeout: 20000 });
+        const response = await fetchJsonWithRetry(URL, {
+            timeout: 20000,
+            maxRetries: 3,
+            initialDelay: 1000,
+            backoffMultiplier: 2
+        });
 
         // 3. Process Response
         if (!response.features || !response.timestamps) {
@@ -62,11 +68,11 @@ const fetchGeosphere = async () => {
             // Transform to our format: { TS, HS, TL, ff, ... }
             const dataPoints = [];
             for (let i = 0; i < timestamps.length; i++) {
-                const tl = params.TL && params.TL.data[i] !== null ? params.TL.data[i] : null;
-                const hs = params.HS && params.HS.data[i] !== null ? params.HS.data[i] : null;
-                const rr = params.RR ? params.RR.data[i] : null;
-                const ff = params.FF ? params.FF.data[i] : null;
-                const dd = params.DD ? params.DD.data[i] : null;
+                const tl = params.tl && params.tl.data[i] !== null ? params.tl.data[i] : null;
+                const hs = params.sh && params.sh.data[i] !== null ? params.sh.data[i] : null;
+                const rr = params.rr ? params.rr.data[i] : null;
+                const ff = params.ff ? params.ff.data[i] : null;
+                const dd = params.dd ? params.dd.data[i] : null;
 
                 if (tl !== null || hs !== null || rr !== null || ff !== null) {
                     dataPoints.push({
@@ -91,7 +97,7 @@ const fetchGeosphere = async () => {
             dataPoints.forEach(d => mergedData.set(d.TS, d));
 
             // Sort and Limit
-            const allData = Array.from(mergedData.values()).sort((a, b) => new Date(a.TS) - new Date(b.TS));
+            const allData = Array.from(mergedData.values()).sort((a, b) => new Date(a.TS).getTime() - new Date(b.TS).getTime());
             const recentData = allData.slice(-1100);
 
             // Update/Create Station Entry

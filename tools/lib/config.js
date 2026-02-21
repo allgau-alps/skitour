@@ -48,14 +48,14 @@ const WEATHER_STATIONS = [
 
 // Austrian TAWES Stations
 const TAWES_STATIONS = [
-    { id: '11012', name: 'Warth', lat: 47.2586, lon: 10.1764, elevation: 1478 },
-    { id: '11003', name: 'Schoppernau', lat: 47.3117, lon: 10.0197, elevation: 835 },
-    { id: '11004', name: 'Schröcken', lat: 47.2583, lon: 10.0917, elevation: 1260 },
-    { id: '11010', name: 'Mittelberg', lat: 47.3242, lon: 10.1528, elevation: 1200 },
-    { id: '10908', name: 'Reutte', lat: 47.4836, lon: 10.7183, elevation: 850 },
-    { id: '10915', name: 'Ehrwald', lat: 47.3983, lon: 10.9189, elevation: 994 },
-    { id: '10927', name: 'Tannheim', lat: 47.4994, lon: 10.5186, elevation: 1100 },
-    { id: '10904', name: 'Holzgau', lat: 47.2625, lon: 10.3444, elevation: 1113 }
+    { id: '11305', name: 'Warth', lat: 47.2586, lon: 10.1764, elevation: 1478 },
+    { id: '172', name: 'Schoppernau', lat: 47.3117, lon: 10.0197, elevation: 835 },
+    { id: '173', name: 'Schröcken', lat: 47.2583, lon: 10.0917, elevation: 1260 },
+    { id: '174', name: 'Mittelberg', lat: 47.3242, lon: 10.1528, elevation: 1200 },
+    { id: '76', name: 'Reutte', lat: 47.4836, lon: 10.7183, elevation: 850 },
+    { id: '20', name: 'Ehrwald', lat: 47.3983, lon: 10.9189, elevation: 994 },
+    { id: '11410', name: 'Tannheim', lat: 47.4994, lon: 10.5186, elevation: 1100 },
+    { id: '146', name: 'Holzgau', lat: 47.2625, lon: 10.3444, elevation: 1113 }
 ];
 
 // Region Configuration for Bulletins
