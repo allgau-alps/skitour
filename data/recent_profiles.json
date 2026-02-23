@@ -160,6 +160,51 @@
     ]
   },
   {
+    "profil_id": 25248,
+    "datum": "2026-02-14 11:50:00",
+    "country_id": 1,
+    "region_id": 2,
+    "subregion_id": 286,
+    "ort": "Lech",
+    "seehoehe": 2013,
+    "latitude": 47.21728,
+    "longitude": 10.17844,
+    "hangneigung": 31,
+    "exposition_id": 7,
+    "loggedon": "2026-02-23 17:45:23",
+    "revision": 1,
+    "location": "Lech",
+    "elevation": 2013,
+    "slope": 31,
+    "neigung": 31,
+    "aspect": 7,
+    "exposition": 7,
+    "comments": "ECTP 6@60.0cm: plötzlicher Bruch (P) (ganzer Block)\nECTP 13@35.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "comments_en": "ECTP 6@60.0cm: sudden break (P) (entire block)\nECTP 13@35.0cm: sudden break (P) (entire block)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 6,
+        "height": 60,
+        "result": {
+          "text": "propagation (P)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 13,
+        "height": 35,
+        "result": {
+          "text": "propagation (P)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 25061,
     "datum": "2026-02-14 11:50:00",
     "country_id": 1,
@@ -684,51 +729,6 @@
         },
         "step": 24,
         "height": 80,
-        "result": {
-          "text": "propagation (P)"
-        }
-      }
-    ]
-  },
-  {
-    "profil_id": 24852,
-    "datum": "2026-02-02 13:15:00",
-    "country_id": 1,
-    "region_id": 2,
-    "subregion_id": 286,
-    "ort": "Lechtaler Alpen",
-    "seehoehe": 2200,
-    "latitude": 47.21226,
-    "longitude": 10.18415,
-    "hangneigung": 30,
-    "exposition_id": 1,
-    "loggedon": "2026-02-02 18:23:49",
-    "revision": 1,
-    "location": "Lechtaler Alpen",
-    "elevation": 2200,
-    "slope": 30,
-    "neigung": 30,
-    "aspect": 1,
-    "exposition": 1,
-    "comments": "ECTN 7@65.0cm: Teilbruch (N)\nECTP 12@65.0cm: plötzlicher Bruch (P) (ganzer Block)",
-    "comments_en": "ECTN 7@65.0cm: Partial fracture (N)\nECTP 12@65.0cm: Sudden fracture (P) (entire block)",
-    "stability_tests": [
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 7,
-        "height": 65,
-        "result": {
-          "text": "no propagation (N)"
-        }
-      },
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 12,
-        "height": 65,
         "result": {
           "text": "propagation (P)"
         }
