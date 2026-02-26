@@ -709,40 +709,5 @@
         }
       }
     ]
-  },
-  {
-    "profil_id": 24952,
-    "datum": "2026-02-05 10:30:00",
-    "country_id": 4,
-    "region_id": 17,
-    "subregion_id": 297,
-    "ort": "Nebelhorn (Koblat)",
-    "seehoehe": 2053,
-    "latitude": 47.4204,
-    "longitude": 10.35181,
-    "hangneigung": 31,
-    "exposition_id": 3,
-    "loggedon": "2026-02-07 22:55:23",
-    "revision": 1,
-    "location": "Nebelhorn (Koblat)",
-    "elevation": 2053,
-    "slope": 31,
-    "neigung": 31,
-    "aspect": 3,
-    "exposition": 3,
-    "comments": "Fortbildung \"Schneephysik\" - Lawinenwarndienst Bayern.\n\nStark eingewehter Osthang. Abfolge von Schichten mit Triebschnee und aufbauender Umwandlung.\n\nECTN 23@285.0cm: Teilbruch (N)",
-    "comments_en": "Advanced training course \"Snow Physics\" - Bavarian Avalanche Warning Service.\n\nHeavily wind-blown east-facing slope. Sequence of layers with wind-drifted snow and constructive metamorphism.\n\nECTN 23@285.0 cm: Partial fracture (N)",
-    "stability_tests": [
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 23,
-        "height": 285,
-        "result": {
-          "text": "no propagation (N)"
-        }
-      }
-    ]
   }
 ]
