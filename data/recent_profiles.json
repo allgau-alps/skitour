@@ -1,5 +1,60 @@
 [
   {
+    "profil_id": 25297,
+    "datum": "2026-02-25 09:15:00",
+    "country_id": 1,
+    "region_id": 1,
+    "subregion_id": 158,
+    "ort": "Jöchelspitze Stanprofil",
+    "seehoehe": 1697,
+    "latitude": 47.274,
+    "longitude": 10.36594,
+    "hangneigung": 3,
+    "exposition_id": 5,
+    "loggedon": "2026-02-25 18:58:44",
+    "revision": 1,
+    "location": "Jöchelspitze Stanprofil",
+    "elevation": 1697,
+    "slope": 3,
+    "neigung": 3,
+    "aspect": 5,
+    "exposition": 5,
+    "comments": "ECTN 9@106.0cm: Teilbruch (N)\nECTN 13@72.0cm: Teilbruch (N)\nECT 31: kein Bruch\nGesamte Schneedecke ist Durchfeuchtet",
+    "comments_en": "ECTN 9@106.0cm: Partial fracture (N)\nECTN 13@72.0cm: Partial fracture (N)\nECTN 31: No fracture\nEntire snowpack is saturated with moisture",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 9,
+        "height": 106,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 13,
+        "height": 72,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 31,
+        "height": null,
+        "result": {
+          "text": ""
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 25159,
     "datum": "2026-02-20 12:30:00",
     "country_id": 4,
