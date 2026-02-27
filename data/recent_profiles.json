@@ -1,5 +1,50 @@
 [
   {
+    "profil_id": 25358,
+    "datum": "2026-02-27 12:25:00",
+    "country_id": 1,
+    "region_id": 2,
+    "subregion_id": 289,
+    "ort": "Zuger Hochlicht",
+    "seehoehe": 2280,
+    "latitude": 47.2262,
+    "longitude": 10.09643,
+    "hangneigung": 31,
+    "exposition_id": 8,
+    "loggedon": "2026-02-27 15:07:23",
+    "revision": 3,
+    "location": "Zuger Hochlicht",
+    "elevation": 2280,
+    "slope": 31,
+    "neigung": 31,
+    "aspect": 8,
+    "exposition": 8,
+    "comments": "ECTN 12@150.0cm: Teilbruch (N)\nECTN 21@110.0cm: Teilbruch (N)",
+    "comments_en": "ECTN 12@150.0cm: Partial fraction (N)\nECTN 21@110.0cm: Partial fraction (N)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 12,
+        "height": 150,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 21,
+        "height": 110,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 25344,
     "datum": "2026-02-26 11:00:00",
     "country_id": 1,
