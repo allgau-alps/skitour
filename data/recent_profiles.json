@@ -1,5 +1,50 @@
 [
   {
+    "profil_id": 25344,
+    "datum": "2026-02-26 11:00:00",
+    "country_id": 1,
+    "region_id": 2,
+    "subregion_id": 82,
+    "ort": "Hochalppass",
+    "seehoehe": 2000,
+    "latitude": 47.27453,
+    "longitude": 10.11493,
+    "hangneigung": 30,
+    "exposition_id": 1,
+    "loggedon": "2026-02-26 20:38:48",
+    "revision": 1,
+    "location": "Hochalppass",
+    "elevation": 2000,
+    "slope": 30,
+    "neigung": 30,
+    "aspect": 1,
+    "exposition": 1,
+    "comments": "1. Test: ECTP 13@28.0cm: plötzlicher Bruch (P) (ganzer Block)\n2. Test: ECTP 0@28.0cm: plötzlicher Bruch (P) (ganzer Block)\n\nHöferspitze Nordflanke westlich vom Profilstandort spontan abgegangen (vermutlich letztes WE). Schwimmschneeschicht auf gleicher Höhe West-seitig bereits kantig abgerundet und kleinere Kristalle (https://avalanche-feedback.eu/cockpit/lolaSimpleObservation/68f5ba31-343f-4d07-8b7c-a6ee4284c972).",
+    "comments_en": "1st Test: ECTP 13@28.0cm: sudden fracture (P) (entire block)\n\n2nd Test: ECTP 0@28.0cm: sudden fracture (P) (entire block)\n\nThe north face of the Höferspitze, west of the profile location, spontaneously broke off (presumably last weekend). The layer of loose, shallow snow at the same elevation on the west side is already rounded and contains smaller crystals (https://avalanche-feedback.eu/cockpit/lolaSimpleObservation/68f5ba31-343f-4d07-8b7c-a6ee4284c972).",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 13,
+        "height": 28,
+        "result": {
+          "text": "propagation (P)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 0,
+        "height": 28,
+        "result": {
+          "text": "propagation (P)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 25297,
     "datum": "2026-02-25 09:15:00",
     "country_id": 1,
