@@ -426,50 +426,5 @@
         }
       }
     ]
-  },
-  {
-    "profil_id": 24967,
-    "datum": "2026-02-08 14:03:00",
-    "country_id": 1,
-    "region_id": 1,
-    "subregion_id": 158,
-    "ort": "Jöchelspitze ,Standprofil",
-    "seehoehe": 1697,
-    "latitude": 47.27383,
-    "longitude": 10.36569,
-    "hangneigung": 3,
-    "exposition_id": 5,
-    "loggedon": "2026-02-08 18:16:10",
-    "revision": 1,
-    "location": "Jöchelspitze ,Standprofil",
-    "elevation": 1697,
-    "slope": 3,
-    "neigung": 3,
-    "aspect": 5,
-    "exposition": 5,
-    "comments": "ECTN 18@24.0cm: Teilbruch (N)\nECTP 19@0.0cm: plötzlicher Bruch (P) (ganzer Block)",
-    "comments_en": "ECTN 18@24.0cm: Partial fracture (N)\nECTP 19@0.0cm: Sudden fracture (P) (entire block)",
-    "stability_tests": [
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 18,
-        "height": 24,
-        "result": {
-          "text": "no propagation (N)"
-        }
-      },
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 19,
-        "height": 0,
-        "result": {
-          "text": "propagation (P)"
-        }
-      }
-    ]
   }
 ]
