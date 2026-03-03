@@ -1,5 +1,40 @@
 [
   {
+    "profil_id": 25439,
+    "datum": "2026-03-03 13:30:00",
+    "country_id": 1,
+    "region_id": 2,
+    "subregion_id": 289,
+    "ort": "Toblermannskopf",
+    "seehoehe": 1800,
+    "latitude": 47.28994,
+    "longitude": 10.00742,
+    "hangneigung": 31,
+    "exposition_id": 7,
+    "loggedon": "2026-03-03 16:48:44",
+    "revision": 1,
+    "location": "Toblermannskopf",
+    "elevation": 1800,
+    "slope": 31,
+    "neigung": 31,
+    "aspect": 7,
+    "exposition": 7,
+    "comments": "ECTN 14@185.0cm: Teilbruch (N)",
+    "comments_en": "ECTN 14@185.0cm: Partial fraction (N)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 14,
+        "height": 185,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 25358,
     "datum": "2026-02-27 12:25:00",
     "country_id": 1,
