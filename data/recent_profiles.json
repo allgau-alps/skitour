@@ -1,5 +1,40 @@
 [
   {
+    "profil_id": 25459,
+    "datum": "2026-03-04 14:30:00",
+    "country_id": 1,
+    "region_id": 2,
+    "subregion_id": 82,
+    "ort": "Falzerkopf",
+    "seehoehe": 1940,
+    "latitude": 47.33304,
+    "longitude": 10.04815,
+    "hangneigung": 30,
+    "exposition_id": 7,
+    "loggedon": "2026-03-04 21:38:44",
+    "revision": 1,
+    "location": "Falzerkopf",
+    "elevation": 1940,
+    "slope": 30,
+    "neigung": 30,
+    "aspect": 7,
+    "exposition": 7,
+    "comments": "ECTP 7@0.0cm: plötzlicher Bruch (P) (ganzer Block) dadurch das der Harschdeckel ausreichend Tragfähig ist, ist es für den Schifahrer nicht Störanfällig.",
+    "comments_en": "ECTP 7@0.0cm: sudden fracture (P) (entire block) because the crust is sufficiently load-bearing, it is not prone to disturbance for the skier.",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 7,
+        "height": 0,
+        "result": {
+          "text": "propagation (P)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 25453,
     "datum": "2026-03-04 10:50:00",
     "country_id": 1,
@@ -45,15 +80,15 @@
     "latitude": 47.28994,
     "longitude": 10.00742,
     "hangneigung": 31,
-    "exposition_id": 7,
+    "exposition_id": 3,
     "loggedon": "2026-03-03 16:48:44",
-    "revision": 1,
+    "revision": 2,
     "location": "Toblermannskopf",
     "elevation": 1800,
     "slope": 31,
     "neigung": 31,
-    "aspect": 7,
-    "exposition": 7,
+    "aspect": 3,
+    "exposition": 3,
     "comments": "ECTN 14@185.0cm: Teilbruch (N)",
     "comments_en": "ECTN 14@185.0cm: Partial fraction (N)",
     "stability_tests": [
