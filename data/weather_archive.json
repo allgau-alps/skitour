@@ -1,5 +1,13 @@
 [
   {
+    "date": "2026-03-09",
+    "title": "Mountain Weather Report (2026-03-09)",
+    "issued": "Sunday, 08/03/2026, at 14.30",
+    "html_content": "<div class=\"panel-body weather-report lwdb-p\"><span class=\"lwdb-p-small-weather\">Deutscher Wetterdienst - Regionale Wetterberatung München, ausgegeben</span><br><span class=\"lwdb-p-black lwdb-p-black-weather\">am Sonntag, den 08.03.2026, um 14.30 Uhr</span><br><br><span class=\"lwdb-h2 lwdb-h2-weather-1\">Wetterbericht für den Deutschen Alpenraum:</span><br><br>Hochdruckeinfluss bestimmt zusammen mit milder Luft weiterhin das  Wettergeschehen im Deutschen Alpenraum. <br><br>In der Nacht zum Montag ist es anfangs oft klar, später nimmt die  Bewölkung etwas zu, es bleibt aber trocken. Die Temperatur geht in  den Tälern auf +5 bis -1 Grad zurück.<br><br>Am Montag ist es heiter bis wolkig. Am Nachmittag sind vereinzelt  kurze Schauer nicht ausgeschlossen. Die Temperatur steigt auf 14 bis  16 Grad in den Tälern, in 1500 m auf 7 Grad und in 3000 m auf -2  Grad. Es bliebt schwachwindig.    <br><br><br>Weitere Aussichten bis zum Mittwoch, 11.03.2026: Am Dienstag Sonne und Wolken, meist trocken. Am Mittwoch einige  Schauer. Weiterhin mild.  </div>",
+    "translated_content": "<div class=\"panel-body weather-report lwdb-p\"><span class=\"lwdb-p-small-weather\">German Weather Service - Regional Weather Advisory Service Munich, issued</span><br> <span class=\"lwdb-p-black lwdb-p-black-weather\">on Sunday, March 8, 2026, at 2:30 p.m.</span><br><br> <span class=\"lwdb-h2 lwdb-h2-weather-1\">Weather forecast for the German Alps:</span><br><br> High pressure, combined with mild air, continues to dominate the weather in the German Alps.<br><br> The night leading into Monday will start mostly clear, with increasing cloud cover later, but it will remain dry. Temperatures in the valleys will drop to between +5 and -1 degrees Celsius.<br><br> Monday will be partly cloudy to sunny. Isolated brief showers are possible in the afternoon. Temperatures will rise to 14 to 16 degrees Celsius in the valleys, 7 degrees Celsius at 1500 meters, and -2 degrees Celsius at 3000 meters. Winds will remain light.<br><br><br> Further outlook until Wednesday, March 11, 2026: Tuesday will be partly sunny and cloudy, mostly dry. Wednesday will bring some showers. It will remain mild.</div>",
+    "fetched_at": "2026-03-08T13:37:15.709Z"
+  },
+  {
     "date": "2026-03-08",
     "title": "Mountain Weather Report (2026-03-08)",
     "issued": "Saturday, 07/03/2026, at 14.30",
