@@ -1,5 +1,50 @@
 [
   {
+    "profil_id": 25522,
+    "datum": "2026-03-09 08:30:00",
+    "country_id": 1,
+    "region_id": 1,
+    "subregion_id": 158,
+    "ort": "Jöchelspitze",
+    "seehoehe": 1697,
+    "latitude": 47.27406,
+    "longitude": 10.3662,
+    "hangneigung": 4,
+    "exposition_id": 5,
+    "loggedon": "2026-03-09 15:18:35",
+    "revision": 1,
+    "location": "Jöchelspitze",
+    "elevation": 1697,
+    "slope": 4,
+    "neigung": 4,
+    "aspect": 5,
+    "exposition": 5,
+    "comments": "ECTN 14@38.0cm: Teilbruch (N)\nECTN 15@27.0cm: Teilbruch (N)",
+    "comments_en": "ECTN 14@38.0cm: Partial fraction (N)\nECTN 15@27.0cm: Partial fraction (N)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 14,
+        "height": 38,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 15,
+        "height": 27,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 25459,
     "datum": "2026-03-04 14:30:00",
     "country_id": 1,
