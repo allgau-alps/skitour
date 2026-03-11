@@ -1,5 +1,40 @@
 [
   {
+    "profil_id": 25531,
+    "datum": "2026-03-10 14:15:00",
+    "country_id": 1,
+    "region_id": 2,
+    "subregion_id": 82,
+    "ort": "Rappenkopf",
+    "seehoehe": 1770,
+    "latitude": 47.2711,
+    "longitude": 10.1569,
+    "hangneigung": 39,
+    "exposition_id": 8,
+    "loggedon": "2026-03-10 19:22:45",
+    "revision": 1,
+    "location": "Rappenkopf",
+    "elevation": 1770,
+    "slope": 39,
+    "neigung": 39,
+    "aspect": 8,
+    "exposition": 8,
+    "comments": "ECTP 0@22.0cm: plötzlicher Bruch (P) (ganzer Block)\n Beim Schneiden",
+    "comments_en": "ECTP 0@22.0cm: sudden break (P) (entire block)\n\nOn cutting",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 0,
+        "height": 22,
+        "result": {
+          "text": "propagation (P)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 25522,
     "datum": "2026-03-09 08:30:00",
     "country_id": 1,
