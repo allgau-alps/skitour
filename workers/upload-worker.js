@@ -1,13 +1,15 @@
 /**
  * Cloudflare Worker for Avalanche Archiver Uploads
- * 
+ *
  * Setup:
  * 1. Create a KV Namespace and bind it as 'UPLOADS'
- * 2. (Optional) set an ADMIN_Key in secrets if you want to protect deletions
- * 
+ * 2. Set ADMIN_KEY secret in Cloudflare dashboard for delete/GPX delete protection
+ *
  * API:
  * - POST /upload: JSON body { user, location, comment, lat, lon, image (base64) }
  * - GET /list: Returns all uploads
+ * - POST /delete: Requires X-Admin-Key header matching secret
+ * - GPX endpoints: /gpx/list, /gpx/get, /gpx/upload, /gpx/delete (protected)
  */
 
 export default {
@@ -16,11 +18,18 @@ export default {
         const corsHeaders = {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, HEAD, POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Headers": "Content-Type, X-Admin-Key",
         };
 
         if (request.method === "OPTIONS") {
             return new Response(null, { headers: corsHeaders });
+        }
+
+        // Admin authentication check for protected endpoints
+        function isAdmin(request) {
+            const adminKey = request.headers.get('X-Admin-Key');
+            const expectedKey = env.ADMIN_KEY;
+            return expectedKey && adminKey === expectedKey;
         }
 
         // LIST UPLOADS
@@ -57,7 +66,12 @@ export default {
             }
         }
 
+        // DELETE UPLOAD (protected)
         if (request.method === "POST" && url.pathname === "/delete") {
+            if (!isAdmin(request)) {
+                return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: corsHeaders });
+            }
+
             try {
                 const data = await request.json();
                 if (!data.id) {
@@ -89,6 +103,7 @@ export default {
                 const uploadRecord = {
                     id: id,
                     date: data.date || new Date().toISOString(),
+                    last_modified: new Date().toISOString(), // Track modifications
                     user: data.user || "Anonymous",
                     location: data.location || "Unknown",
                     comment: data.comment || "",
@@ -97,16 +112,12 @@ export default {
                     elevation: data.elevation || null,
                     aspect: data.aspect || null,
                     type: data.type || 'generic',
-                    images: data.images || (data.image ? [data.image] : []), // Array of Base64 strings
-                    layers: data.layers || [], // Store raw snow profile layers
-                    tests: data.tests || [], // Store stability tests
-                    approved: true // Auto-approve for now, change logic if needed
+                    images: data.images || (data.image ? [data.image] : []),
+                    layers: data.layers || [],
+                    tests: data.tests || [],
+                    approved: true
                 };
 
-                // Store in KV
-                // CRITICAL: Do NOT set an expirationTtl here.
-                // Retention is handled by the build script (Application Layer). 
-                // We must keep raw data PERMANENTLY because some items are linked to Incidents and must never expire.
                 await env.UPLOADS.put(id, JSON.stringify(uploadRecord));
 
                 return new Response(JSON.stringify({ success: true, id: id }), {
@@ -118,13 +129,9 @@ export default {
             }
         }
 
-        // GUIDE FOR GPX LIBRARY:
-        // We use a "Metadata Index" strategy. 
-        // 1. 'gpx:index' -> Stores the lightweight JSON array of all route metadata.
-        // 2. 'gpx:file:<id>' -> Stores the heavy GPX XML content.
-        // This avoids listing thousands of keys or fetching heavy files just to show the library.
+        // GPX LIBRARY endpoints (protected by admin key for modifications)
 
-        // GET GPX LIST (Library Index)
+        // GET GPX LIST
         if (request.method === "GET" && url.pathname === "/gpx/list") {
             try {
                 const index = await env.UPLOADS.get('gpx:index', { type: "json" });
@@ -142,9 +149,7 @@ export default {
             if (!id) return new Response("Missing ID", { status: 400, headers: corsHeaders });
 
             try {
-                // Try fetching gpx specific key first
                 let content = await env.UPLOADS.get(`gpx:file:${id}`);
-                // Fallback for legacy or different storage if needed
                 if (!content) return new Response("GPX file not found", { status: 404, headers: corsHeaders });
 
                 return new Response(content, {
@@ -155,22 +160,25 @@ export default {
             }
         }
 
-        // UPLOAD GPX (Update Index + Store File)
+        // UPLOAD GPX (protected)
         if (request.method === "POST" && url.pathname === "/gpx/upload") {
+            if (!isAdmin(request)) {
+                return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: corsHeaders });
+            }
+
             try {
                 const data = await request.json();
 
-                // Expecting: { gpxContent: "...", metadata: { id, name, ... } }
                 if (!data.gpxContent || !data.metadata || !data.metadata.id) {
                     return new Response("Missing GPX content or metadata", { status: 400, headers: corsHeaders });
                 }
 
                 const id = data.metadata.id;
 
-                // 1. Store the File
+                // Store the file
                 await env.UPLOADS.put(`gpx:file:${id}`, data.gpxContent);
 
-                // 2. Update the Index
+                // Update the index
                 let index = await env.UPLOADS.get('gpx:index', { type: "json" }) || [];
 
                 // Remove existing entry if updating
@@ -178,7 +186,7 @@ export default {
                 // Add new metadata
                 index.push(data.metadata);
 
-                // Sort by name by default to keep index tidy
+                // Sort by name
                 index.sort((a, b) => a.name.localeCompare(b.name));
 
                 await env.UPLOADS.put('gpx:index', JSON.stringify(index));
@@ -192,18 +200,22 @@ export default {
             }
         }
 
-        // DELETE GPX
+        // DELETE GPX (protected)
         if (request.method === "POST" && url.pathname === "/gpx/delete") {
+            if (!isAdmin(request)) {
+                return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: corsHeaders });
+            }
+
             try {
                 const data = await request.json();
                 if (!data.id) return new Response("Missing ID", { status: 400, headers: corsHeaders });
 
                 const id = data.id;
 
-                // 1. Delete the File
+                // Delete the file
                 await env.UPLOADS.delete(`gpx:file:${id}`);
 
-                // 2. Update the Index
+                // Update the index
                 let index = await env.UPLOADS.get('gpx:index', { type: "json" }) || [];
                 const newIndex = index.filter(r => r.id !== id);
 

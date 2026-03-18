@@ -32,8 +32,6 @@ function getSeasonDates() {
     const currentMonth = now.getMonth() + 1; // 1-12
 
     // Avalanche season usually starts around Sept/Oct.
-    // If we are in Jan 2026, season started late 2025.
-    // If we are in Oct 2025, season started late 2025.
     let startYear = currentYear;
     if (currentMonth < 9) {
         startYear = currentYear - 1;
@@ -58,26 +56,15 @@ function getSeasonDates() {
         function findSubregions(obj, parentName = '') {
             if (!obj || typeof obj !== 'object') return;
 
-            // If this object represents a region/subregion with a name
-            if (obj.name && (obj.name.toLowerCase().includes('allgäu') || obj.name.toLowerCase().includes('kleinwalsertal'))) {
-                // Try to determine the ID. In the Lawis structure, the ID is often the key in the parent object used to access this object.
-                // However, we are iterating. If we are currently AT the object, we might not have the ID if it's the key.
-                // But wait, usually `subregions` is a map of ID -> Object.
-                // So when we iterate `Object.entries(parent.subregions)`, the key is the ID.
-            }
-
-            // Iterate children
             for (const key in obj) {
                 const child = obj[key];
                 if (key === 'subregions' && typeof child === 'object') {
-                    // Iterate subregions map specifically to capture IDs
                     for (const subId in child) {
                         const subData = child[subId];
                         if (subData.name && (subData.name.toLowerCase().includes('allgäu') || subData.name.toLowerCase().includes('kleinwalsertal'))) {
                             log.info(`Found relevant subregion: ${subData.name} (ID: ${subId})`);
                             relevantSubregionIds.add(parseInt(subId));
                         }
-                        // Recurse in case there are sub-subregions
                         findSubregions(subData, subData.name);
                     }
                 } else {
@@ -94,8 +81,6 @@ function getSeasonDates() {
         }
 
         log.info('Fetching incidents...');
-        // Fetch broad range to capture historical archive
-        // User example was from 2021. Let's fetch from 2018.
         const incidentApiUrl = `${INCIDENTS_URL}?startDate=2018-09-01&endDate=${getSeasonDates().endDate}`;
         log.info(`Querying: ${incidentApiUrl}`);
 
@@ -120,7 +105,7 @@ function getSeasonDates() {
 
         log.info(`Found ${relevantIncidents.length} relevant incidents.`);
 
-        // 1. Load existing data to avoid re-fetching/re-translating
+        // Load existing data to avoid re-fetching/re-translating
         let existingIncidentsMap = new Map();
         if (fs.existsSync(OUTPUT_FILE)) {
             try {
@@ -174,7 +159,6 @@ function getSeasonDates() {
                     }
 
                     // Merge details
-                    // 1. Try images from API response first
                     if (details.images && Array.isArray(details.images)) {
                         parsedImages = details.images
                             .filter(img => img && img.url)
@@ -185,12 +169,9 @@ function getSeasonDates() {
                             }));
                     }
 
-                    // 2. If no images found, try probing
+                    // Probe for images if none found
                     if (parsedImages.length === 0) {
-                        // console.log(`  Probing images for ${simpleInc.id}...`);
                         parsedImages = await probeImages(simpleInc.id);
-                    } else {
-                        // console.log(`  Found ${parsedImages.length} images from API for ${simpleInc.id}.`);
                     }
 
                     // DOWNLOAD IMAGES
@@ -207,9 +188,18 @@ function getSeasonDates() {
 
                     if (details.comments) {
                         log.info(`  Translating text for ${simpleInc.id}...`);
-                        commentsEn = await translateText(details.comments);
-                        if (commentsEn) log.info(`  -> Success!`);
-                        else log.info(`  -> Failed.`);
+                        try {
+                            commentsEn = await translateText(details.comments);
+                            if (commentsEn) {
+                                log.info(`  -> Success!`);
+                            } else {
+                                log.info(`  -> Translation returned null, using original German.`);
+                                commentsEn = details.comments; // Fallback to original
+                            }
+                        } catch (transError) {
+                            log.warn(`  -> Translation failed: ${transError.message}. Using original German.`);
+                            commentsEn = details.comments;
+                        }
                     }
 
                     finalInc = {
@@ -247,21 +237,17 @@ function getSeasonDates() {
 async function probeImages(incidentId) {
     const base = "https://lawis.at/lawis_api/v2_3/files/incidents";
     const found = [];
-    // Verify up to 5 images to keep it fast, user script said 20 but that's a lot of requests per incident
-    for (let i = 0; i < 20; i++) {
+    // Verify up to 5 images to keep it fast
+    for (let i = 0; i < 5; i++) {
         const index = String(i).padStart(3, '0');
         const url = `${base}/incident_${incidentId}_${index}.jpg`;
-        // Check if exists using HEAD or GET
         try {
             const exists = await checkUrlExists(url);
             if (exists) {
                 found.push({ url: url });
             } else if (i === 0) {
-                // If the first one (000) fails, we assume no images and stop probing
                 break;
             } else {
-                // If a subsequent one fails, maybe gap? or end.
-                // Usually sequential. Let's stop to save time.
                 break;
             }
         } catch (e) {
@@ -283,8 +269,6 @@ function checkUrlExists(url) {
     });
 }
 
-// Translation logic moved to lib/translator.js
-
 async function ensurePdfLink(inc) {
     const { PATHS } = require('./lib/config');
     const DAILY_PDF_DIR = PATHS.pdfs;
@@ -294,15 +278,12 @@ async function ensurePdfLink(inc) {
     if (!dateStr) return;
     const iDate = dateStr.split(' ')[0].split('T')[0];
 
-    // Priority slugs based on heuristics, but we will check all
-    // Determine a "primary" slug based on region
+    // Determine primary slug based on region
     let primarySlug = 'allgau-alps-central';
     if (inc.regionId === 2) primarySlug = 'allgau-alps-west';
     else if (inc.regionId === 1) primarySlug = 'allgau-alps-east';
-    // Note: subregionId 158 is Kleinwalsertal/Ifen area (uses AT-08 Vorarlberg bulletin = allgau-alps-west)
     if (inc.subregionId === 158) primarySlug = 'allgau-alps-west';
 
-    // Create ordered slugs array with primarySlug first to prioritize correct region
     const allSlugs = ['allgau-alps-central', 'allgau-alps-west', 'allgau-alps-east', 'allgau-prealps'];
     const slugs = [primarySlug, ...allSlugs.filter(s => s !== primarySlug)];
 
@@ -314,7 +295,7 @@ async function ensurePdfLink(inc) {
 
     let foundPath = null;
 
-    // 1. Check if it already exists in Incident Archive (prioritize correct region first)
+    // 1. Check Incident Archive (prioritize correct region)
     for (const slug of slugs) {
         const checkPath = path.join(INCIDENT_PDF_DIR, slug, ym, `${iDate}.pdf`);
         if (fs.existsSync(checkPath)) {
@@ -323,12 +304,11 @@ async function ensurePdfLink(inc) {
         }
     }
 
-    // 2. If not in Incident Archive, try to find in Daily Archive (any slug) and COPY
+    // 2. If not found, try Daily Archive and COPY
     if (!foundPath) {
         for (const slug of slugs) {
             const checkPath = path.join(DAILY_PDF_DIR, slug, `${iDate}.pdf`);
             if (fs.existsSync(checkPath)) {
-                // Found in Daily! Copy to Incident Archive (using the SAME slug to preserve structure)
                 const targetAbsPath = path.join(INCIDENT_PDF_DIR, slug, ym, `${iDate}.pdf`);
                 try {
                     fs.mkdirSync(path.dirname(targetAbsPath), { recursive: true });

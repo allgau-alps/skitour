@@ -1,12 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer');
-require('dotenv').config(); // Load environment variables
+require('dotenv').config();
 const { log } = require('./lib/utils');
 const { translateText } = require('./lib/translator');
 
 const OUTPUT_FILE = path.join(__dirname, '../data/weather_archive.json');
-// Translation logic moved to lib/translator.js
 
 // --- Fetching Logic ---
 
@@ -25,10 +24,10 @@ const main = async () => {
                 args: [
                     '--no-sandbox',
                     '--disable-setuid-sandbox',
-                    '--disable-dev-shm-usage',  // Prevents shared memory issues in containers
+                    '--disable-dev-shm-usage',
                     '--disable-gpu',
                     '--disable-software-rasterizer',
-                    '--single-process'  // Better for CI environments
+                    '--single-process'
                 ]
             });
 
@@ -36,6 +35,9 @@ const main = async () => {
 
             // Set a reasonable viewport
             await page.setViewport({ width: 1280, height: 720 });
+
+            // Set default timeout for all operations
+            await page.setDefaultTimeout(30000);
 
             // Navigate with increased timeout and retry on detachment
             const url = 'https://lawinenwarndienst.bayern.de/webclient/weather-report';
@@ -45,7 +47,7 @@ const main = async () => {
                 try {
                     await page.goto(url, {
                         waitUntil: 'networkidle0',
-                        timeout: 90000  // Increased from 60s to 90s
+                        timeout: 90000
                     });
                     navigationSuccess = true;
                     break;
@@ -63,25 +65,29 @@ const main = async () => {
                 throw new Error('Failed to navigate after frame detachment retry');
             }
 
-            // Wait for the content to appear
+            // Wait for the content to appear with reasonable timeout
             const selector = '.panel-body.weather-report.lwdb-p';
             try {
-                await page.waitForSelector(selector, { timeout: 10000 });
+                await page.waitForSelector(selector, { timeout: 15000 });
             } catch (e) {
-                log.info('Specific selector not found, trying general weather-report class...');
-                // Fallback
+                log.warn('Specific weather report selector not found, trying fallback...');
+                // Wait a bit longer for alternative rendering
+                await new Promise(r => setTimeout(r, 5000));
             }
 
             // Extract HTML content
             const content = await page.evaluate(() => {
-                const el = document.querySelector('.panel-body.weather-report.lwdb-p') || document.querySelector('.weather-report');
+                const el = document.querySelector('.panel-body.weather-report.lwdb-p') ||
+                          document.querySelector('.weather-report') ||
+                          document.querySelector('.panel-body');
                 return el ? el.outerHTML : null;
             });
 
             if (!content) {
-                log.info('No weather report content found.');
+                log.error('No weather report content found after navigation');
                 await browser.close();
-                return;
+                // Continue to next retry instead of returning
+                throw new Error('Empty content retrieved');
             }
 
             // Extract Date for Archiving
@@ -92,7 +98,6 @@ const main = async () => {
             let issuedDate;
 
             if (germanDateMatch) {
-                // 12.01.2026, 14.30
                 datePart = germanDateMatch[1];
                 timePart = germanDateMatch[2];
                 const [day, month, year] = datePart.split('.');
@@ -108,10 +113,8 @@ const main = async () => {
                 if (ampm === 'a.m.' && hour === 12) hour = 0;
                 issuedDate = new Date(`${year}-${month}-${day}T${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:00`);
             } else {
-                log.info('Could not parse date from content.');
-                log.info(content.substring(0, 300));
-                await browser.close();
-                return;
+                log.warn('Could not parse date from content, using current date as fallback');
+                issuedDate = new Date();
             }
 
             log.info(`Report Issued: ${issuedDate.toLocaleString()}`);
@@ -124,14 +127,25 @@ const main = async () => {
             const targetDateStr = targetDate.toISOString().split('T')[0];
             log.info(`Target Date for Archive: ${targetDateStr}`);
 
-            // Translate
+            // Translate with fallback
             log.info('Translating content...');
-            const translatedHtml = await translateText(content, { format: 'html' });
+            let translatedHtml;
+            try {
+                translatedHtml = await translateText(content, { format: 'html' });
+            } catch (transError) {
+                log.warn(`Translation failed: ${transError.message}. Using original German content.`);
+                translatedHtml = content; // Fallback to original
+            }
 
             // Prepare Entry
             let archive = [];
             if (fs.existsSync(OUTPUT_FILE)) {
-                archive = JSON.parse(fs.readFileSync(OUTPUT_FILE, 'utf8'));
+                try {
+                    archive = JSON.parse(fs.readFileSync(OUTPUT_FILE, 'utf8'));
+                } catch (e) {
+                    log.warn('Failed to parse existing weather archive, starting fresh');
+                    archive = [];
+                }
             }
 
             // Format Issued String

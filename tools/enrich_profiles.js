@@ -6,7 +6,6 @@ require('dotenv').config();
 const { log } = require('./lib/utils');
 const { validateEnv } = require('./lib/validateEnv');
 const { translateText } = require('./lib/translator');
-// Translation logic moved to lib/translator.js
 
 const rootDir = path.resolve(__dirname, '..');
 const incidentsPath = path.join(rootDir, 'data', 'incidents.json');
@@ -32,7 +31,7 @@ async function fetchProfile(id) {
                 }
             });
         }).on('error', (e) => {
-            log.error(`valid URL ${url}: ${e.message}`);
+            log.error(`Invalid URL ${url}: ${e.message}`);
             resolve(null);
         });
     });
@@ -46,7 +45,7 @@ function parseTests(comment) {
     const regex = /(ECT[A-Z]*\s*\d+)(?:\s*@\s*([\d.]+)\s*cm)?/g;
     let match;
 
-    // Normalize newlines to avoid issues
+    // Normalize newlines
     comment = comment.replace(/\r\n/g, '\n');
 
     while ((match = regex.exec(comment)) !== null) {
@@ -72,8 +71,6 @@ function parseTests(comment) {
         }
 
         // Create structure to match buildProfilePages expectations
-        // build uses: t.type.text, t.result.text (regex extracted), t.step, t.height
-        // result text needs to contain "(P)" for P, etc.
         const resultText = code === 'P' ? 'propagation (P)' : (code === 'N' ? 'no propagation (N)' : '');
 
         tests.push({
@@ -119,21 +116,10 @@ async function run() {
     let enrichedCount = 0;
 
     for (const [id, localObj] of profilesToFetch) {
-        // Skip if we already have "slope" and "weather" (user might have good data?)
-        // Actually, fetch overwrites usually lack specific details. "ort" usually missing in scraper?
-        // Scraper fills "location" with subregion?
-        // We ALWAYS fetch to get "bemerkungen" for stability tests.
-
+        // Always fetch to get detailed metadata (bemerkungen, etc.)
         const data = await fetchProfile(id);
         if (data) {
-            // Update Local Object (in memory, affects incidents/recent arrays because objects are refs?
-            // Wait, profilesToFetch values are references to objects in recent/incidents arrays?
-            // Yes, JS objects are refs.
-
             // Map API fields to our Schema
-            // API: ort, bemerkungen, seehoehe(int), hangneigung(int), exposition_id(int)
-            // Local: location, comments, elevation, slope, aspect
-
             if (data.ort) localObj.location = data.ort;
             if (data.ort) localObj.ort = data.ort; // For recent
 
@@ -145,21 +131,35 @@ async function run() {
             if (data.hangneigung) localObj.hangneigung = data.hangneigung;
 
             if (data.exposition_id) localObj.aspect = data.exposition_id;
-            if (data.exposition_id) localObj.exposition = data.exposition_id; // Mapping ID
+            if (data.exposition_id) localObj.exposition = data.exposition_id;
             if (data.exposition_id) localObj.exposition_id = data.exposition_id;
 
             if (data.bemerkungen) {
                 localObj.comments = data.bemerkungen;
 
-                // Translate
+                // Translate with fallback to original German if translation fails
                 if (process.env.GCP_TRANSLATE_KEY || process.env.GOOGLE_TRANSLATE_KEY) {
-                    const translated = await translateText(data.bemerkungen);
-                    if (translated) localObj.comments_en = translated;
+                    try {
+                        const translated = await translateText(data.bemerkungen);
+                        if (translated) {
+                            localObj.comments_en = translated;
+                        } else {
+                            // Translation failed or returned null, keep original
+                            localObj.comments_en = data.bemerkungen;
+                            log.debug(`Translation skipped for profile ${id}, using original German`);
+                        }
+                    } catch (transError) {
+                        log.warn(`Translation error for profile ${id}: ${transError.message}. Using original.`);
+                        localObj.comments_en = data.bemerkungen;
+                    }
+                } else {
+                    // No API key, keep original
+                    localObj.comments_en = data.bemerkungen;
                 }
 
                 const tests = parseTests(data.bemerkungen);
                 if (tests.length > 0) {
-                    localObj.stability_tests = tests; // Enriched!
+                    localObj.stability_tests = tests;
                 }
             }
             enrichedCount++;

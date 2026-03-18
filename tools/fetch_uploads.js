@@ -12,6 +12,18 @@ const ACTIVE_FILE = path.join(__dirname, '../data/uploads.json');
 const ARCHIVE_FILE = path.join(__dirname, '../data/uploads_archive.json');
 const IMAGES_DIR = path.join(__dirname, '../data/upload_images');
 
+function loadFile(filePath) {
+    if (fs.existsSync(filePath)) {
+        try {
+            return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        } catch (e) {
+            log.error(`Failed to parse ${filePath}: ${e.message}`);
+            return [];
+        }
+    }
+    return [];
+}
+
 async function fetchUploads() {
     validateEnv({ required: [], optional: ['UPLOAD_WORKER_URL'] });
     log.info(`Fetching uploads from ${WORKER_URL}...`);
@@ -38,16 +50,22 @@ async function fetchUploads() {
     });
 }
 
-function loadFile(filePath) {
-    if (fs.existsSync(filePath)) {
-        try {
-            return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-        } catch (e) {
-            log.error(`Failed to parse ${filePath}: ${e.message}`);
-            return [];
-        }
+function processImageBase64(upload, imgField, filenameSuffix = '') {
+    if (!upload[imgField] || !upload[imgField].startsWith('data:image')) return upload[imgField];
+
+    const ext = upload[imgField].substring(upload[imgField].indexOf('/') + 1, upload[imgField].indexOf(';'));
+    const id = upload.id || new Date(upload.date).getTime();
+    const filename = `${id}${filenameSuffix}.${ext}`;
+    const filePath = path.join(IMAGES_DIR, filename);
+
+    try {
+        const base64Data = upload[imgField].split(',')[1];
+        fs.writeFileSync(filePath, base64Data, 'base64');
+        return `../data/upload_images/${filename}`;
+    } catch (e) {
+        log.error(`Failed to save image ${filename}:`, e.message);
+        return upload[imgField]; // Keep original if save fails
     }
-    return [];
 }
 
 async function main() {
@@ -62,27 +80,51 @@ async function main() {
         // Use a Map to deduplicate by ID key
         const allUploadsMap = new Map();
 
-        // Helper to add/merge items
+        // Helper to add/merge items with proper conflict resolution
         const addItems = (items) => {
             items.forEach(u => {
-                const id = u.id || new Date(u.date).getTime();
-                // We overwrite existing with newer version (in case of edits), 
-                // but usually older data is more complete if the new fetch is partial?
-                // Actually, if we modify file paths locally, we want to PRESERVE the local version 
-                // unless the remote version has changed?
-                // Since user uploads are generally immutable or explicitly edited, 
-                // and we strip base64, we should trust our local processed version 
-                // UNLESS the incoming one is "raw" with base64 (which implies new data).
+                const id = String(u.id || new Date(u.date).getTime());
 
-                // Strategy: Always add. If duplicate ID, last write wins.
-                // We process "Archive" first, then "Active", then "New Fetch".
-                // This ensures latest state is preserved.
-                allUploadsMap.set(String(id), u);
+                // Check if we already have this ID
+                const existing = allUploadsMap.get(id);
+
+                if (!existing) {
+                    // New item, just add
+                    allUploadsMap.set(id, { ...u });
+                } else {
+                    // Conflict resolution: Prefer local file paths over base64
+                    // and newer timestamps over older ones
+                    const incoming = u;
+                    const keepIncoming = (() => {
+                        // If existing has local file paths and incoming only has base64, keep existing
+                        if (existing.image && existing.image.startsWith('../data/upload_images/') &&
+                            incoming.image && incoming.image.startsWith('data:image')) {
+                            return false;
+                        }
+                        // If existing has last_modified and incoming doesn't, keep existing
+                        if (existing.last_modified && !incoming.last_modified) {
+                            return false;
+                        }
+                        // If incoming has last_modified and it's newer, take incoming
+                        if (incoming.last_modified && existing.last_modified &&
+                            new Date(incoming.last_modified) > new Date(existing.last_modified)) {
+                            return true;
+                        }
+                        // Otherwise, keep the one with more complete data (heuristic: longer JSON)
+                        return JSON.stringify(incoming).length > JSON.stringify(existing).length;
+                    })();
+
+                    if (keepIncoming) {
+                        allUploadsMap.set(id, { ...incoming });
+                    }
+                    // else keep existing as-is
+                }
             });
         };
 
+        // Add archive first (oldest), then active (may have edits), then new fetch (newest)
         addItems(archiveUploads);
-        addItems(activeUploads); // Active might have newer edits than archive
+        addItems(activeUploads);
 
         // 2. Fetch new data
         let newUploads = [];
@@ -95,13 +137,11 @@ async function main() {
         }
 
         // Merge new uploads
-        // Note: New uploads from worker might have Base64 images.
-        // We add them to the map, potentially overwriting proper local paths with Base64.
-        // That's fine, because step 3 cleaning will fix it.
         if (newUploads.length > 0) {
             newUploads.forEach(u => {
                 const id = String(u.id || new Date(u.date).getTime());
-                allUploadsMap.set(id, u);
+                // For fresh fetches, always add (they may have base64 images to process)
+                allUploadsMap.set(id, { ...u });
             });
         }
 
@@ -111,21 +151,12 @@ async function main() {
         const processedList = [];
 
         for (const [id, upload] of allUploadsMap.entries()) {
-            const u = { ...upload }; // Clone
+            const u = { ...upload };
             let changed = false;
 
-            // Handle main image
+            // Handle main image (legacy field)
             if (u.image && u.image.startsWith('data:image')) {
-                const ext = u.image.substring(u.image.indexOf('/') + 1, u.image.indexOf(';'));
-                const filename = `${id}.${ext}`;
-                const filePath = path.join(IMAGES_DIR, filename);
-
-                // Save file
-                const base64Data = u.image.split(',')[1];
-                fs.writeFileSync(filePath, base64Data, 'base64');
-
-                // Update reference
-                u.image = `../data/upload_images/${filename}`;
+                u.image = processImageBase64(u, 'image');
                 changed = true;
             }
 
@@ -137,32 +168,45 @@ async function main() {
                         const filename = `${id}_${index}.${ext}`;
                         const filePath = path.join(IMAGES_DIR, filename);
 
-                        const base64Data = img.split(',')[1];
-                        fs.writeFileSync(filePath, base64Data, 'base64');
-                        changed = true;
-
-                        return `../data/upload_images/${filename}`;
+                        try {
+                            const base64Data = img.split(',')[1];
+                            fs.writeFileSync(filePath, base64Data, 'base64');
+                            return `../data/upload_images/${filename}`;
+                        } catch (e) {
+                            log.error(`Failed to save image ${filename}:`, e.message);
+                            return img;
+                        }
                     }
                     return img;
                 });
+                changed = true;
+            }
+
+            // Ensure date is set
+            if (!u.date && u.last_modified) {
+                u.date = u.last_modified;
             }
 
             processedList.push(u);
         }
 
         // 4. Update Archive (Master Record)
-        // Sort by date descending
-        processedList.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        // Sort by date descending (use last_modified as tiebreaker)
+        processedList.sort((a, b) => {
+            const dateA = new Date(a.last_modified || a.date || 0);
+            const dateB = new Date(b.last_modified || b.date || 0);
+            return dateB - dateA;
+        });
 
         fs.writeFileSync(ARCHIVE_FILE, JSON.stringify(processedList, null, 2));
         log.info(`Updated Archive ${ARCHIVE_FILE} (${processedList.length} items)`);
 
-        // 5. Update Active (Ephemera - e.g. last 45 days)
-        // Broad enough to cover the 21-day build window with safety margin
+        // 5. Update Active (Last 45 days)
         const Cutoff = Date.now() - (45 * 24 * 60 * 60 * 1000);
 
         const activeList = processedList.filter(u => {
-            return new Date(u.date).getTime() > Cutoff;
+            const date = new Date(u.last_modified || u.date || 0);
+            return date.getTime() > Cutoff;
         });
 
         fs.writeFileSync(ACTIVE_FILE, JSON.stringify(activeList, null, 2));
