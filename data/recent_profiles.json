@@ -1,5 +1,50 @@
 [
   {
+    "profil_id": 25650,
+    "datum": "2026-03-19 11:20:00",
+    "country_id": 1,
+    "region_id": 2,
+    "subregion_id": 82,
+    "ort": "Liechelkopf",
+    "seehoehe": 1950,
+    "latitude": 47.29657,
+    "longitude": 10.19036,
+    "hangneigung": 35,
+    "exposition_id": 1,
+    "loggedon": "2026-03-19 10:46:14",
+    "revision": 1,
+    "location": "Liechelkopf",
+    "elevation": 1950,
+    "slope": 35,
+    "neigung": 35,
+    "aspect": 1,
+    "exposition": 1,
+    "comments": "ECTN 21@101.5cm: Teilbruch (N)\nECTN 26@93.0cm: Teilbruch (N)",
+    "comments_en": "ECTN 21@101.5cm: Partial fraction (N)\nECTN 26@93.0cm: partial fraction (N)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 21,
+        "height": 101.5,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 26,
+        "height": 93,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 25592,
     "datum": "2026-03-13 16:30:00",
     "country_id": 1,
@@ -286,50 +331,5 @@
     "exposition": 1,
     "comments": "LO.LA Profile\nFirn\nBruch beim Schneiden ganzer Block.   \nECT P 0 @ 11 (from ground)\nganzer Block bein Schneiden",
     "comments_en": "LO.LA Profile\nFirn\nBreakage during cutting of the entire block.\n\nECT P 0 @ 11 (from ground)\nEntire block during cutting"
-  },
-  {
-    "profil_id": 25344,
-    "datum": "2026-02-26 11:00:00",
-    "country_id": 1,
-    "region_id": 2,
-    "subregion_id": 82,
-    "ort": "Hochalppass",
-    "seehoehe": 2000,
-    "latitude": 47.27453,
-    "longitude": 10.11493,
-    "hangneigung": 30,
-    "exposition_id": 1,
-    "loggedon": "2026-02-26 20:38:48",
-    "revision": 1,
-    "location": "Hochalppass",
-    "elevation": 2000,
-    "slope": 30,
-    "neigung": 30,
-    "aspect": 1,
-    "exposition": 1,
-    "comments": "1. Test: ECTP 13@28.0cm: plötzlicher Bruch (P) (ganzer Block)\n2. Test: ECTP 0@28.0cm: plötzlicher Bruch (P) (ganzer Block)\n\nHöferspitze Nordflanke westlich vom Profilstandort spontan abgegangen (vermutlich letztes WE). Schwimmschneeschicht auf gleicher Höhe West-seitig bereits kantig abgerundet und kleinere Kristalle (https://avalanche-feedback.eu/cockpit/lolaSimpleObservation/68f5ba31-343f-4d07-8b7c-a6ee4284c972).",
-    "comments_en": "1st Test: ECTP 13@28.0cm: sudden fracture (P) (entire block)\n\n2nd Test: ECTP 0@28.0cm: sudden fracture (P) (entire block)\n\nThe north face of the Höferspitze, west of the profile location, spontaneously broke off (presumably last weekend). The layer of loose, shallow snow at the same elevation on the west side is already rounded and contains smaller crystals (https://avalanche-feedback.eu/cockpit/lolaSimpleObservation/68f5ba31-343f-4d07-8b7c-a6ee4284c972).",
-    "stability_tests": [
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 13,
-        "height": 28,
-        "result": {
-          "text": "propagation (P)"
-        }
-      },
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 0,
-        "height": 28,
-        "result": {
-          "text": "propagation (P)"
-        }
-      }
-    ]
   }
 ]
