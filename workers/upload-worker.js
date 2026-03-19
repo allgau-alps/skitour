@@ -37,10 +37,24 @@ export default {
             try {
                 const list = await env.UPLOADS.list();
                 const uploads = [];
+                const badKeys = [];
+
                 for (const key of list.keys) {
-                    const val = await env.UPLOADS.get(key.name, { type: "json" });
-                    if (val) uploads.push(val);
+                    try {
+                        const val = await env.UPLOADS.get(key.name, { type: "json" });
+                        if (val) uploads.push(val);
+                    } catch (e) {
+                        // Skip malformed JSON entries but log for cleanup
+                        console.error(`Skipping malformed KV key: ${key.name}`, e.message);
+                        badKeys.push(key.name);
+                    }
                 }
+
+                // Optionally log summary for debugging
+                if (badKeys.length > 0) {
+                    console.warn(`Filtered ${badKeys.length} malformed entries from /list`);
+                }
+
                 return new Response(JSON.stringify(uploads), {
                     headers: { ...corsHeaders, "Content-Type": "application/json" }
                 });
@@ -62,7 +76,9 @@ export default {
                     headers: { ...corsHeaders, "Content-Type": "application/json" }
                 });
             } catch (e) {
-                return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: corsHeaders });
+                // If stored value is corrupted, treat as not found rather than 500
+                console.error(`Failed to parse upload ${id}:`, e.message);
+                return new Response("Not Found", { status: 404, headers: corsHeaders });
             }
         }
 
@@ -139,7 +155,11 @@ export default {
                     headers: { ...corsHeaders, "Content-Type": "application/json" }
                 });
             } catch (e) {
-                return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: corsHeaders });
+                // If gpx:index is corrupted, return empty list and log
+                console.error('Failed to parse gpx:index:', e.message);
+                return new Response(JSON.stringify({ routes: [] }), {
+                    headers: { ...corsHeaders, "Content-Type": "application/json" }
+                });
             }
         }
 
