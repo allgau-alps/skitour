@@ -93,6 +93,8 @@ See **[.ai/CONTEXT.md](.ai/CONTEXT.md)** for the master index.
 *   **Archive Structure**: [archive/CONTEXT.md](archive/CONTEXT.md)
 *   **Tools Engine**: [tools/CONTEXT.md](tools/CONTEXT.md)
 *   **Shared Code**: [shared/CONTEXT.md](shared/CONTEXT.md)
+*   **Steward Memory**: [MEMORY.md](MEMORY.md) — quick-reference architecture, process, and pointers.
+*   **Manual Changelog**: [CHANGELOG.md](CHANGELOG.md) — detailed narrative of manual interventions.
 
 ## 🛑 Common Pitfalls (Don't do these!)
 *   ❌ **Don't edit `incidents/2026-01-15.html`**. It will be deleted/overwritten next time we build.
