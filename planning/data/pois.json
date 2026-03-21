@@ -345,6 +345,21 @@
       "type": "Feature",
       "properties": { "name": "Großer Krottenkopf", "type": "peak", "ele": 2656 },
       "geometry": { "type": "Point", "coordinates": [10.2167, 47.5167] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Rangiswanger Horn", "type": "peak", "ele": 1760 },
+      "geometry": { "type": "Point", "coordinates": [10.2167, 47.3667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Sigiswanger Horn", "type": "peak", "ele": 1785 },
+      "geometry": { "type": "Point", "coordinates": [10.1833, 47.3833] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Sonnenkopf", "type": "peak", "ele": 1768 },
+      "geometry": { "type": "Point", "coordinates": [10.2333, 47.5400] }
     }
   ]
 }
