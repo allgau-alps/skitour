@@ -1,0 +1,85 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Kreuzeck", "type": "peak", "ele": 2651 },
+      "geometry": { "type": "Point", "coordinates": [10.1933, 47.3733] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Hörnle", "type": "peak", "ele": 2447 },
+      "geometry": { "type": "Point", "coordinates": [10.2233, 47.3833] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Mädelegabel", "type": "peak", "ele": 2645 },
+      "geometry": { "type": "Point", "coordinates": [10.3167, 47.3167] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Unspitze", "type": "peak", "ele": 1702 },
+      "geometry": { "type": "Point", "coordinates": [10.1198, 47.3045] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Söllereck", "type": "peak", "ele": 1706 },
+      "geometry": { "type": "Point", "coordinates": [10.1667, 47.3667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Fellhorn", "type": "peak", "ele": 2038 },
+      "geometry": { "type": "Point", "coordinates": [10.2833, 47.3500] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Kanzelwand", "type": "peak", "ele": 2038 },
+      "geometry": { "type": "Point", "coordinates": [10.2333, 47.3167] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Ifen", "type": "peak", "ele": 2230 },
+      "geometry": { "type": "Point", "coordinates": [10.1333, 47.3667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Heiterberg", "type": "peak", "ele": 2184 },
+      "geometry": { "type": "Point", "coordinates": [10.2333, 47.3833] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Schafalpenköpfe", "type": "peak", "ele": 2272 },
+      "geometry": { "type": "Point", "coordinates": [10.2833, 47.3333] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Oberstdorf", "type": "town", "ele": 824 },
+      "geometry": { "type": "Point", "coordinates": [10.2833, 47.4167] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Bayerisch Eisenstein", "type": "town", "ele": 760 },
+      "geometry": { "type": "Point", "coordinates": [13.2167, 49.1500] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Mittenwald", "type": "town", "ele": 914 },
+      "geometry": { "type": "Point", "coordinates": [11.2500, 47.4333] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Garmisch-Partenkirchen", "type": "town", "ele": 708 },
+      "geometry": { "type": "Point", "coordinates": [11.1333, 47.4833] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Sonthofen", "type": "town", "ele": 724 },
+      "geometry": { "type": "Point", "coordinates": [10.2833, 47.5167] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Immenstadt", "type": "town", "ele": 731 },
+      "geometry": { "type": "Point", "coordinates": [10.2167, 47.5667] }
+    }
+  ]
+}

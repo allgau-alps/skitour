@@ -18,6 +18,30 @@ body {
     height: 100%;
 }
 
+/* POI Search */
+.search-container {
+    margin-bottom: 1rem;
+}
+.search-results {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.poi-result-item {
+    padding: 0.5rem;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+.poi-result-item:hover {
+    background: #f0f9ff;
+}
+.poi-result-item:last-child {
+    border-bottom: none;
+}
+
 /* Map Header (Back Button) */
 .map-header {
     position: fixed;

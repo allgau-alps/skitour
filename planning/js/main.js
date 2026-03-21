@@ -39,10 +39,141 @@ const map = new maplibregl.Map({
 // Add standard scale control
 map.addControl(new maplibregl.ScaleControl(), 'bottom-left');
 
+// POI Search Setup
+let pois = []; // Will hold GeoJSON features
+let poiMarker = null; // Current marker for selected POI
 
+// Utility: debounce
+function debounce(fn, delay) {
+    let timer = null;
+    return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+}
+
+// Search handler
+async function initPOISearch() {
+    const input = document.getElementById('poi-search-input');
+    const resultsBox = document.getElementById('poi-search-results');
+    if (!input || !resultsBox) return;
+
+    try {
+        const response = await fetch('data/pois.json');
+        if (response.ok) {
+            const geojson = await response.json();
+            pois = geojson.features || [];
+        } else {
+            console.warn('POIS data not available');
+            pois = [];
+        }
+    } catch (e) {
+        console.error('Failed to load POI data:', e);
+        pois = [];
+    }
+
+    if (pois.length === 0) {
+        input.placeholder = 'No POI data available';
+        input.disabled = true;
+        return;
+    }
+
+    const query = debounce((q) => {
+        if (!q) {
+            resultsBox.innerHTML = '';
+            resultsBox.style.display = 'none';
+            return;
+        }
+        const lower = q.toLowerCase();
+        const matches = pois.filter(f => f.properties.name.toLowerCase().includes(lower)).slice(0, 10);
+        renderResults(matches);
+    }, 200);
+
+    input.addEventListener('input', (e) => query(e.target.value));
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+        if (!input.contains(e.target) && !resultsBox.contains(e.target)) {
+            resultsBox.style.display = 'none';
+        }
+    });
+}
+
+function renderResults(matches) {
+    const resultsBox = document.getElementById('poi-search-results');
+    if (matches.length === 0) {
+        resultsBox.innerHTML = '<div style="padding:0.5rem;color:#888;">No matches</div>';
+    } else {
+        resultsBox.innerHTML = matches.map(f => {
+            const props = f.properties;
+            const name = props.name;
+            const type = props.type || '';
+            const ele = props.ele ? `, ${props.ele}m` : '';
+            return `<div class="poi-result-item" data-lng="${f.geometry.coordinates[0]}" data-lat="${f.geometry.coordinates[1]}" style="padding:0.5rem; cursor:pointer; border-bottom:1px solid #eee;">
+                <div style="font-weight:bold;">${name}</div>
+                <div style="font-size:0.8rem;color:#666;">${type}${ele}</div>
+            </div>`;
+        }).join('');
+        // Attach click listeners
+        resultsBox.querySelectorAll('.poi-result-item').forEach(el => {
+            el.addEventListener('click', () => {
+                const lng = parseFloat(el.dataset.lng);
+                const lat = parseFloat(el.dataset.lat);
+                flyToPOI(lat, lng, el.querySelector('div').textContent);
+                resultsBox.style.display = 'none';
+                document.getElementById('poi-search-input').value = '';
+            });
+        });
+    }
+    resultsBox.style.display = 'block';
+}
+
+function flyToPOI(lat, lng, name) {
+    // Remove existing marker if any
+    if (poiMarker) {
+        map.removeLayer('poi-marker-layer');
+        map.removeSource('poi-marker');
+        poiMarker = null;
+    }
+
+    // Add a red pin marker
+    map.addSource('poi-marker', {
+        type: 'geojson',
+        data: {
+            type: 'FeatureCollection',
+            features: [{
+                type: 'Feature',
+                geometry: { type: 'Point', 'coordinates': [lng, lat] }
+            }]
+        }
+    });
+    map.addLayer({
+        id: 'poi-marker-layer',
+        type: 'circle',
+        source: 'poi-marker',
+        paint: {
+            'circle-radius': 8,
+            'circle-color': '#dc2626',
+            'circle-stroke-width': 2,
+            'circle-stroke-color': '#ffffff'
+        }
+    });
+
+    // Fly to location with a nice zoom
+    map.flyTo({
+        center: [lng, lat],
+        zoom: 13,
+        pitch: 0,
+        bearing: 0,
+        essential: true
+    });
+}
 
 // Initialize overlay layers when map loads
 map.on('load', () => {
+    // Initialize POI search
+    initPOISearch();
+
     // Add Satellite layer (Sentinel-2)
     map.addSource('satellite', {
         type: 'raster',
