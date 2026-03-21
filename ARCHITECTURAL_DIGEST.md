@@ -93,6 +93,7 @@ See **[.ai/CONTEXT.md](.ai/CONTEXT.md)** for the master index.
 *   **Archive Structure**: [archive/CONTEXT.md](archive/CONTEXT.md)
 *   **Tools Engine**: [tools/CONTEXT.md](tools/CONTEXT.md)
 *   **Shared Code**: [shared/CONTEXT.md](shared/CONTEXT.md)
+*   **GPX Library**: [gpx-library/CONTEXT.md](gpx-library/CONTEXT.md) — architecture and admin notes
 *   **Steward Memory**: [MEMORY.md](MEMORY.md) — quick-reference architecture, process, and pointers.
 *   **Manual Changelog**: [CHANGELOG.md](CHANGELOG.md) — detailed narrative of manual interventions.
 

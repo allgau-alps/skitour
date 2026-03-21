@@ -52,6 +52,11 @@ Sources → Fetch scripts → `data/` → Build → `archive/` → GitHub Pages
 - **Upload API**: `workers/upload-worker.js` — handles user uploads and GPX library
 - **KV**: Stores `uploads.json` and GPX metadata/files (`gpx:index`, `gpx:file:<id>`)
 - **Deploy**: `wrangler deploy` (run manually when `workers/` changes)
+- **GPX Library**:
+  - Frontend: `gpx-library/` (SPA with analysis, filtering, deep linking)
+  - Worker URL: `https://avalanche-archiver-uploads.bigdoggybollock.workers.dev` (hardcoded in `library.js`)
+  - Admin key required for upload/delete (`X-Admin-Key` header, set in Cloudflare dashboard)
+  - See `gpx-library/CONTEXT.md` for architecture and manual upload instructions.
 
 ## Important Rules
 - Do NOT edit files in `archive/` or `data/` directly — they are overwritten by fetch/build
