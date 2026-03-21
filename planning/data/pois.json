@@ -310,6 +310,41 @@
       "type": "Feature",
       "properties": { "name": "Prinz Luitpold Haus", "type": "hut", "ele": 1846 },
       "geometry": { "type": "Point", "coordinates": [10.3000, 47.3500] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Riezlern", "type": "town", "ele": 960 },
+      "geometry": { "type": "Point", "coordinates": [10.2740, 47.2950] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Riedbergerhorn", "type": "peak", "ele": 1785 },
+      "geometry": { "type": "Point", "coordinates": [10.2560, 47.4350] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Hirschegg", "type": "town", "ele": 1000 },
+      "geometry": { "type": "Point", "coordinates": [10.2167, 47.2667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Biberkopf", "type": "peak", "ele": 2508 },
+      "geometry": { "type": "Point", "coordinates": [10.3667, 47.3667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Hochgrat", "type": "peak", "ele": 1834 },
+      "geometry": { "type": "Point", "coordinates": [10.2333, 47.5500] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Grünten", "type": "peak", "ele": 1738 },
+      "geometry": { "type": "Point", "coordinates": [10.3333, 47.7333] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Großer Krottenkopf", "type": "peak", "ele": 2656 },
+      "geometry": { "type": "Point", "coordinates": [10.2167, 47.5167] }
     }
   ]
 }
