@@ -58,12 +58,10 @@ function calculateSlopeAspect(data, idx, r, c, metersPerPixel) {
     const slopeRad = Math.atan(Math.sqrt(dzdx * dzdx + dzdy * dzdy));
     const slope = slopeRad * 180 / Math.PI;
 
-    // Aspect Calculation
-    let aspectRad = Math.atan2(dzdy, dzdx);
+    // Aspect Calculation (downhill direction, 0° = North, 90° = East)
+    // downhill vector = (-dzdx, dzdy) because dzdx is east gradient, dzdy is south gradient
+    let aspectRad = Math.atan2(-dzdx, dzdy);
     let aspectDeg = aspectRad * 180 / Math.PI;
-
-    // Convert to compass bearing (0° = North, 90° = East, etc.)
-    aspectDeg = 90 - aspectDeg;
     if (aspectDeg < 0) aspectDeg += 360;
     if (aspectDeg >= 360) aspectDeg -= 360;
 
