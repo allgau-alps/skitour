@@ -31,8 +31,7 @@ Sources → Fetch scripts → `data/` → Build → `archive/` → GitHub Pages
 - `fetch_uploads.js` — retrieves user submissions from KV
 - `process_profiles.js` — snow profile data
 - `enrich_profiles.js` — translates German→English (GCP API), parses stability tests
-- `pdf_fetcher.js` — handles PDF download for all regions; for Tyrol (AT-07) uses official endpoint with local Puppeteer fallback via `pdf_generator.js`
-- `pdf_generator.js` — local PDF generation fallback from JSON (Puppeteer)
+- `pdf_fetcher.js` — handles PDF download for all regions; for Tyrol (AT-07) uses official endpoint with `date=YYYY-MM-DDT16:00:00.000Z&microRegionId=...`
 
 ## Key Commands
 - `npm ci` — install dependencies

@@ -3,7 +3,6 @@ const path = require('path');
 const { log } = require('./lib/utils');
 const { downloadImageWithRetry } = require('./lib/fetcher'); // Generic file downloader
 const { REGION_PDF_MAP, PATHS } = require('./lib/config');
-const { generatePdf } = require('./pdf_generator');
 
 // Using downloadImageWithRetry as generic file downloader
 const downloadPdf = downloadImageWithRetry;
@@ -11,7 +10,6 @@ const downloadPdf = downloadImageWithRetry;
 // sourceType: 'lawinen-warnung' (Bavaria/Vorarlberg) or 'avalanche-report' (Tyrol/Euregio)
 /**
  * Extracts and downloads the official PDF URL from a bulletin JSON object.
- * For Tyrol (AT-07), generates PDF locally from JSON data since the endpoint is defunct.
  * Checks for version conflicts and archives updates with timestamp suffixes.
  * 
  * @param {object} bulletin - The raw JSON bulletin object
@@ -50,115 +48,93 @@ async function processBulletinForPdfs(bulletin, dateStr, sourceType = 'lawinen-w
         // Base filename: YYYY-MM-DD.pdf
         const baseDest = path.join(PATHS.pdfs, slug, `${dateStr}.pdf`);
 
-        // For Tyrol (avalanche-report), try the official endpoint first; fallback to local generation
+        // For Tyrol (avalanche-report), use official endpoint only; no fallback
         if (sourceType === 'avalanche-report') {
-            // The endpoint expects the bulletin date at 16:00:00.000Z (the valid date), not the publicationTime.
-            // Use the dateStr we are processing, with fixed 16:00 UTC.
+            // The endpoint expects the bulletin date at 16:00:00.000Z (the valid date).
             const dateParam = `${dateStr}T16:00:00.000Z`;
             const url = `https://api.avalanche.report/albina/api/bulletins/pdf?date=${encodeURIComponent(dateParam)}&region=EUREGIO&microRegionId=${regionId}&lang=en&grayscale=false`;
 
-            log.info(`  Attempting official PDF URL: ${url}`);
+            log.info(`  PDF URL: ${url}`);
 
+            // If file doesn't exist, download
+            if (!fs.existsSync(baseDest)) {
+                try {
+                    await downloadPdf(url, baseDest);
+                    if (!resultStatus) resultStatus = 'new';
+                    log.info(`  Downloaded PDF for ${slug}/${dateStr}.pdf`);
+                } catch (e) {
+                    log.error(`  Failed to download PDF for ${slug}/${dateStr}: ${e.message}`);
+                }
+                continue;
+            }
+
+            // File exists - check for update
+            const tempDest = baseDest + '.tmp';
             try {
-                // If file doesn't exist, try to download; on failure, fallback to local generation
-                if (!fs.existsSync(baseDest)) {
-                    const result = await downloadPdf(url, baseDest);
-                    if (result) {
-                        if (!resultStatus) resultStatus = 'new';
-                        log.info(`  Downloaded PDF for ${slug}/${dateStr}.pdf`);
-                    } else {
-                        log.warn(`  Official PDF download failed for new file, generating locally`);
-                        fs.mkdirSync(path.dirname(baseDest), { recursive: true });
-                        const genOk = await generatePdf(bulletin, dateStr, baseDest);
-                        if (genOk) {
-                            if (!resultStatus) resultStatus = 'new';
-                            log.info(`  Generated PDF for ${slug}/${dateStr}.pdf`);
-                        } else {
-                            log.error(`  Failed to generate PDF for ${slug}/${dateStr}.pdf`);
-                        }
+                await downloadPdf(url, tempDest);
+
+                // Compare file sizes
+                const statExisting = fs.statSync(baseDest);
+                const statNew = fs.statSync(tempDest);
+                let isDifferent = (statExisting.size !== statNew.size);
+
+                if (isDifferent) {
+                    const bufBase = fs.readFileSync(baseDest);
+                    const bufNew = fs.readFileSync(tempDest);
+                    if (bufBase.equals(bufNew)) {
+                        log.info(`  Update matches existing ${dateStr}.pdf (content check). Skipping.`);
+                        isDifferent = false;
                     }
-                    continue;
                 }
 
-                // File exists - check for update
-                const tempDest = baseDest + '.tmp';
-                try {
-                    await downloadPdf(url, tempDest);
+                if (isDifferent) {
+                    log.info(`  Update detected for ${slug}/${dateStr}.pdf!`);
+                    if (resultStatus !== 'new') resultStatus = 'updated';
 
-                    // Compare file sizes
-                    const statExisting = fs.statSync(baseDest);
-                    const statNew = fs.statSync(tempDest);
-                    let isDifferent = (statExisting.size !== statNew.size);
+                    // Archive versioned update
+                    let suffix = '_v2';
+                    if (bulletin.publicationTime) {
+                        try {
+                            const d = new Date(bulletin.publicationTime);
+                            const y = d.getUTCFullYear();
+                            const m = String(d.getUTCMonth() + 1).padStart(2, '0');
+                            const day = String(d.getUTCDate()).padStart(2, '0');
+                            const H = String(d.getUTCHours()).padStart(2, '0');
+                            const M = String(d.getUTCMinutes()).padStart(2, '0');
+                            suffix = `_${y}${m}${day}-${H}${M}`;
+                        } catch (err) {
+                            log.error('Error formatting publicationTime for suffix:', err);
+                        }
+                    }
 
-                    if (isDifferent) {
-                        const bufBase = fs.readFileSync(baseDest);
+                    let versionDest = path.join(PATHS.pdfs, slug, `${dateStr}${suffix}.pdf`);
+
+                    if (fs.existsSync(versionDest)) {
+                        const bufExisting = fs.readFileSync(versionDest);
                         const bufNew = fs.readFileSync(tempDest);
-                        if (bufBase.equals(bufNew)) {
-                            log.info(`  Update matches existing ${dateStr}.pdf (content check). Skipping.`);
+                        if (bufExisting.equals(bufNew)) {
+                            log.info(`  Update matches existing ${dateStr}${suffix}.pdf. Skipping.`);
                             isDifferent = false;
+                        } else {
+                            suffix += '_v2';
+                            versionDest = path.join(PATHS.pdfs, slug, `${dateStr}${suffix}.pdf`);
                         }
                     }
 
                     if (isDifferent) {
-                        log.info(`  Update detected for ${slug}/${dateStr}.pdf!`);
-                        if (resultStatus !== 'new') resultStatus = 'updated';
-
-                        // Archive versioned update
-                        let suffix = '_v2';
-                        if (bulletin.publicationTime) {
-                            try {
-                                const d = new Date(bulletin.publicationTime);
-                                const y = d.getUTCFullYear();
-                                const m = String(d.getUTCMonth() + 1).padStart(2, '0');
-                                const day = String(d.getUTCDate()).padStart(2, '0');
-                                const H = String(d.getUTCHours()).padStart(2, '0');
-                                const M = String(d.getUTCMinutes()).padStart(2, '0');
-                                suffix = `_${y}${m}${day}-${H}${M}`;
-                            } catch (err) {
-                                log.error('Error formatting publicationTime for suffix:', err);
-                            }
-                        }
-
-                        let versionDest = path.join(PATHS.pdfs, slug, `${dateStr}${suffix}.pdf`);
-
-                        if (fs.existsSync(versionDest)) {
-                            const bufExisting = fs.readFileSync(versionDest);
-                            const bufNew = fs.readFileSync(tempDest);
-                            if (bufExisting.equals(bufNew)) {
-                                log.info(`  Update matches existing ${dateStr}${suffix}.pdf. Skipping.`);
-                                isDifferent = false;
-                            } else {
-                                suffix += '_v2';
-                                versionDest = path.join(PATHS.pdfs, slug, `${dateStr}${suffix}.pdf`);
-                            }
-                        }
-
-                        if (isDifferent) {
-                            fs.renameSync(tempDest, versionDest);
-                            log.info(`  Archived update as: ${slug}/${dateStr}${suffix}.pdf`);
-                        } else {
-                            fs.unlinkSync(tempDest);
-                        }
+                        fs.renameSync(tempDest, versionDest);
+                        log.info(`  Archived update as: ${slug}/${dateStr}${suffix}.pdf`);
                     } else {
                         fs.unlinkSync(tempDest);
                     }
-                } catch (e) {
-                    log.error(`  Failed to download/compare: ${e.message}`);
-                    if (fs.existsSync(tempDest)) fs.unlinkSync(tempDest);
-                    // Throw to trigger fallback
-                    throw e;
-                }
-            } catch (e) {
-                log.warn(`  Official PDF fetch failed, falling back to local generation: ${e.message}`);
-                // Ensure target directory exists
-                fs.mkdirSync(path.dirname(baseDest), { recursive: true });
-                const success = await generatePdf(bulletin, dateStr, baseDest);
-                if (success) {
-                    if (!resultStatus) resultStatus = 'new';
-                    log.info(`  Generated PDF for ${slug}/${dateStr}.pdf`);
                 } else {
-                    log.error(`  Failed to generate PDF for ${slug}/${dateStr}.pdf`);
+                    fs.unlinkSync(tempDest);
                 }
+
+            } catch (e) {
+                log.error(`  Failed to download/compare: ${e.message}`);
+                if (fs.existsSync(tempDest)) fs.unlinkSync(tempDest);
+                // No fallback; just report error and continue
             }
             continue;
         }

@@ -2,38 +2,37 @@
 
 This file records all manual changes, fixes, and decisions made by the Skitour Steward (outside of automated GitHub Actions updates). It provides narrative context beyond terse git commit messages.
 
-## 2026-03-21: Fix Tyrol PDF Endpoint for AT-07-01 (Official Endpoint + Local Fallback)
+## 2026-03-21: Fix Tyrol PDF Endpoint for AT-07-01
 
 **Issue**: The Tyrol (AT-07) avalanche bulletin PDF endpoint (`https://api.avalanche.report/albina/api/bulletins/.../pdf`) was returning HTML ("albina-server") or 401/404 errors, causing daily fetch failures for Allgäu Alps East. The region stopped updating in March.
 
-**Root Cause**: The original code used an incomplete URL pattern. The correct endpoint requires both `date` (ISO timestamp) and `microRegionId` parameters.
+**Root Cause**: The code used an incomplete URL pattern. The correct endpoint requires both `date` (ISO timestamp at 16:00:00.000Z for the bulletin date) and `microRegionId` parameters.
 
-**Fix (v1)**: Updated `tools/pdf_fetcher.js` to use the correct endpoint pattern for Tyrol:
+**Fix**: Updated `tools/pdf_fetcher.js` to use the correct endpoint pattern:
 ```
-https://api.avalanche.report/albina/api/bulletins/pdf?date=<dateStr>T16:00:00.000Z>&region=EUREGIO&microRegionId=<regionId>&lang=en&grayscale=false
+https://api.avalanche.report/albina/api/bulletins/pdf?date=<dateStr>T16:00:00.000Z&region=EUREGIO&microRegionId=<regionId>&lang=en&grayscale=false
 ```
-- For new PDF files, the code now checks the return value of `downloadImageWithRetry` (which returns `null` on failure instead of throwing). On failure, it falls back to local PDF generation via `pdf_generator.js`.
-- For existing files, download failures are logged and skipped (existing file remains).
-- This ensures that when the official endpoint returns errors (e.g., 400 for future dates not yet published), the fetch still produces a PDF via local generation and keeps the archive complete.
+- For new PDFs: attempts download; on failure, logs error (no local fallback).
+- For existing PDFs: checks for updates; archives versions if changed.
+- The official endpoint works for dates that have been published. Future dates may return 400 until the bulletin is released; in that case the fetch logs an error and proceeds without PDF.
 
 **Files Changed**:
 - `tools/pdf_fetcher.js` — revised `processBulletinForPdfs` for `sourceType='avalanche-report'`
-- `tools/pdf_generator.js` — new module (Puppeteer-based local generation) used as fallback.
+- Removed `tools/pdf_generator.js` (no longer used)
 - `CHANGELOG.md` / `MEMORY.md` — documentation updates.
 
 **Impact**:
-- AT-07-01 PDFs now retrieve correctly from the official endpoint when available.
-- Fallback ensures resilience against endpoint outages or premature fetches (future dates).
-- Site resumes daily updates for the region.
-- No new runtime dependencies (puppeteer already in package.json).
+- AT-07-01 PDFs are now fetched from the official source when available.
+- Site resumes daily updates for the region via GitHub Actions.
+- No local PDF generation; archival completeness depends on endpoint availability.
 
 **Verification**:
-- Tested the endpoint URLs; they return valid PDFs for dates that exist.
-- For 2026-03-22 (not yet available), the fetch falls back to local generation successfully (64 KB PDF produced).
-- After deploying, routine GitHub Actions runs will fetch the official PDF when it becomes available; otherwise local generation fills the gap.
+- Tested endpoint URLs; they return valid PDFs for existing dates (e.g., 2026-02-17 through 2026-03-21).
+- For 2026-03-22 (not yet published), endpoint returns 400 and fetch logs an error (no PDF created).
+- Next scheduled GitHub Actions run will fetch March 22 once the PDF is published.
 
 **Notes**:
-- The fallback generator is now robustly invoked for missing new files.
+- If the endpoint becomes unreliable again, consider reintroducing a fallback or alerting.
 - No Cloudflare Worker changes needed.
 
 ## 2026-03-21: Fix East/West Slope Aspect Mix-up
