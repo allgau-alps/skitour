@@ -314,12 +314,12 @@
     {
       "type": "Feature",
       "properties": { "name": "Riezlern", "type": "town", "ele": 960 },
-      "geometry": { "type": "Point", "coordinates": [10.2740, 47.2950] }
+      "geometry": { "type": "Point", "coordinates": [10.2744, 47.2948] }
     },
     {
       "type": "Feature",
       "properties": { "name": "Riedbergerhorn", "type": "peak", "ele": 1785 },
-      "geometry": { "type": "Point", "coordinates": [10.2560, 47.4350] }
+      "geometry": { "type": "Point", "coordinates": [10.2556, 47.4347] }
     },
     {
       "type": "Feature",
@@ -349,17 +349,17 @@
     {
       "type": "Feature",
       "properties": { "name": "Rangiswanger Horn", "type": "peak", "ele": 1760 },
-      "geometry": { "type": "Point", "coordinates": [10.2167, 47.3667] }
+      "geometry": { "type": "Point", "coordinates": [10.2144, 47.3648] }
     },
     {
       "type": "Feature",
       "properties": { "name": "Sigiswanger Horn", "type": "peak", "ele": 1785 },
-      "geometry": { "type": "Point", "coordinates": [10.1833, 47.3833] }
+      "geometry": { "type": "Point", "coordinates": [10.1850, 47.3845] }
     },
     {
       "type": "Feature",
       "properties": { "name": "Sonnenkopf", "type": "peak", "ele": 1768 },
-      "geometry": { "type": "Point", "coordinates": [10.2333, 47.5400] }
+      "geometry": { "type": "Point", "coordinates": [10.2340, 47.4400] }
     }
   ]
 }
