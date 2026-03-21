@@ -60,11 +60,23 @@ async function processBulletinForPdfs(bulletin, dateStr, sourceType = 'lawinen-w
             log.info(`  Attempting official PDF URL: ${url}`);
 
             try {
-                // If file doesn't exist, simply download
+                // If file doesn't exist, try to download; on failure, fallback to local generation
                 if (!fs.existsSync(baseDest)) {
-                    await downloadPdf(url, baseDest);
-                    if (!resultStatus) resultStatus = 'new';
-                    log.info(`  Downloaded PDF for ${slug}/${dateStr}.pdf`);
+                    const result = await downloadPdf(url, baseDest);
+                    if (result) {
+                        if (!resultStatus) resultStatus = 'new';
+                        log.info(`  Downloaded PDF for ${slug}/${dateStr}.pdf`);
+                    } else {
+                        log.warn(`  Official PDF download failed for new file, generating locally`);
+                        fs.mkdirSync(path.dirname(baseDest), { recursive: true });
+                        const genOk = await generatePdf(bulletin, dateStr, baseDest);
+                        if (genOk) {
+                            if (!resultStatus) resultStatus = 'new';
+                            log.info(`  Generated PDF for ${slug}/${dateStr}.pdf`);
+                        } else {
+                            log.error(`  Failed to generate PDF for ${slug}/${dateStr}.pdf`);
+                        }
+                    }
                     continue;
                 }
 
