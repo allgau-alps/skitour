@@ -29,37 +29,130 @@ async function processBulletinForPdfs(bulletin, dateStr, sourceType = 'lawinen-w
     // Check if this bulletin contains any of our target regions
     const regions = bulletin.regions.map(r => (typeof r === 'string' ? r : r.regionID));
 
-    const matchedSlugs = [];
+    // Collect matched regions with both regionId and slug
+    const matchedRegions = [];
     for (const rid of regions) {
-        if (REGION_PDF_MAP[rid]) {
-            matchedSlugs.push(REGION_PDF_MAP[rid]);
+        const slug = REGION_PDF_MAP[rid];
+        if (slug) {
+            matchedRegions.push({ regionId: rid, slug });
         }
     }
 
     const uuid = bulletin.id || bulletin.bulletinID;
 
-    if (matchedSlugs.length === 0) return;
+    if (matchedRegions.length === 0) return;
 
-    log.info(`Found relevant bulletin ${uuid || '(no uuid)'} for regions: ${matchedSlugs.join(', ')}`);
+    log.info(`Found relevant bulletin ${uuid || '(no uuid)'} for regions: ${matchedRegions.map(r => r.slug).join(', ')}`);
 
     let resultStatus;
 
-    for (const slug of matchedSlugs) {
+    for (const { regionId, slug } of matchedRegions) {
         // Base filename: YYYY-MM-DD.pdf
         const baseDest = path.join(PATHS.pdfs, slug, `${dateStr}.pdf`);
 
-        // For Tyrol (avalanche-report), generate PDF locally from JSON
+        // For Tyrol (avalanche-report), try the official endpoint first; fallback to local generation
         if (sourceType === 'avalanche-report') {
-            // Ensure target directory exists
-            fs.mkdirSync(path.dirname(baseDest), { recursive: true });
-
-            // Generate PDF
-            const success = await generatePdf(bulletin, dateStr, baseDest);
-            if (success) {
-                if (!resultStatus) resultStatus = 'new';
-                log.info(`  Generated PDF for ${slug}/${dateStr}.pdf`);
+            // Build the official PDF URL
+            let dateParam;
+            if (bulletin.publicationTime) {
+                const d = new Date(bulletin.publicationTime);
+                dateParam = d.toISOString(); // e.g., 2026-03-20T16:00:00.000Z
             } else {
-                log.error(`  Failed to generate PDF for ${slug}/${dateStr}.pdf`);
+                // Default to 16:00 UTC of the dateStr if no publicationTime
+                dateParam = `${dateStr}T16:00:00.000Z`;
+            }
+            const url = `https://api.avalanche.report/albina/api/bulletins/pdf?date=${encodeURIComponent(dateParam)}&region=EUREGIO&microRegionId=${regionId}&lang=en&grayscale=false`;
+
+            log.info(`  Attempting official PDF URL: ${url}`);
+
+            try {
+                // If file doesn't exist, simply download
+                if (!fs.existsSync(baseDest)) {
+                    await downloadPdf(url, baseDest);
+                    if (!resultStatus) resultStatus = 'new';
+                    log.info(`  Downloaded PDF for ${slug}/${dateStr}.pdf`);
+                    continue;
+                }
+
+                // File exists - check for update
+                const tempDest = baseDest + '.tmp';
+                try {
+                    await downloadPdf(url, tempDest);
+
+                    // Compare file sizes
+                    const statExisting = fs.statSync(baseDest);
+                    const statNew = fs.statSync(tempDest);
+                    let isDifferent = (statExisting.size !== statNew.size);
+
+                    if (isDifferent) {
+                        const bufBase = fs.readFileSync(baseDest);
+                        const bufNew = fs.readFileSync(tempDest);
+                        if (bufBase.equals(bufNew)) {
+                            log.info(`  Update matches existing ${dateStr}.pdf (content check). Skipping.`);
+                            isDifferent = false;
+                        }
+                    }
+
+                    if (isDifferent) {
+                        log.info(`  Update detected for ${slug}/${dateStr}.pdf!`);
+                        if (resultStatus !== 'new') resultStatus = 'updated';
+
+                        // Archive versioned update
+                        let suffix = '_v2';
+                        if (bulletin.publicationTime) {
+                            try {
+                                const d = new Date(bulletin.publicationTime);
+                                const y = d.getUTCFullYear();
+                                const m = String(d.getUTCMonth() + 1).padStart(2, '0');
+                                const day = String(d.getUTCDate()).padStart(2, '0');
+                                const H = String(d.getUTCHours()).padStart(2, '0');
+                                const M = String(d.getUTCMinutes()).padStart(2, '0');
+                                suffix = `_${y}${m}${day}-${H}${M}`;
+                            } catch (err) {
+                                log.error('Error formatting publicationTime for suffix:', err);
+                            }
+                        }
+
+                        let versionDest = path.join(PATHS.pdfs, slug, `${dateStr}${suffix}.pdf`);
+
+                        if (fs.existsSync(versionDest)) {
+                            const bufExisting = fs.readFileSync(versionDest);
+                            const bufNew = fs.readFileSync(tempDest);
+                            if (bufExisting.equals(bufNew)) {
+                                log.info(`  Update matches existing ${dateStr}${suffix}.pdf. Skipping.`);
+                                isDifferent = false;
+                            } else {
+                                suffix += '_v2';
+                                versionDest = path.join(PATHS.pdfs, slug, `${dateStr}${suffix}.pdf`);
+                            }
+                        }
+
+                        if (isDifferent) {
+                            fs.renameSync(tempDest, versionDest);
+                            log.info(`  Archived update as: ${slug}/${dateStr}${suffix}.pdf`);
+                        } else {
+                            fs.unlinkSync(tempDest);
+                        }
+                    } else {
+                        fs.unlinkSync(tempDest);
+                    }
+                } catch (e) {
+                    log.error(`  Failed to download/compare: ${e.message}`);
+                    if (fs.existsSync(tempDest)) fs.unlinkSync(tempDest);
+                    // Throw to trigger fallback
+                    throw e;
+                }
+            } catch (e) {
+                log.warn(`  Official PDF fetch failed, falling back to local generation: ${e.message}`);
+                // Ensure target directory exists
+                fs.mkdirSync(path.dirname(baseDest), { recursive: true });
+                const success = await generatePdf(bulletin, dateStr, baseDest);
+                if (success) {
+                    if (!resultStatus) resultStatus = 'new';
+                    log.info(`  Generated PDF for ${slug}/${dateStr}.pdf`);
+                } else {
+                    log.error(`  Failed to generate PDF for ${slug}/${dateStr}.pdf`);
+                }
             }
             continue;
         }

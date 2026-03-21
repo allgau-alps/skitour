@@ -2,40 +2,41 @@
 
 This file records all manual changes, fixes, and decisions made by the Skitour Steward (outside of automated GitHub Actions updates). It provides narrative context beyond terse git commit messages.
 
-## 2026-03-21: Fix Tyrol PDF Endpoint Failure for AT-07-01
+## 2026-03-21: Fix Tyrol PDF Endpoint for AT-07-01 (Official Endpoint + Local Fallback)
 
-**Issue**: The Tyrol (AT-07) avalanche bulletin PDF endpoint (`https://api.avalanche.report/albina/api/bulletins/.../pdf`) started returning HTML ("albina-server") or 401/404 errors instead of PDFs, causing daily fetch failures for Allgäu Alps East region. The region stopped updating in March 2026.
+**Issue**: The Tyrol (AT-07) avalanche bulletin PDF endpoint (`https://api.avalanche.report/albina/api/bulletins/.../pdf`) was returning HTML ("albina-server") or 401/404 errors, causing daily fetch failures for Allgäu Alps East. The region stopped updating in March.
 
-**Root Cause**: The Albina API for Tyrol appears to be deprecated or requires parameters/authorization that are not available. The existing code in `tools/pdf_fetcher.js` relied solely on that endpoint for `sourceType: 'avalanche-report'`.
+**Root Cause**: The original code used an incomplete URL pattern. The correct endpoint requires both `date` (ISO timestamp) and `microRegionId` parameters.
 
-**Fix**: Implemented local PDF generation from bulletin JSON data for Tyrol bulletins, bypassing the broken external endpoint entirely.
+**Fix**: Updated `tools/pdf_fetcher.js` to use the correct endpoint pattern for Tyrol:
+```
+https://api.avalanche.report/albina/api/bulletins/pdf?date=<ISO>&region=EUREGIO&microRegionId=<regionId>&lang=en&grayscale=false
+```
+The code now:
+- Attempts the official endpoint first with the bulletin's `publicationTime`.
+- If the download fails (network error, non-PDF, 404, etc.), falls back to local PDF generation from JSON (via `tools/pdf_generator.js` using Puppeteer).
 
 **Files Changed**:
-- `tools/pdf_generator.js` — new module
-  - Uses Puppeteer (already a dependency) to render an HTML template of the bulletin and print to PDF.
-  - Template includes danger ratings, avalanche problems, snowpack comments, and source attribution.
-- `tools/pdf_fetcher.js` — updated `processBulletinForPdfs`
-  - For `sourceType === 'avalanche-report'` (Tyrol), calls `generatePdf` instead of attempting remote download.
-  - For `lawinen-warnung` (DE-BY, AT-08), keeps existing remote PDF download flow.
-- `package.json` — no changes; puppeteer already present.
-- `CHANGELOG.md` — this entry.
+- `tools/pdf_fetcher.js` — revised `processBulletinForPdfs` for `sourceType='avalanche-report'`
+- `tools/pdf_generator.js` — new module (Puppeteer-based local generation) created as fallback.
+- `CHANGELOG.md` / `MEMORY.md` — documentation updates.
 
 **Impact**:
-- AT-07-01 (Allgäu Alps East) PDFs will now generate reliably from the JSON bulletin data, regardless of external endpoint status.
-- The site resumes daily updates for the region.
-- PDFs are styled to match the original format (A4, print-friendly, color-coded danger levels).
-- Backfill is not needed for past dates because the generator runs on fetch; future dates will be generated automatically.
+- AT-07-01 PDFs now retrieve correctly from the official endpoint when available.
+- Fallback ensures resilience against future endpoint issues.
+- Site resumes daily updates for the region.
+- No new runtime dependencies (puppeteer already in package.json).
 
 **Verification**:
-- Output PDF saved to `data/pdfs/allgau-alps-east/YYYY-MM-DD.pdf`.
-- Build pipeline (`npm run fetch:all`) now completes without errors for AT-07.
-- Puppeteer runs headless in CI; no additional system dependencies required beyond those already present.
+- Tested the endpoint URLs you provided; they return valid PDFs.
+- After deploying, fetch logs should show "Downloaded PDF for allgau-alps-east/YYYY-MM-DD.pdf" rather than "Generated PDF".
+- If any download fails, the fallback logs "Generated PDF...".
 
 **Notes**:
-- If the original Tyrol PDF endpoint ever becomes stable again, this code can be extended to prefer remote first with local fallback, but local generation is currently the most robust approach.
-- No changes to `wrangler.toml` or Cloudflare Workers required.
+- The fallback generator remains in place for robustness; it only activates if the official endpoint is unreachable or returns an error.
+- No wrangler or worker changes needed.
 
-**Related**: This resolves the failure noted in commit `dc8f166` (backfilled PDFs manually) and ensures sustainable operation going forward.
+**Related**: Resolves failure noted in commit `dc8f166` (backfilled PDFs manually).
 
 ## 2026-03-21: Fix East/West Slope Aspect Mix-up
 
