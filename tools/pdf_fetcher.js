@@ -52,15 +52,9 @@ async function processBulletinForPdfs(bulletin, dateStr, sourceType = 'lawinen-w
 
         // For Tyrol (avalanche-report), try the official endpoint first; fallback to local generation
         if (sourceType === 'avalanche-report') {
-            // Build the official PDF URL
-            let dateParam;
-            if (bulletin.publicationTime) {
-                const d = new Date(bulletin.publicationTime);
-                dateParam = d.toISOString(); // e.g., 2026-03-20T16:00:00.000Z
-            } else {
-                // Default to 16:00 UTC of the dateStr if no publicationTime
-                dateParam = `${dateStr}T16:00:00.000Z`;
-            }
+            // The endpoint expects the bulletin date at 16:00:00.000Z (the valid date), not the publicationTime.
+            // Use the dateStr we are processing, with fixed 16:00 UTC.
+            const dateParam = `${dateStr}T16:00:00.000Z`;
             const url = `https://api.avalanche.report/albina/api/bulletins/pdf?date=${encodeURIComponent(dateParam)}&region=EUREGIO&microRegionId=${regionId}&lang=en&grayscale=false`;
 
             log.info(`  Attempting official PDF URL: ${url}`);
