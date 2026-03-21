@@ -73,8 +73,8 @@ Sources → Fetch scripts → `data/` → Build → `archive/` → GitHub Pages
 - `archive/CONTEXT.md` — static site structure explanation
 - `shared/CONTEXT.md` — shared client-side modules
 - `.ai/CONTEXT.md` — master index of all CONTEXT.md files
+- **`CHANGELOG.md` — detailed manual intervention history** (preferred for change context)
 
-## Recent Changes & Decisions
-- 2026-03-21: Fixed slope aspect calculation in `shared/js/SlopeUtils.js`. The previous formula produced correct N/S but swapped E/W. Changed to `Math.atan2(-dzdx, dzdy)` for true downhill bearing (0°=N, 90°=E). Verified that N and S remain correct and E/W are now accurate.
-
-*(To be appended as work progresses)*
+## Change Tracking
+- For detailed records of manual fixes and decisions, see `CHANGELOG.md`.
+- This `MEMORY.md` remains a quick-reference architecture and process guide.
