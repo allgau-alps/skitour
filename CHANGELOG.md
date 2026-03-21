@@ -59,6 +59,18 @@ https://api.avalanche.report/albina/api/bulletins/pdf?date=<dateStr>T16:00:00.00
 
 **Related**: Documentation updated in `MEMORY.md` (Planning Tool section).
 
+## 2026-03-21: Enhance POI Search in Planning Tool
+
+**Improvements**:
+- Expanded `planning/data/pois.json` to ~50 features (peaks, huts, towns, passes) with accurate coordinates across Allgäu.
+- Changed search to tokenized prefix matching: query must match the start of any word in the name (case-insensitive). This avoids overly broad matches (e.g., "e" does not match "Mädelegabel").
+- Removed the map marker; selecting a result now only recenters the map.
+- Maintains additive, non-breaking design.
+
+**Files changed**:
+- `planning/data/pois.json` — comprehensive replacement.
+- `planning/js/main.js` — tokenization, prefix filter, simplified `flyToPOI`.
+
 ## 2026-03-21: Fix East/West Slope Aspect Mix-up
 
 **Issue**: The slope aspect visualization in the planning/route tool incorrectly swapped east and west. North and south appeared correct, but east-facing slopes were colored as west and vice versa.

@@ -60,10 +60,10 @@ Sources → Fetch scripts → `data/` → Build → `archive/` → GitHub Pages
 
 ## Planning Tool
 - **Location**: `planning/` (SPA: index.html, planning.js, planning.css)
-- **POI Search**: Client-side search over `planning/data/pois.json` (GeoJSON features: peaks, towns).
-  - Search input in control panel; queries by name (case-insensitive substring).
-  - Results dropdown; selecting flies map to location and shows a red marker.
-  - Expand `pois.json` to add more places.
+- **POI Search**: Client-side search over `planning/data/pois.json` (GeoJSON features: peaks, huts, towns, passes).
+  - Tokenized prefix matching: query must match the beginning of any word in the name (case-insensitive). This avoids overly broad matches (e.g., "e" does not match "Mädelegabel").
+  - Results dropdown; selecting recenters the map (no marker shown).
+  - Dataset expanded to ~50 entries covering the Allgäu Alps and neighboring ranges.
 - **Overlays**: Slope-aspect, slope angle, shade map, 3D terrain, GPX route upload.
 - **GPX Integration**: Can load routes via query params `?filename=...&name=...` from GPX Library.
 

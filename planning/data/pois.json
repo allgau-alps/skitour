@@ -80,6 +80,236 @@
       "type": "Feature",
       "properties": { "name": "Immenstadt", "type": "town", "ele": 731 },
       "geometry": { "type": "Point", "coordinates": [10.2167, 47.5667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Hochvogel", "type": "peak", "ele": 2592 },
+      "geometry": { "type": "Point", "coordinates": [10.2167, 47.3833] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Trettachspitze", "type": "peak", "ele": 2595 },
+      "geometry": { "type": "Point", "coordinates": [10.3167, 47.3333] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Kesselspitze", "type": "peak", "ele": 2468 },
+      "geometry": { "type": "Point", "coordinates": [10.2833, 47.2833] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Rotspitze", "type": "peak", "ele": 2333 },
+      "geometry": { "type": "Point", "coordinates": [10.2167, 47.3667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Höfats", "type": "peak", "ele": 2258 },
+      "geometry": { "type": "Point", "coordinates": [10.1167, 47.3667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Rappenfluh", "type": "peak", "ele": 2260 },
+      "geometry": { "type": "Point", "coordinates": [10.1333, 47.3500] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Höfler", "type": "peak", "ele": 2220 },
+      "geometry": { "type": "Point", "coordinates": [10.1667, 47.3667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Elfer", "type": "peak", "ele": 2387 },
+      "geometry": { "type": "Point", "coordinates": [10.1667, 47.3333] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Zettele", "type": "peak", "ele": 2205 },
+      "geometry": { "type": "Point", "coordinates": [10.1833, 47.3667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Bärenkopf", "type": "peak", "ele": 2591 },
+      "geometry": { "type": "Point", "coordinates": [10.2667, 47.3833] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Gieselerwand", "type": "peak", "ele": 2360 },
+      "geometry": { "type": "Point", "coordinates": [10.2167, 47.3500] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Walserkarspitze", "type": "peak", "ele": 2502 },
+      "geometry": { "type": "Point", "coordinates": [10.3000, 47.3667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Schneckspitze", "type": "peak", "ele": 2380 },
+      "geometry": { "type": "Point", "coordinates": [10.2833, 47.3500] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Gimpelspitze", "type": "peak", "ele": 2426 },
+      "geometry": { "type": "Point", "coordinates": [10.2667, 47.3333] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Rubihorn", "type": "peak", "ele": 1957 },
+      "geometry": { "type": "Point", "coordinates": [10.3667, 47.3833] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Koblat", "type": "peak", "ele": 2302 },
+      "geometry": { "type": "Point", "coordinates": [10.2333, 47.4000] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Laufbacher Eck", "type": "peak", "ele": 2174 },
+      "geometry": { "type": "Point", "coordinates": [10.2000, 47.3667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Sattelköpfe", "type": "peak", "ele": 2206 },
+      "geometry": { "type": "Point", "coordinates": [10.2333, 47.3667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Griesgundkopf", "type": "peak", "ele": 2164 },
+      "geometry": { "type": "Point", "coordinates": [10.1833, 47.3667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Parseierspitze", "type": "peak", "ele": 3040 },
+      "geometry": { "type": "Point", "coordinates": [10.6833, 47.2333] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Pflatsch", "type": "peak", "ele": 2596 },
+      "geometry": { "type": "Point", "coordinates": [10.8667, 47.2500] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Hoher Riffler", "type": "peak", "ele": 2791 },
+      "geometry": { "type": "Point", "coordinates": [10.8667, 47.2333] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Kuchenspitze", "type": "peak", "ele": 2741 },
+      "geometry": { "type": "Point", "coordinates": [10.8667, 47.2667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Großer Schröder", "type": "peak", "ele": 2798 },
+      "geometry": { "type": "Point", "coordinates": [10.6833, 47.2167] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Westlicher Feuerstein", "type": "peak", "ele": 2810 },
+      "geometry": { "type": "Point", "coordinates": [10.6333, 47.2500] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Holzgauer Wetterspitze", "type": "peak", "ele": 2895 },
+      "geometry": { "type": "Point", "coordinates": [10.7500, 47.2167] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Vorderspitze", "type": "peak", "ele": 2730 },
+      "geometry": { "type": "Point", "coordinates": [10.6333, 47.2333] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Gimpel", "type": "peak", "ele": 2171 },
+      "geometry": { "type": "Point", "coordinates": [10.6500, 47.5000] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Rote Flüh", "type": "peak", "ele": 2107 },
+      "geometry": { "type": "Point", "coordinates": [10.6667, 47.5000] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Schartschrofen", "type": "peak", "ele": 1968 },
+      "geometry": { "type": "Point", "coordinates": [10.6667, 47.5167] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Kellenspitze", "type": "peak", "ele": 2238 },
+      "geometry": { "type": "Point", "coordinates": [10.6833, 47.5000] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Zugspitze", "type": "peak", "ele": 2962 },
+      "geometry": { "type": "Point", "coordinates": [11.1433, 47.4211] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Säuling", "type": "peak", "ele": 2048 },
+      "geometry": { "type": "Point", "coordinates": [11.0167, 47.5167] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Notkarspitze", "type": "peak", "ele": 1889 },
+      "geometry": { "type": "Point", "coordinates": [11.0500, 47.5333] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Hoher Ziegspitz", "type": "peak", "ele": 1864 },
+      "geometry": { "type": "Point", "coordinates": [10.9333, 47.6667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Friederspitz", "type": "peak", "ele": 2050 },
+      "geometry": { "type": "Point", "coordinates": [10.9833, 47.5167] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Madlenjoch", "type": "pass", "ele": 2140 },
+      "geometry": { "type": "Point", "coordinates": [10.8833, 47.3000] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Kempten", "type": "town", "ele": 674 },
+      "geometry": { "type": "Point", "coordinates": [10.3167, 47.7333] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Füssen", "type": "town", "ele": 808 },
+      "geometry": { "type": "Point", "coordinates": [10.7167, 47.5833] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Reutte", "type": "town", "ele": 853 },
+      "geometry": { "type": "Point", "coordinates": [10.9833, 47.5000] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Kemptner Hütte", "type": "hut", "ele": 1376 },
+      "geometry": { "type": "Point", "coordinates": [10.2833, 47.3667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Waltenberger Haus", "type": "hut", "ele": 1196 },
+      "geometry": { "type": "Point", "coordinates": [10.1167, 47.2667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Hermann-von-Barth-Hütte", "type": "hut", "ele": 2147 },
+      "geometry": { "type": "Point", "coordinates": [10.3667, 47.3833] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Tannheimer Hütte", "type": "hut", "ele": 1721 },
+      "geometry": { "type": "Point", "coordinates": [10.6167, 47.4667] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Gimpelhütte", "type": "hut", "ele": 1670 },
+      "geometry": { "type": "Point", "coordinates": [10.6500, 47.5000] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Prinz Luitpold Haus", "type": "hut", "ele": 1846 },
+      "geometry": { "type": "Point", "coordinates": [10.3000, 47.3500] }
     }
   ]
 }

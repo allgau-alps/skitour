@@ -40,8 +40,7 @@ const map = new maplibregl.Map({
 map.addControl(new maplibregl.ScaleControl(), 'bottom-left');
 
 // POI Search Setup
-let pois = []; // Will hold GeoJSON features
-let poiMarker = null; // Current marker for selected POI
+let pois = []; // Will hold GeoJSON features with tokenized names
 
 // Utility: debounce
 function debounce(fn, delay) {
@@ -62,7 +61,10 @@ async function initPOISearch() {
         const response = await fetch('data/pois.json');
         if (response.ok) {
             const geojson = await response.json();
-            pois = geojson.features || [];
+            pois = (geojson.features || []).map(f => {
+                const tokens = f.properties.name.toLowerCase().split(/[-\s]+/).filter(Boolean);
+                return { ...f, __tokens: tokens };
+            });
         } else {
             console.warn('POIS data not available');
             pois = [];
@@ -85,7 +87,7 @@ async function initPOISearch() {
             return;
         }
         const lower = q.toLowerCase();
-        const matches = pois.filter(f => f.properties.name.toLowerCase().includes(lower)).slice(0, 10);
+        const matches = pois.filter(p => p.__tokens.some(t => t.startsWith(lower))).slice(0, 10);
         renderResults(matches);
     }, 200);
 
@@ -119,7 +121,7 @@ function renderResults(matches) {
             el.addEventListener('click', () => {
                 const lng = parseFloat(el.dataset.lng);
                 const lat = parseFloat(el.dataset.lat);
-                flyToPOI(lat, lng, el.querySelector('div').textContent);
+                flyToPOI(lat, lng);
                 resultsBox.style.display = 'none';
                 document.getElementById('poi-search-input').value = '';
             });
@@ -128,38 +130,8 @@ function renderResults(matches) {
     resultsBox.style.display = 'block';
 }
 
-function flyToPOI(lat, lng, name) {
-    // Remove existing marker if any
-    if (poiMarker) {
-        map.removeLayer('poi-marker-layer');
-        map.removeSource('poi-marker');
-        poiMarker = null;
-    }
-
-    // Add a red pin marker
-    map.addSource('poi-marker', {
-        type: 'geojson',
-        data: {
-            type: 'FeatureCollection',
-            features: [{
-                type: 'Feature',
-                geometry: { type: 'Point', 'coordinates': [lng, lat] }
-            }]
-        }
-    });
-    map.addLayer({
-        id: 'poi-marker-layer',
-        type: 'circle',
-        source: 'poi-marker',
-        paint: {
-            'circle-radius': 8,
-            'circle-color': '#dc2626',
-            'circle-stroke-width': 2,
-            'circle-stroke-color': '#ffffff'
-        }
-    });
-
-    // Fly to location with a nice zoom
+function flyToPOI(lat, lng) {
+    // Simply fly to the location; no marker
     map.flyTo({
         center: [lng, lat],
         zoom: 13,
