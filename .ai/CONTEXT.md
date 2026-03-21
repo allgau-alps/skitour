@@ -148,3 +148,8 @@ graph TD
     - [Add New Region](.agent/workflows/add_region.md)
     - [Debug Scraper](.agent/workflows/debug_scraper.md)
 
+## Steward Resources
+*For the Skitour Steward (maintenance and operations).*
+- **[MEMORY.md](MEMORY.md)**: Quick-reference architecture, process notes, and rules.
+- **[CHANGELOG.md](CHANGELOG.md)**: Detailed narrative of manual interventions and decisions.
+
