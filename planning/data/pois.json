@@ -314,12 +314,12 @@
     {
       "type": "Feature",
       "properties": { "name": "Riezlern", "type": "town", "ele": 960 },
-      "geometry": { "type": "Point", "coordinates": [10.2744, 47.2948] }
+      "geometry": { "type": "Point", "coordinates": [10.2760791, 47.2948558] }
     },
     {
       "type": "Feature",
       "properties": { "name": "Riedbergerhorn", "type": "peak", "ele": 1785 },
-      "geometry": { "type": "Point", "coordinates": [10.2556, 47.4347] }
+      "geometry": { "type": "Point", "coordinates": [10.2541458, 47.4348098] }
     },
     {
       "type": "Feature",
@@ -349,12 +349,12 @@
     {
       "type": "Feature",
       "properties": { "name": "Rangiswanger Horn", "type": "peak", "ele": 1760 },
-      "geometry": { "type": "Point", "coordinates": [10.2144, 47.3648] }
+      "geometry": { "type": "Point", "coordinates": [10.2134329, 47.3641689] }
     },
     {
       "type": "Feature",
       "properties": { "name": "Sigiswanger Horn", "type": "peak", "ele": 1785 },
-      "geometry": { "type": "Point", "coordinates": [10.1850, 47.3845] }
+      "geometry": { "type": "Point", "coordinates": [10.1823253, 47.3806056] }
     },
     {
       "type": "Feature",
