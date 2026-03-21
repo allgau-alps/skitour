@@ -35,6 +35,30 @@ https://api.avalanche.report/albina/api/bulletins/pdf?date=<dateStr>T16:00:00.00
 - If the endpoint becomes unreliable again, consider reintroducing a fallback or alerting.
 - No Cloudflare Worker changes needed.
 
+## 2026-03-21: Add POI Search to Planning Tool
+
+**Feature**: Added a search bar in the planning tool's control panel to quickly locate peaks and towns on the map.
+
+**Implementation**:
+- Created `planning/data/pois.json` with initial set of Allgäu peaks and nearby towns (GeoJSON).
+- Modified `planning/index.html`: added search input and results dropdown container.
+- Modified `planning/js/main.js`:
+  - Added `initPOISearch()` to fetch POI data and set up debounced input.
+  - Added `renderResults()` to build a dropdown of matching names with elevation info.
+  - Added `flyToPOI()` to center the map on the selected location and show a red marker.
+- Modified `planning/planning.css`: styled the search container and dropdown.
+
+**Usage**:
+- In the planning tool sidebar, type in the "Search peaks or towns..." box.
+- Matching names appear; click one to fly the map to that location.
+- The search is case-insensitive and matches substrings (e.g., "unsp" finds "Unspitze").
+
+**Non-breaking**: The feature is additive; existing layers and controls remain unaffected.
+
+**Future**: Expand `pois.json` with more Alpine features (passes, huts, etc.) as needed.
+
+**Related**: Documentation updated in `MEMORY.md` (Planning Tool section).
+
 ## 2026-03-21: Fix East/West Slope Aspect Mix-up
 
 **Issue**: The slope aspect visualization in the planning/route tool incorrectly swapped east and west. North and south appeared correct, but east-facing slopes were colored as west and vice versa.

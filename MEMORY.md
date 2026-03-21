@@ -58,6 +58,15 @@ Sources → Fetch scripts → `data/` → Build → `archive/` → GitHub Pages
   - Admin key required for upload/delete (`X-Admin-Key` header, set in Cloudflare dashboard)
   - See `gpx-library/CONTEXT.md` for architecture and manual upload instructions.
 
+## Planning Tool
+- **Location**: `planning/` (SPA: index.html, planning.js, planning.css)
+- **POI Search**: Client-side search over `planning/data/pois.json` (GeoJSON features: peaks, towns).
+  - Search input in control panel; queries by name (case-insensitive substring).
+  - Results dropdown; selecting flies map to location and shows a red marker.
+  - Expand `pois.json` to add more places.
+- **Overlays**: Slope-aspect, slope angle, shade map, 3D terrain, GPX route upload.
+- **GPX Integration**: Can load routes via query params `?filename=...&name=...` from GPX Library.
+
 ## Important Rules
 - Do NOT edit files in `archive/` or `data/` directly — they are overwritten by fetch/build
 - For any UI/HTML changes, edit `tools/lib/templates.js` or source in `tools/src/`
