@@ -31,6 +31,7 @@ Sources → Fetch scripts → `data/` → Build → `archive/` → GitHub Pages
 - `fetch_uploads.js` — retrieves user submissions from KV
 - `process_profiles.js` — snow profile data
 - `enrich_profiles.js` — translates German→English (GCP API), parses stability tests
+- `pdf_generator.js` — generates PDFs locally for Tyrol (AT-07) bulletins (used by `pdf_fetcher.js`)
 
 ## Key Commands
 - `npm ci` — install dependencies
