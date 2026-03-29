@@ -57,21 +57,21 @@ async function fetchAndProcess(source, dateStr) {
 
         if (isNew) {
             stats.fetched++;
-
-            // Process Pdfs
-            const bulletins = Array.isArray(data) ? data : data.bulletins;
-            if (bulletins) {
-                for (const bulletin of bulletins) {
-                    const result = await processBulletinForPdfs(bulletin, dateStr, source.type);
-                    if (result === 'new') stats.pdfsNew++;
-                    if (result === 'updated') stats.pdfsUpdated++;
-                }
-            }
-
             // Update Cache
             fs.writeFileSync(cacheFile, contentStr); // Save the normalized string
             log.info(`${source.name}: Updated cache`);
         }
+
+        // Always process PDFs (even if JSON cached) to retry missing/failed downloads
+        const bulletins = Array.isArray(data) ? data : data.bulletins;
+        if (bulletins) {
+            for (const bulletin of bulletins) {
+                const result = await processBulletinForPdfs(bulletin, dateStr, source.type);
+                if (result === 'new') stats.pdfsNew++;
+                if (result === 'updated') stats.pdfsUpdated++;
+            }
+        }
+
         return true;
 
     } catch (e) {
