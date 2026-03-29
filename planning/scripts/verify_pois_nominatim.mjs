@@ -58,7 +58,7 @@ async function main() {
       console.error(`[${i + 1}/${features.length}] ${name}: request error ${e.message}`);
       notFound++;
       await delay(1100);
-      continue;
+        continue;
     }
 
     const d = haversine(oldLat, oldLng, newLat, newLng);
