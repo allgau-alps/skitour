@@ -50,8 +50,26 @@ async function processBulletinForPdfs(bulletin, dateStr, sourceType = 'lawinen-w
 
         // For Tyrol (avalanche-report), use official endpoint only; no fallback
         if (sourceType === 'avalanche-report') {
-            // The endpoint expects the bulletin date at 16:00:00.000Z (the valid date).
-            const dateParam = `${dateStr}T16:00:00.000Z`;
+            // The endpoint requires the bulletin's validTime.startTime (or publicationTime).
+            // Prefer validTime.startTime; fall back to publicationTime.
+            let dateParam;
+            if (bulletin.validTime && bulletin.validTime.startTime) {
+                // Convert to required format: YYYY-MM-DDTHH:MM:SS.000Z
+                // Source usually gives "2026-03-29T15:00:00+00:00"
+                dateParam = bulletin.validTime.startTime.replace('+00:00', '.000Z');
+                if (!dateParam.endsWith('Z') && !dateParam.includes('.')) {
+                    dateParam = dateParam + '.000Z';
+                }
+            } else if (bulletin.publicationTime) {
+                dateParam = bulletin.publicationTime.replace('+00:00', '.000Z');
+                if (!dateParam.endsWith('Z') && !dateParam.includes('.')) {
+                    dateParam = dateParam + '.000Z';
+                }
+            } else {
+                // Fallback to previous behavior (dateStr at 16:00) — may fail
+                dateParam = `${dateStr}T16:00:00.000Z`;
+                log.warn(`Missing validTime/publicationTime for ${slug}/${dateStr}, falling back to ${dateParam}`);
+            }
             const url = `https://api.avalanche.report/albina/api/bulletins/pdf?date=${encodeURIComponent(dateParam)}&region=EUREGIO&microRegionId=${regionId}&lang=en&grayscale=false`;
 
             log.info(`  PDF URL: ${url}`);
