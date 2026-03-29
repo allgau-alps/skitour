@@ -42,17 +42,26 @@
                 </button>
                 <button class="map-btn" id="ctrl-tilt-up" title="Tilt Up">▲</button>
                 <button class="map-btn" id="ctrl-tilt-down" title="Tilt Down">▼</button>
-                <button class="map-btn" id="ctrl-rotate-left" title="Rotate Left">➚</button>
-                <button class="map-btn" id="ctrl-rotate-right" title="Rotate Right">➛</button>
+                <button class="map-btn" id="ctrl-rotate-left" title="Rotate Left">↺</button>
+                <button class="map-btn" id="ctrl-rotate-right" title="Rotate Right">↻</button>
             </div>
         </div>
     </div>
 
-    <!-- Mobile Navigation (for mobile devices) -->
-    <div class="mobile-nav" id="mobile-nav">
-        <div class="nav-section" data-section="search">
-            <h3>Search</h3>
-            <div class="nav-content">
+    <!-- Control Panel (Right Drawer) -->
+    <div class="control-panel" id="control-panel">
+        <div class="sidebar-handle" id="sidebar-handle">
+            <div class="sidebar-handle-bar"></div>
+        </div>
+
+        <div class="panel-scroll-container">
+            <div class="panel-header">
+                <h2>&#x1F6E0; Planning Tool</h2>
+            </div>
+
+            <!-- Search Places -->
+            <div class="control-section">
+                <h3>Search Places</h3>
                 <div class="search-container" style="position: relative;">
                     <input type="text" id="poi-search-input" placeholder="Search peaks or towns..." autocomplete="off"
                         style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 0.9rem;">
@@ -61,10 +70,11 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="nav-section" data-section="overlays">
-            <h3>Overlays</h3>
-            <div class="nav-content">
+
+            <!-- Overlay Layers -->
+            <div class="control-section">
+                <h3>Overlay Layers</h3>
+
                 <!-- Satellite -->
                 <div class="layer-control">
                     <label>
@@ -135,33 +145,34 @@
                         More accurate (external link) <span style="font-size: 0.7em;">↗</span>
                     </a>
                 </div>
-            </div>
-        </div>
-        <div class="nav-section" data-section="3d">
-            <h3>3D</h3>
-            <div class="nav-content">
-                <div class="layer-control">
-                    <label>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="terrain-toggle">
-                            <span class="slider"></span>
-                        </div>
-                        Enable 3D
-                    </label>
+
+                <div class="control-section">
+                    <h3>3D Terrain</h3>
+                    <div class="layer-control">
+                        <label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="terrain-toggle">
+                                <span class="slider"></span>
+                            </div>
+                            Enable 3D
+                        </label>
+                    </div>
+                    <!-- External Link for RealityMaps -->
+                    <div id="realitymaps-link-container"
+                        style="display: none; padding-left: 0.5rem; margin-top: 0.25rem; margin-bottom: 0.75rem;">
+                        <a href="https://www.realitymaps.app/" target="_blank"
+                            style="font-size: 0.8rem; color: #0284c7; text-decoration: none;">
+                            Highest quality 3d Maps <span style="font-size: 0.7em;">↗</span>
+                        </a>
+                    </div>
                 </div>
-                <!-- External Link for RealityMaps -->
-                <div id="realitymaps-link-container"
-                    style="display: none; padding-left: 0.5rem; margin-top: 0.25rem; margin-bottom: 0.75rem;">
-                    <a href="https://www.realitymaps.app/" target="_blank"
-                        style="font-size: 0.8rem; color: #0284c7; text-decoration: none;">
-                        Highest quality 3d Maps <span style="font-size: 0.7em;">↗</span>
-                    </a>
-                </div>
+
+
             </div>
-        </div>
-        <div class="nav-section" data-section="gpx">
-            <h3>GPX</h3>
-            <div class="nav-content">
+
+            <!-- GPX Routes -->
+            <div class="control-section">
+                <h3>GPX Routes</h3>
                 <div class="gpx-upload-container">
                     <input type="file" id="gpx-file-input" accept=".gpx" class="hidden-input">
                     <label for="gpx-file-input" class="upload-btn">
@@ -176,19 +187,6 @@
                         📂 Load from Library
                     </a>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Control Panel (Right Drawer) -->
-    <div class="control-panel" id="control-panel">
-        <div class="sidebar-handle" id="sidebar-handle">
-            <div class="sidebar-handle-bar"></div>
-        </div>
-
-        <div class="panel-scroll-container">
-            <div class="panel-header">
-                <h2>🛠️ Planning Tool</h2>
             </div>
         </div>
     </div>
@@ -233,6 +231,10 @@
         <div class="legend-item"><span style="background: #3b82f6cc;"></span> N</div>
         <div class="legend-item"><span style="background: #22d3eecc;"></span> NE</div>
         <div class="legend-item"><span style="background: #22c55ecc;"></span> E</div>
+        <div class="legend-item"><span style="background: #a3e635cc;"></span> SE</div>
+        <div class="legend-item"><span style="background: #ef4444cc;"></span> S</div>
+        <div class="legend-item"><span style="background: #fb923ccc;"></span> SW</div>
+        <div class="legend-item"><span style="background: #facc15cc;"></span> W</div>
         <div class="legend-item"><span style="background: #a855f7cc;"></span> NW</div>
     </div>
 
