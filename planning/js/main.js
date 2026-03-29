@@ -1036,3 +1036,31 @@ function analyzeGPXContent(gpxDoc, filename) {
         aspectBreakdown
     };
 }
+
+// Accordion functionality for top-level menu sections
+document.addEventListener('DOMContentLoaded', function() {
+    const sections = document.querySelectorAll('.control-section');
+    
+    sections.forEach(section => {
+        const header = section.querySelector('h3');
+        if (!header) return;
+        
+        // Add cursor style if not already there
+        header.style.cursor = 'pointer';
+        
+        header.addEventListener('click', (e) => {
+            const isCollapsed = section.classList.contains('collapsed');
+            
+            // Close all sections first (accordion behavior)
+            sections.forEach(s => {
+                s.classList.add('collapsed');
+            });
+            
+            // Toggle the clicked section (open if it was closed)
+            if (isCollapsed) {
+                section.classList.remove('collapsed');
+            }
+            // If it was already open, it stays closed (all sections now closed)
+        });
+    });
+});
