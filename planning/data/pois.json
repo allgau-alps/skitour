@@ -314,7 +314,7 @@
     {
       "type": "Feature",
       "properties": { "name": "Riezlern", "type": "town", "ele": 960 },
-      "geometry": { "type": "Point", "coordinates": [10.2760791, 47.2948558] }
+      "geometry": { "type": "Point", "coordinates": [10.1881, 47.3617] }
     },
     {
       "type": "Feature",
@@ -359,7 +359,7 @@
     {
       "type": "Feature",
       "properties": { "name": "Sonnenkopf", "type": "peak", "ele": 1768 },
-      "geometry": { "type": "Point", "coordinates": [10.2340, 47.4400] }
+      "geometry": { "type": "Point", "coordinates": [10.33, 47.4589] }
     }
   ]
 }
