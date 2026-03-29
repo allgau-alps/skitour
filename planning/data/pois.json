@@ -58,11 +58,6 @@
     },
     {
       "type": "Feature",
-      "properties": { "name": "Bayerisch Eisenstein", "type": "town", "ele": 760 },
-      "geometry": { "type": "Point", "coordinates": [13.2167, 49.1500] }
-    },
-    {
-      "type": "Feature",
       "properties": { "name": "Mittenwald", "type": "town", "ele": 914 },
       "geometry": { "type": "Point", "coordinates": [11.2500, 47.4333] }
     },
@@ -98,8 +93,8 @@
     },
     {
       "type": "Feature",
-      "properties": { "name": "Rotspitze", "type": "peak", "ele": 2333 },
-      "geometry": { "type": "Point", "coordinates": [10.2167, 47.3667] }
+      "properties": { "name": "Rotspitze", "type": "peak", "ele": 2633 },
+      "geometry": { "type": "Point", "coordinates": [10.3633, 47.3500] }
     },
     {
       "type": "Feature",
@@ -309,12 +304,11 @@
     {
       "type": "Feature",
       "properties": { "name": "Prinz Luitpold Haus", "type": "hut", "ele": 1846 },
-      "geometry": { "type": "Point", "coordinates": [10.3000, 47.3500] }
-    },
+      "geometry": { "type": "Point", "coordinates": [10.3000, 47.3500] } },
     {
       "type": "Feature",
       "properties": { "name": "Riezlern", "type": "town", "ele": 960 },
-      "geometry": { "type": "Point", "coordinates": [10.1881, 47.3617] }
+      "geometry": { "type": "Point", "coordinates": [10.2760791, 47.2948558] }
     },
     {
       "type": "Feature",
@@ -329,22 +323,22 @@
     {
       "type": "Feature",
       "properties": { "name": "Biberkopf", "type": "peak", "ele": 2508 },
-      "geometry": { "type": "Point", "coordinates": [10.3667, 47.3667] }
+      "geometry": { "type": "Point", "coordinates": [10.368, 47.366] }
     },
     {
       "type": "Feature",
       "properties": { "name": "Hochgrat", "type": "peak", "ele": 1834 },
-      "geometry": { "type": "Point", "coordinates": [10.2333, 47.5500] }
+      "geometry": { "type": "Point", "coordinates": [10.222, 47.560] }
     },
     {
       "type": "Feature",
       "properties": { "name": "Grünten", "type": "peak", "ele": 1738 },
-      "geometry": { "type": "Point", "coordinates": [10.3333, 47.7333] }
+      "geometry": { "type": "Point", "coordinates": [10.322, 47.733] }
     },
     {
       "type": "Feature",
       "properties": { "name": "Großer Krottenkopf", "type": "peak", "ele": 2656 },
-      "geometry": { "type": "Point", "coordinates": [10.2167, 47.5167] }
+      "geometry": { "type": "Point", "coordinates": [10.222, 47.517] }
     },
     {
       "type": "Feature",
@@ -359,7 +353,7 @@
     {
       "type": "Feature",
       "properties": { "name": "Sonnenkopf", "type": "peak", "ele": 1768 },
-      "geometry": { "type": "Point", "coordinates": [10.33, 47.4589] }
+      "geometry": { "type": "Point", "coordinates": [10.2056316, 47.3801058] }
     }
   ]
 }
