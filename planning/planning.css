@@ -42,6 +42,31 @@ body {
     border-bottom: none;
 }
 
+/* Collapsible control sections */
+.control-section {
+    border-bottom: 1px solid #eee;
+}
+.control-section > h3 {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    background: #f7f7f7;
+    cursor: pointer;
+    font-size: 1rem;
+    user-select: none;
+    position: relative;
+}
+.control-section > h3::after {
+    content: "▾";
+    position: absolute;
+    right: 1rem;
+}
+.control-section.collapsed > h3::after {
+    content: "▸";
+}
+.control-section.collapsed > :not(h3) {
+    display: none;
+}
+
 /* Map Header (Back Button) */
 .map-header {
     position: fixed;
