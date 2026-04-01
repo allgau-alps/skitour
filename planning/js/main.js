@@ -1048,6 +1048,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add cursor style if not already there
         header.style.cursor = 'pointer';
         
+        // Default to collapsed
+        section.classList.add('collapsed');
+        
         header.addEventListener('click', (e) => {
             const isCollapsed = section.classList.contains('collapsed');
             
