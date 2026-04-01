@@ -2,6 +2,49 @@
 
 This file records all manual changes, fixes, and decisions made by the Skitour Steward (outside of automated GitHub Actions updates). It provides narrative context beyond terse git commit messages.
 
+## 2026-03-29: Correct AT-07 PDF Date Parameter & Backfill March 20–28
+
+**Issue**: The March 20–28 PDFs for Allgäu Alps East were misdated by one day (e.g., `2026-03-27.pdf` contained the bulletin valid on March 28). This was due to using the wrong timestamp for the PDF endpoint's `date` parameter.
+
+**Root Cause**: In `tools/pdf_fetcher.js`, for `sourceType='avalanche-report'` (AT-07), the code constructed the date parameter as `${dateStr}T16:00:00.000Z`, where `dateStr` is the fetch/valid date. However, the avalanche-report API expects the bulletin's `validTime.startTime` (or `publicationTime`), which for next-day bulletins is the previous evening. This caused an off-by-one error.
+
+**Fix**: Updated `tools/pdf_fetcher.js` to derive the `date` parameter from the bulletin object itself:
+- Prefer `bulletin.validTime.startTime`
+- Fall back to `bulletin.publicationTime`
+- Last resort: warn and use `${dateStr}T16:00:00.000Z`
+
+The value is normalized to ISO format with `.000Z` suffix.
+
+**Backfill**:
+- Purged misdated PDFs for March 20–28 from `data/pdfs/allgau-alps-east/` and `archive/allgau-alps-east/2026-03/`.
+- Re-ran `fetch_daily.js` for each date (2026-03-20 through 2026-03-28) with the corrected script.
+- Rebuilt the site (`npm run build`) to populate the archive with correctly dated PDFs.
+- March 29 and 30 PDFs, which had been manually downloaded earlier with the correct timestamp, were already correct and remained in place.
+
+**Files Changed**:
+- `tools/pdf_fetcher.js` — corrected date parameter logic for avalanche-report.
+- `data/pdfs/allgau-alps-east/2026-03-{20..30}.pdf` — corrected content.
+- `archive/allgau-alps-east/2026-03/{index.html,2026-03-{20..30}.pdf}` — rebuilt.
+- `archive/health.json`, `archive/index.html` — regenerated.
+
+**Commits**:
+- `3921f10`: initial fix + manual March 29/30 addition.
+- `0448778`: backfill March 20–28.
+
+**Impact**:
+- Allgäu Alps East PDF archive for March 2026 is now correct.
+- Future automatic fetches (including morning updates) will use the proper date parameter and maintain correctness.
+- No other regions affected; DE-BY and AT-08 use `lawinen-warnung` source type and were never broken.
+
+**Verification**:
+- Each PDF's content matches its filename date (checked via build logs and archive listing).
+- Build completed without errors.
+- Site deployed to GitHub Pages; propagation expected within minutes.
+
+**Notes**:
+- The AT-07 source remains the only one using `avalanche-report`.
+- The fetch script now robustly handles missing `validTime` by falling back to `publicationTime` or logging a warning.
+
 ## 2026-03-21: Fix Tyrol PDF Endpoint for AT-07-01
 
 **Issue**: The Tyrol (AT-07) avalanche bulletin PDF endpoint (`https://api.avalanche.report/albina/api/bulletins/.../pdf`) was returning HTML ("albina-server") or 401/404 errors, causing daily fetch failures for Allgäu Alps East. The region stopped updating in March.
