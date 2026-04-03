@@ -43,40 +43,5 @@
         }
       }
     ]
-  },
-  {
-    "profil_id": 25592,
-    "datum": "2026-03-13 16:30:00",
-    "country_id": 1,
-    "region_id": 2,
-    "subregion_id": 289,
-    "ort": "Schröcken",
-    "seehoehe": 1625,
-    "latitude": 47.26019,
-    "longitude": 10.13583,
-    "hangneigung": 30,
-    "exposition_id": 1,
-    "loggedon": "2026-03-13 18:37:18",
-    "revision": 1,
-    "location": "Schröcken",
-    "elevation": 1625,
-    "slope": 30,
-    "neigung": 30,
-    "aspect": 1,
-    "exposition": 1,
-    "comments": "ECT 31: kein Bruch",
-    "comments_en": "ECT 31: no fracture",
-    "stability_tests": [
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 31,
-        "height": null,
-        "result": {
-          "text": ""
-        }
-      }
-    ]
   }
 ]
