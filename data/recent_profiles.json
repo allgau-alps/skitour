@@ -1,5 +1,60 @@
 [
   {
+    "profil_id": 25813,
+    "datum": "2026-04-05 13:00:00",
+    "country_id": 1,
+    "region_id": 2,
+    "subregion_id": 82,
+    "ort": "Rappenkopf Allgäuer Alpen",
+    "seehoehe": 1770,
+    "latitude": 47.2711,
+    "longitude": 10.1569,
+    "hangneigung": 38,
+    "exposition_id": 1,
+    "loggedon": "2026-04-05 17:00:09",
+    "revision": 1,
+    "location": "Rappenkopf Allgäuer Alpen",
+    "elevation": 1770,
+    "slope": 38,
+    "neigung": 38,
+    "aspect": 1,
+    "exposition": 1,
+    "comments": "ECTN 24@204.0cm: Teilbruch (N)\nECTN 24@183.0cm: Teilbruch (N)\nECTP 29@150.0cm: plötzlicher Bruch (P) (ganzer Block)",
+    "comments_en": "ECTN 24@204.0cm: Partial fracture (N)\nECTN 24@183.0cm: Partial fracture (N)\nECTP 29@150.0cm: Sudden fracture (P) (entire block)",
+    "stability_tests": [
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 24,
+        "height": 204,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 24,
+        "height": 183,
+        "result": {
+          "text": "no propagation (N)"
+        }
+      },
+      {
+        "type": {
+          "text": "ECT"
+        },
+        "step": 29,
+        "height": 150,
+        "result": {
+          "text": "propagation (P)"
+        }
+      }
+    ]
+  },
+  {
     "profil_id": 25650,
     "datum": "2026-03-19 11:20:00",
     "country_id": 1,
