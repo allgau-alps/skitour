@@ -2644,5 +2644,92 @@
     },
     "pdf_path": "incident_bulletins/allgau-alps-central/2026-01/2026-01-11.pdf",
     "linked_profiles": []
+  },
+  {
+    "id": 11496,
+    "date": "2026-04-03 10:03:00",
+    "location": "Bugschrofen",
+    "regionId": 1,
+    "subregionId": 158,
+    "lat": 47.51854,
+    "lon": 10.63673,
+    "url": "https://lawis.at/incident/11496",
+    "details": {
+      "id": 11496,
+      "valid_time": true,
+      "date": "2026-04-03T10:03:00+02:00",
+      "reported": {
+        "date": "2026-04-08T08:55:28+02:00",
+        "name": "LWD Tirol",
+        "email": "lawine@tirol.gv.at"
+      },
+      "involved": {
+        "dead": 0,
+        "injured": null,
+        "uninjured": 1,
+        "sweeped": null,
+        "buried_partial": null,
+        "buried_total": null,
+        "equipment": []
+      },
+      "danger": {
+        "rating": {
+          "id": 2,
+          "level": 2,
+          "text": "moderate"
+        },
+        "problem": {
+          "id": 1,
+          "text": "fresh snow"
+        }
+      },
+      "avalanche": {
+        "extent": {
+          "length": 200,
+          "width": 60
+        },
+        "breakheight": 80,
+        "type": {
+          "id": 1,
+          "text": "slab"
+        },
+        "size": {
+          "id": 2,
+          "text": "2: medium avalanche"
+        },
+        "release": {
+          "id": 1,
+          "text": "artificial"
+        }
+      },
+      "location": {
+        "name": "Bugschrofen",
+        "elevation": 1880,
+        "longitude": 10.63673,
+        "latitude": 47.51854,
+        "slope_angle": 40,
+        "aspect": {
+          "id": 8,
+          "text": "NW"
+        },
+        "country": {
+          "id": 1,
+          "code": "AT",
+          "text": "Österreich"
+        },
+        "region": {
+          "id": 1,
+          "text": "Tirol"
+        },
+        "subregion": {
+          "id": 158,
+          "text": "Allgäuer Alpen"
+        }
+      },
+      "images": [],
+      "comments_en": null
+    },
+    "pdf_path": "incident_bulletins/allgau-alps-west/2026-04/2026-04-03.pdf",
+    "linked_profiles": []
   }
 ]
