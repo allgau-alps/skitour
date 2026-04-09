@@ -53,50 +53,5 @@
         }
       }
     ]
-  },
-  {
-    "profil_id": 25650,
-    "datum": "2026-03-19 11:20:00",
-    "country_id": 1,
-    "region_id": 2,
-    "subregion_id": 82,
-    "ort": "Liechelkopf",
-    "seehoehe": 1950,
-    "latitude": 47.29657,
-    "longitude": 10.19036,
-    "hangneigung": 35,
-    "exposition_id": 1,
-    "loggedon": "2026-03-19 10:46:14",
-    "revision": 1,
-    "location": "Liechelkopf",
-    "elevation": 1950,
-    "slope": 35,
-    "neigung": 35,
-    "aspect": 1,
-    "exposition": 1,
-    "comments": "ECTN 21@101.5cm: Teilbruch (N)\nECTN 26@93.0cm: Teilbruch (N)",
-    "comments_en": "ECTN 21@101.5cm: Partial fraction (N)\nECTN 26@93.0cm: partial fraction (N)",
-    "stability_tests": [
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 21,
-        "height": 101.5,
-        "result": {
-          "text": "no propagation (N)"
-        }
-      },
-      {
-        "type": {
-          "text": "ECT"
-        },
-        "step": 26,
-        "height": 93,
-        "result": {
-          "text": "no propagation (N)"
-        }
-      }
-    ]
   }
 ]
