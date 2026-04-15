@@ -2731,5 +2731,112 @@
     },
     "pdf_path": "incident_bulletins/allgau-alps-west/2026-04/2026-04-03.pdf",
     "linked_profiles": []
+  },
+  {
+    "id": 11586,
+    "date": "2026-04-03 11:47:00",
+    "location": "Schneid",
+    "regionId": 1,
+    "subregionId": 158,
+    "lat": 47.49483,
+    "lon": 10.645,
+    "url": "https://lawis.at/incident/11586",
+    "details": {
+      "id": 11586,
+      "comments": "Koordinaten nicht verifiziert!",
+      "valid_time": true,
+      "date": "2026-04-03T11:47:00+02:00",
+      "reported": {
+        "date": "2026-04-15T15:11:28+02:00",
+        "name": "LWD Tirol",
+        "email": "lawine@tirol.gv.at"
+      },
+      "involved": {
+        "dead": 0,
+        "injured": 0,
+        "uninjured": 1,
+        "sweeped": null,
+        "buried_partial": null,
+        "buried_total": null,
+        "equipment": {
+          "standard": {
+            "id": 0,
+            "text": "unknown"
+          },
+          "lvs": {
+            "id": 0,
+            "text": "unknown"
+          },
+          "airbag": {
+            "id": 0,
+            "text": "unknown"
+          }
+        },
+        "ascent_descent": {
+          "id": 0,
+          "text": "unknown"
+        }
+      },
+      "danger": {
+        "rating": {
+          "id": 2,
+          "level": 2,
+          "text": "moderate"
+        },
+        "problem": {
+          "id": 1,
+          "text": "fresh snow"
+        }
+      },
+      "avalanche": {
+        "extent": {
+          "length": null,
+          "width": null
+        },
+        "breakheight": null,
+        "type": {
+          "id": 4,
+          "text": "unknown"
+        },
+        "size": {
+          "id": 6,
+          "text": "unknown"
+        },
+        "release": {
+          "id": 1,
+          "text": "artificial"
+        },
+        "humidity": {
+          "id": 0,
+          "text": "unknown"
+        }
+      },
+      "location": {
+        "name": "Schneid",
+        "longitude": 10.645,
+        "latitude": 47.49483,
+        "aspect": {
+          "id": 9,
+          "text": "unknown"
+        },
+        "country": {
+          "id": 1,
+          "code": "AT",
+          "text": "Österreich"
+        },
+        "region": {
+          "id": 1,
+          "text": "Tirol"
+        },
+        "subregion": {
+          "id": 158,
+          "text": "Allgäuer Alpen"
+        }
+      },
+      "images": [],
+      "comments_en": "Coordinates not verified!"
+    },
+    "pdf_path": "incident_bulletins/allgau-alps-west/2026-04/2026-04-03.pdf",
+    "linked_profiles": []
   }
 ]
