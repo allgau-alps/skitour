@@ -51,6 +51,28 @@ function debounce(fn, delay) {
     };
 }
 
+// Global fallback search using Photon (Komoot)
+async function globalSearch(query) {
+    const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=10`;
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        return data.features.map(f => ({
+            properties: {
+                name: f.properties.name,
+                type: f.properties.osm_value || f.properties.type || ''
+            },
+            geometry: {
+                coordinates: f.geometry.coordinates
+            }
+        }));
+    } catch (e) {
+        console.warn('Global search failed:', e);
+        return [];
+    }
+}
+
 // Search handler
 async function initPOISearch() {
     const input = document.getElementById('poi-search-input');
@@ -86,9 +108,22 @@ async function initPOISearch() {
             resultsBox.style.display = 'none';
             return;
         }
+
         const lower = q.toLowerCase();
-        const matches = pois.filter(p => p.__tokens.some(t => t.startsWith(lower))).slice(0, 10);
-        renderResults(matches);
+
+        // Local search
+        const matches = pois
+            .filter(p => p.__tokens.some(t => t.startsWith(lower)))
+            .slice(0, 10);
+
+        if (matches.length > 0) {
+            renderResults(matches);
+        } else {
+            // No local results → fallback to global search
+            globalSearch(lower).then(globalMatches => {
+                renderResults(globalMatches);
+            });
+        }
     }, 200);
 
     input.addEventListener('input', (e) => query(e.target.value));
